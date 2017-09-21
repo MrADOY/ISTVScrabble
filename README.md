@@ -8,7 +8,7 @@ Institut des Sciences et Techniques du Valenciennois
 
 Licence 3 - Informatique - FA 4
 
-Amine Federer
-Nicolas Jourdain
-Romain Lefevre
-Aurélien Pietrzak
+- Amine Boumoussou
+- Nicolas Jourdain
+- Romain Lefevre
+- Aurélien Pietrzak
