@@ -7,8 +7,8 @@ public class Cellule {
     
     //Constructeur
     public Cellule(){
-        i= 100;
-        j= 200;
+        i= -1;
+        j= -1;
         estVide= true;
     }
     public void genererCelluleVide(){
