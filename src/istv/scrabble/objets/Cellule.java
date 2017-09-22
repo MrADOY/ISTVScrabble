@@ -11,6 +11,7 @@ public class Cellule {
         j= -1;
         estVide= true;
     }
+    
     public void genererCelluleVide(){
         Cellule cellule = new Cellule();
     }
