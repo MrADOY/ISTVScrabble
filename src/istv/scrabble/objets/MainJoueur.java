@@ -13,6 +13,10 @@ package istv.scrabble.objets;
  */
 public class MainJoueur {
 
+	// ATTRIBUTS
+	Cellule[] main;
+	
+	
 	/**
 	 * Constructeur de MainJoueur
 	 */
