@@ -1,3 +1,10 @@
+/**
+ * 22-09-2017
+ * @author Lefevre Romain
+ * Licence 3 FA - ISTV
+ * 
+ */
+
 package istv.scrabble.objets;
 
 import java.util.List;
