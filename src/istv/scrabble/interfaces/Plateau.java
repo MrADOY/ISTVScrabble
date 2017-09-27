@@ -21,4 +21,5 @@ public interface Plateau {
 	public void poserCellule(final int i , final int j,final CelluleImpl cellule);
 	public void creationPlateau();
 	public CelluleImpl getCellule(final int i,final int j);
+	public void setCaseJouable();
 }

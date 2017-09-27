@@ -16,6 +16,7 @@ public class CelluleImpl implements Cellule {
 	private int i, j, scoreLettre;
 	private String lettre;
 	private Boolean estVide;
+	private Boolean estJouable;
 
 	/* Constructeurs */
 
@@ -32,6 +33,7 @@ public class CelluleImpl implements Cellule {
 		this.lettre = lettre;
 		this.scoreLettre = scoreLettre;
 		this.estVide = false;
+		this.estJouable = false;
 	}
 
 	/* Methodes */
@@ -42,6 +44,7 @@ public class CelluleImpl implements Cellule {
 		this.lettre = "";
 		this.estVide = true;
 		this.scoreLettre = 0;
+		this.estJouable = false;
 
 	}
 
@@ -101,5 +104,15 @@ public class CelluleImpl implements Cellule {
 			this.estVide = true;
 		} else
 			this.estVide = false;
+	}
+
+	@Override
+	public Boolean getEstJouable() {
+		return estJouable;
+	}
+
+	@Override
+	public void setEstJouable(Boolean estJouable) {
+		this.estJouable = estJouable;
 	}
 }

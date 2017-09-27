@@ -23,5 +23,7 @@ public interface Cellule {
 	public Boolean getEstVide();
 	public void setEstVide(Boolean estVide);
 	public void setEstVide();
+	public Boolean getEstJouable();
+	public void setEstJouable(Boolean estJouable);
 	
 }
