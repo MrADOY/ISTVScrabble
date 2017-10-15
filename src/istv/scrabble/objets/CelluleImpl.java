@@ -1,5 +1,6 @@
 package istv.scrabble.objets;
 
+import istv.scrabble.enumerations.CelluleBonus;
 import istv.scrabble.interfaces.Cellule;
 
 /**
@@ -14,11 +15,13 @@ public class CelluleImpl implements Cellule {
 	/* Attributs */
 
 	private int i, j, scoreLettre;
-	private String lettre;
+	private Character lettre;
 	private Boolean estVide;
 	private Boolean estJouable;
-
+	private CelluleBonus bonus;
+	
 	/* Constructeurs */
+
 
 	public CelluleImpl() {
 
@@ -28,26 +31,43 @@ public class CelluleImpl implements Cellule {
 		this.i = i;
 		this.j = j;
 	}
+	
+	public CelluleImpl(final int i, final int j,final CelluleBonus bonus) {
+		this.i = i;
+		this.j = j;
+		this.bonus = bonus;
+		
+	}
 
-	public CelluleImpl(final String lettre, final int scoreLettre) {
+	public CelluleImpl(final Character lettre) {
 		this.lettre = lettre;
-		this.scoreLettre = scoreLettre;
+		this.char2score();
 		this.estVide = false;
 		this.estJouable = false;
+	}
+	
+	public CelluleImpl(final Character lettre,CelluleBonus bonus) {
+		this.lettre = lettre;
+		this.char2score();
+		this.estVide = false;
+		this.estJouable = false;
+		this.bonus = bonus;
 	}
 
 	/* Methodes */
 
 	@Override
-	public void genererCelluleVide() {
+	public CelluleImpl genererCelluleVide() {
 
-		this.lettre = "";
-		this.estVide = true;
+		this.lettre = ' ';
 		this.scoreLettre = 0;
+		this.setEstVide();
 		this.estJouable = false;
-
+		return this;
+	
 	}
 
+	
 	@Override
 	public int getI() {
 		return i;
@@ -79,13 +99,21 @@ public class CelluleImpl implements Cellule {
 	}
 
 	@Override
-	public String getLettre() {
+	public Character getLettre() {
 		return lettre;
 	}
 
 	@Override
-	public void setLettre(String lettre) {
+	public void setLettre(Character lettre) {
 		this.lettre = lettre;
+	}
+	
+	public CelluleBonus getBonus() {
+		return bonus;
+	}
+	
+	public void setBonus(CelluleBonus bonus) {
+		this.bonus = bonus;
 	}
 
 	@Override
@@ -100,7 +128,7 @@ public class CelluleImpl implements Cellule {
 
 	@Override
 	public void setEstVide() {
-		if (this.lettre.equals("")) {
+		if (this.lettre.equals(' ')) {
 			this.estVide = true;
 		} else
 			this.estVide = false;
@@ -115,4 +143,22 @@ public class CelluleImpl implements Cellule {
 	public void setEstJouable(Boolean estJouable) {
 		this.estJouable = estJouable;
 	}
+	
+	@Override
+	public void setEstJouable() {
+		if(this.estVide) {
+			this.estJouable = true;
+		}
+		else this.estJouable = false;
+	}
+	
+	public void char2score() {
+		
+		Lettre l = new Lettre();
+		
+		this.scoreLettre = l.getScore(this.getLettre());
+	}
+
+
+	
 }
