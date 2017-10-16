@@ -1,27 +1,42 @@
-/**
- * 22-09-2017
- * @author Jourdain Nicolas
- * Licence 3 FA - ISTV
- * 
- */
 package istv.scrabble.objets;
 
 /**
- *  
- * MainJoueur.java
- *
+ * 
+ * @author Nicolas JOURDAIN
+ * 
  */
 public class MainJoueur {
 
 	// ATTRIBUTS
-	Cellule[] main;
+	static CelluleImpl[][] mainJoueur;
 	
 	
 	/**
 	 * Constructeur de MainJoueur
 	 */
 	public MainJoueur() {
-		// TODO Auto-generated constructor stub
+		mainJoueur = new CelluleImpl[1][7];
+	}
+
+
+	public static CelluleImpl[][] getMainJoueur() {
+		return mainJoueur;
+	}
+
+
+	public static void setMainJoueur(CelluleImpl[][] mainJoueur) {
+		MainJoueur.mainJoueur = mainJoueur;
+	}
+	
+	public MainJoueur melangerMain(MainJoueur mainJoueur) {
+		
+		return mainJoueur;
+	}
+	
+	public MainJoueur piocherLettre(MainJoueur main, Pioche pioche) {
+		
+		return main;
+		
 	}
 
 }
