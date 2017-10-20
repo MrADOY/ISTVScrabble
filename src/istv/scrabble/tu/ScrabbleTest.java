@@ -7,16 +7,12 @@
 package istv.scrabble.tu;
 
 import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
-
 import org.junit.Test;
-
 import istv.scrabble.objets.Scrabble;
 
 public class ScrabbleTest {
-	
-	
+
 	@Test 
 	// Test si la méthode dico renvoie true si le mot existe
 	public void isInDicoTest() {
@@ -38,6 +34,7 @@ public class ScrabbleTest {
 	}
 	*/
 	
+	/*
 	@Test 
 	// Test si le mot est découpé et test le score renvoyé
 	public void getTabChar() {
@@ -48,6 +45,11 @@ public class ScrabbleTest {
 		}
 		System.out.print("\n" + scr3.valeurScore(actuel));
 	}
+	*/
 	
-	
+	@Test
+	public void getScore() {
+		Scrabble scr3 = new Scrabble();
+		System.out.println(scr3.valeurScore("ZZ"));	
+	}
 }
