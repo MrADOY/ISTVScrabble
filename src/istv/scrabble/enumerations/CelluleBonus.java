@@ -9,7 +9,7 @@ package istv.scrabble.enumerations;
 
 public enum CelluleBonus {
 	
-	NORMAL(0),
+	NORMAL(1),
 	MOT_COMPTE_DOUBLE(2),
 	MOT_COMPTE_TRIPLE(3),
 	LETTRE_COMPTE_DOUBLE(2),
