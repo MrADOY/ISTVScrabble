@@ -9,6 +9,7 @@ package istv.scrabble.objets;
 
 import istv.scrabble.interfaces.Plateau;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -17,8 +18,9 @@ public class Scrabble {
 	List<Character> pioche;
 
 	//DECLARATION DES VARIABLES / TREESET
-	String monMot;
-	String monFichier = "./src/dico.txt";
+	String monFichier = "dico.txt";
+	int score = 0;
+	Lettre lettre = new Lettre();
 	TreeSet<String> set = new TreeSet<String>();
 	
 	public void piocheLettre(){
@@ -26,7 +28,7 @@ public class Scrabble {
 	}
 
 	// NAVIGATION DANS MON FICHIER TXT ET AJOUT DES LIGNES DANS TREESET
-	public void verifMotsTree(String monMot){
+	public void ajoutMotsTree(){
 		try{
 			InputStream ips = new FileInputStream(monFichier);
 			InputStreamReader ipsr = new InputStreamReader(ips);
@@ -41,11 +43,38 @@ public class Scrabble {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		this.monMot = monMot;
 	}
 	
-	public void ajoutMotsTree(){
+	
+	//Decoupe le mot en character 
+	public ArrayList<Character> decoupMot(String motADecoupe) {
+		String str1 = motADecoupe;
+		ArrayList<Character> maListe = new ArrayList<Character>();
+		for(int i = 0; i < str1.length(); i++) {
+			char val = str1.charAt(i);
+			maListe.add(val);
+		}
+		return maListe;
+	}
+	
+	// Calcul le score des mots posés 
+	public int valeurScore(ArrayList<Character> tab) {
+		//CelluleImpl tab[] = {new CelluleImpl('Z'),  new CelluleImpl('Z')};
+		Lettre valeurScore = new Lettre();
+		for(Character c : tab) {
+			score = score + valeurScore.getScore(c);
+		}
 		
+		/*
+		for(int i = 0; i < tab.length; i++) {
+			score = score + tab[i].getScoreLettre();
+		}
+		*/
+		return score;
+	}
+	
+	public boolean isInDico(String monMot) {
+		return set.contains(monMot.toUpperCase());
 	}
 
 	public Plateau getPlateau() {
@@ -71,14 +100,4 @@ public class Scrabble {
 	public void setDico(TreeSet<String> dico) {
 		this.set = dico;
 	}
-
-	// METHODE TOSTRING QUI RENVOIE SI OUI OU NON LA VALEUR EXISTE DANS LA LISTE TREESET
-	public String toString() {
-		if(set.contains(monMot.toUpperCase()) == true){
-			return "Le mot " + monMot.toLowerCase() + " existe dans la liste !";
-		}else{
-			return "Le mot " + monMot.toLowerCase() + " n'existe pas dans la liste !";
-		}
-	}
-
 }
