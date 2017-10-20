@@ -57,6 +57,15 @@ public class CelluleImpl implements Cellule {
 	/* Methodes */
 
 	@Override
+	public String toString() {
+		
+		if(!this.estVide)
+		return " [" + this.getLettre() + "," + this.getI() + "," + this.getJ() + "] ";
+		return " [VIDE] ";	
+	
+	}
+		
+	@Override
 	public CelluleImpl genererCelluleVide() {
 
 		this.lettre = ' ';

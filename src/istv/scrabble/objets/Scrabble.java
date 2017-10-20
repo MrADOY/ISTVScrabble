@@ -17,7 +17,8 @@ public class Scrabble {
 	List<Character> pioche;
 
 	//DECLARATION DES VARIABLES / TREESET
-	String monFichier = "dico.txt";
+	String monMot;
+	String monFichier = "./src/dico.txt";
 	TreeSet<String> set = new TreeSet<String>();
 	
 	public void piocheLettre(){
@@ -25,7 +26,7 @@ public class Scrabble {
 	}
 
 	// NAVIGATION DANS MON FICHIER TXT ET AJOUT DES LIGNES DANS TREESET
-	public void ajoutMotsTree(){
+	public void verifMotsTree(String monMot){
 		try{
 			InputStream ips = new FileInputStream(monFichier);
 			InputStreamReader ipsr = new InputStreamReader(ips);
@@ -40,10 +41,11 @@ public class Scrabble {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		this.monMot = monMot;
 	}
 	
-	public boolean isInDico(String monMot) {
-		return set.contains(monMot.toUpperCase());
+	public void ajoutMotsTree(){
+		
 	}
 
 	public Plateau getPlateau() {
@@ -68,6 +70,15 @@ public class Scrabble {
 
 	public void setDico(TreeSet<String> dico) {
 		this.set = dico;
+	}
+
+	// METHODE TOSTRING QUI RENVOIE SI OUI OU NON LA VALEUR EXISTE DANS LA LISTE TREESET
+	public String toString() {
+		if(set.contains(monMot.toUpperCase()) == true){
+			return "Le mot " + monMot.toLowerCase() + " existe dans la liste !";
+		}else{
+			return "Le mot " + monMot.toLowerCase() + " n'existe pas dans la liste !";
+		}
 	}
 
 }

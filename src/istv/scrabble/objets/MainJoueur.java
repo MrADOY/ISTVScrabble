@@ -6,6 +6,8 @@
  */
 package istv.scrabble.objets;
 
+import istv.scrabble.interfaces.Cellule;
+
 /**
  *  
  * MainJoueur.java
