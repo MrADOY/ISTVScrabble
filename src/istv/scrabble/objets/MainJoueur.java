@@ -1,29 +1,61 @@
-/**
- * 22-09-2017
- * @author Jourdain Nicolas
- * Licence 3 FA - ISTV
- * 
- */
 package istv.scrabble.objets;
 
-import istv.scrabble.interfaces.Cellule;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 
 /**
- *  
- * MainJoueur.java
- *
+ * 
+ * @author Nicolas JOURDAIN
+ * 
  */
 public class MainJoueur {
 
 	// ATTRIBUTS
-	Cellule[] main;
+	
+	protected static List<Character> mainJoueur;
 	
 	
 	/**
 	 * Constructeur de MainJoueur
 	 */
 	public MainJoueur() {
-		// TODO Auto-generated constructor stub
+		mainJoueur = new ArrayList<Character>();
+//		PiocheInt p = new Pioche();
+//		List<Character> l = new ArrayList<Character>();
+//		l = Pioche.piocheLettre(7);
+//		((MainJoueur) mainJoueur).ajoutLettreMain(l);
+
+	}
+	
+	
+    public List<Character> ajoutLettreMain(List<Character> rack) {
+        mainJoueur.addAll(rack);
+        return mainJoueur;
+    }
+    
+	public static List<Character> getMainJoueur() {
+		return mainJoueur;
+	}
+	
+	public void afficherMainJoueur() {
+		System.out.println("Votre main est : ");
+		for(Character l : mainJoueur)
+		System.out.print(l + " ");
+		System.out.print("\n");
 	}
 
+
+	public static void setMainJoueur(List<Character> mainJoueur) {
+		MainJoueur.mainJoueur = mainJoueur;
+	}
+	
+	public List<Character> melangerMain(List<Character> mainJoueur) {
+		Collections.shuffle(mainJoueur);
+		return mainJoueur;
+	}
+
+	
+	
 }
