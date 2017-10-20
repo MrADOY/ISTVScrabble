@@ -4,14 +4,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import istv.scrabble.interfaces.PiocheInt;
+
 /**
  * 
  * @author Nicolas JOURDAIN
  * 
  */
-public class Pioche {
+public class Pioche implements PiocheInt {
 
-	    List<Character> lettresPioche = new ArrayList<Character>();
+	    static List<Character> lettresPioche = new ArrayList<Character>();
 	    
 	    /**
 	     * Constructeur de Pioche
@@ -51,8 +53,8 @@ public class Pioche {
 
 	    	    }
 
-	    //Le joueur pioche j lettre
-	    public List<Character> piocheLettre(int j) {
+	    //Le joueur pioche un nombre j de lettres
+	    public static List<Character> piocheLettre(int j) {
 	        List<Character> tabLettre = new ArrayList<Character>();
 	        
 	        for (int i = 0; i < j; i++) {

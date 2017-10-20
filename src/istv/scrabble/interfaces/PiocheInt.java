@@ -11,6 +11,6 @@ import java.util.List;
 public interface PiocheInt {
 
 	//Le joueur pioche un nombre j de lettres
-	List<Character> piocheLettre(int j);
+//	List<Character> piocheLettre(int j);
 
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import org.junit.Test;
 
 import istv.scrabble.interfaces.PiocheInt;
+import istv.scrabble.objets.MainJoueur;
 import istv.scrabble.objets.Pioche;
 
 /**
@@ -15,13 +16,18 @@ import istv.scrabble.objets.Pioche;
  *
  */
 
-public class PiocheTest {
+public class MainJoueurTest {
 
 	@Test
-	public void testPiocheGetLettre() {
+	public void testMainJoueurImpl() {
+		MainJoueur m = new MainJoueur();
 		PiocheInt p = new Pioche();
 		List<Character> l = new ArrayList<Character>();
 		l = Pioche.piocheLettre(7);
+		m.ajoutLettreMain(l);
+		m.afficherMainJoueur();
+		m.melangerMain(m.getMainJoueur());
+		m.afficherMainJoueur();
+		}
 
-	}
 }

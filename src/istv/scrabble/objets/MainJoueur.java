@@ -1,5 +1,11 @@
 package istv.scrabble.objets;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import istv.scrabble.interfaces.PiocheInt;
+
 /**
  * 
  * @author Nicolas JOURDAIN
@@ -8,35 +14,49 @@ package istv.scrabble.objets;
 public class MainJoueur {
 
 	// ATTRIBUTS
-	static CelluleImpl[][] mainJoueur;
+	
+	protected static List<Character> mainJoueur;
 	
 	
 	/**
 	 * Constructeur de MainJoueur
 	 */
 	public MainJoueur() {
-		mainJoueur = new CelluleImpl[1][7];
+		mainJoueur = new ArrayList<Character>();
+//		PiocheInt p = new Pioche();
+//		List<Character> l = new ArrayList<Character>();
+//		l = Pioche.piocheLettre(7);
+//		((MainJoueur) mainJoueur).ajoutLettreMain(l);
+
 	}
-
-
-	public static CelluleImpl[][] getMainJoueur() {
+	
+	
+    public List<Character> ajoutLettreMain(List<Character> rack) {
+        mainJoueur.addAll(rack);
+        return mainJoueur;
+    }
+    
+	public static List<Character> getMainJoueur() {
 		return mainJoueur;
 	}
+	
+	public void afficherMainJoueur() {
+		System.out.println("Votre main est : ");
+		for(Character l : mainJoueur)
+		System.out.print(l + " ");
+		System.out.print("\n");
+	}
 
 
-	public static void setMainJoueur(CelluleImpl[][] mainJoueur) {
+	public static void setMainJoueur(List<Character> mainJoueur) {
 		MainJoueur.mainJoueur = mainJoueur;
 	}
 	
-	public MainJoueur melangerMain(MainJoueur mainJoueur) {
-		
+	public List<Character> melangerMain(List<Character> mainJoueur) {
+		Collections.shuffle(mainJoueur);
 		return mainJoueur;
 	}
-	
-	public MainJoueur piocherLettre(MainJoueur main, Pioche pioche) {
-		
-		return main;
-		
-	}
 
+	
+	
 }
