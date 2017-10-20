@@ -3,17 +3,8 @@ package istv.scrabble.tu;
 import org.junit.Before;
 import org.junit.Test;
 
-import istv.scrabble.enumerations.CelluleBonus;
-import istv.scrabble.interfaces.Plateau;
 import istv.scrabble.objets.CelluleImpl;
 import istv.scrabble.objets.PlateauImpl;
-
-/**
- * 
- *
- * @author Aurelien PIETRZAK
- *
- */
 
 public class PlateauImplTest {
 
@@ -45,10 +36,7 @@ public class PlateauImplTest {
 		plateau.poserCellule(2, 3, celluleA);
 		System.out.println("===================================");
 		plateau.dessinerPlateau();
-	
 		
 	}
 	
-	
-
 }

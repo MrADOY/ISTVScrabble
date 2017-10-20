@@ -45,6 +45,7 @@ public class Scrabble {
 		}
 	}
 	
+	
 	//Decoupe le mot en character 
 	public ArrayList<Character> decoupMot(String motADecoupe) {
 		String str1 = motADecoupe;
@@ -99,5 +100,4 @@ public class Scrabble {
 	public void setDico(TreeSet<String> dico) {
 		this.set = dico;
 	}
-
 }

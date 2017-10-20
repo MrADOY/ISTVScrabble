@@ -25,6 +25,10 @@ public class PlateauImpl implements Plateau {
 
 	@Override
 	public void poserCellule(int i, int j, CelluleImpl cellule) {
+		
+		//TODO EFFECTUER LES TESTS AVANT DE POSER UNE CELLULE 
+		
+		
 		PlateauImpl.plateauJeu[i][j].setLettre(cellule.getLettre());
 		PlateauImpl.plateauJeu[i][j].setScoreLettre(cellule.getScoreLettre());
 		PlateauImpl.plateauJeu[i][j].setEstVide();
@@ -33,6 +37,7 @@ public class PlateauImpl implements Plateau {
 		cellule.setJ(j);
 		PlateauImpl.plateauJeu[i][j].setEstJouable(false);
 		this.setCaseJouable();
+	
 	}
 
 	/**
@@ -169,7 +174,7 @@ public class PlateauImpl implements Plateau {
 	public void dessinerPlateau() {
 		for (int i = 0; i < Plateau.LONGUEUR_PLATEAU; i++) {
 			for (int j = 0; j < Plateau.LARGEUR_PLATEAU; j++) {
-				System.out.print(" " + PlateauImpl.plateauJeu[i][j].getEstJouable() + " ");
+				System.out.print(PlateauImpl.plateauJeu[i][j]);
 
 			}
 			System.out.println();
