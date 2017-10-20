@@ -14,20 +14,16 @@ import java.util.List;
 import java.util.TreeSet;
 
 public class Scrabble {
-	Plateau plateau;
-	List<Character> pioche;
 
 	//DECLARATION DES VARIABLES / TREESET
+	Plateau plateau;
+	List<Character> pioche;
 	String monFichier = "dico.txt";
 	int score = 0;
 	Lettre lettre = new Lettre();
 	TreeSet<String> set = new TreeSet<String>();
-	
-	public void piocheLettre(){
-		
-	}
 
-	// NAVIGATION DANS MON FICHIER TXT ET AJOUT DES LIGNES DANS TREESET
+	// NAVIGATION DANS FICHIER TXT ET AJOUT DES LIGNES DANS TREESET
 	public void ajoutMotsTree(){
 		try{
 			InputStream ips = new FileInputStream(monFichier);
@@ -45,7 +41,7 @@ public class Scrabble {
 		}
 	}
 	
-	
+	/*
 	//Decoupe le mot en character 
 	public ArrayList<Character> decoupMot(String motADecoupe) {
 		String str1 = motADecoupe;
@@ -59,45 +55,31 @@ public class Scrabble {
 	
 	// Calcul le score des mots posés 
 	public int valeurScore(ArrayList<Character> tab) {
-		//CelluleImpl tab[] = {new CelluleImpl('Z'),  new CelluleImpl('Z')};
 		Lettre valeurScore = new Lettre();
 		for(Character c : tab) {
 			score = score + valeurScore.getScore(c);
 		}
-		
-		/*
-		for(int i = 0; i < tab.length; i++) {
-			score = score + tab[i].getScoreLettre();
+		return score;
+	}
+	*/
+	
+	//Decoupe le mot en character & calcul le score des mots posés 
+	public int valeurScore(String motADecoupe) {
+		String str1 = motADecoupe;
+		ArrayList<Character> maListe = new ArrayList<Character>();
+		for(int i = 0; i < str1.length(); i++) {
+			char val = str1.charAt(i);
+			maListe.add(val);
 		}
-		*/
+		
+		Lettre valeurScore = new Lettre();
+		for(Character c : maListe) {
+			score = score + valeurScore.getScore(c);
+		}
 		return score;
 	}
 	
 	public boolean isInDico(String monMot) {
 		return set.contains(monMot.toUpperCase());
-	}
-
-	public Plateau getPlateau() {
-		return plateau;
-	}
-
-	public void setPlateau(Plateau plateau) {
-		this.plateau = plateau;
-	}
-
-	public List<Character> getPioche() {
-		return pioche;
-	}
-
-	public void setPioche(List<Character> pioche) {
-		this.pioche = pioche;
-	}
-
-	public TreeSet<String> getDico() {
-		return set;
-	}
-
-	public void setDico(TreeSet<String> dico) {
-		this.set = dico;
 	}
 }
