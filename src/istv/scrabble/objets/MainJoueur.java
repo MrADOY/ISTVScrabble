@@ -22,11 +22,6 @@ public class MainJoueur {
 	 */
 	public MainJoueur() {
 		mainJoueur = new ArrayList<Character>();
-//		PiocheInt p = new Pioche();
-//		List<Character> l = new ArrayList<Character>();
-//		l = Pioche.piocheLettre(7);
-//		((MainJoueur) mainJoueur).ajoutLettreMain(l);
-
 	}
 	
 	
@@ -35,7 +30,7 @@ public class MainJoueur {
         return mainJoueur;
     }
     
-	public static List<Character> getMainJoueur() {
+	public List<Character> getMainJoueur() {
 		return mainJoueur;
 	}
 	

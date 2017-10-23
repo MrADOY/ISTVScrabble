@@ -23,8 +23,7 @@ public class MainJoueurTest {
 		MainJoueur m = new MainJoueur();
 		PiocheInt p = new Pioche();
 		List<Character> l = new ArrayList<Character>();
-		l = Pioche.piocheLettre(7);
-		m.ajoutLettreMain(l);
+		m.ajoutLettreMain(Pioche.piocheLettre(7));
 		m.afficherMainJoueur();
 		m.melangerMain(m.getMainJoueur());
 		m.afficherMainJoueur();

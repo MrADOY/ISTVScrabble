@@ -21,7 +21,10 @@ public class PiocheTest {
 	public void testPiocheGetLettre() {
 		PiocheInt p = new Pioche();
 		List<Character> l = new ArrayList<Character>();
-		l = Pioche.piocheLettre(7);
-
+		p.piocheRestant();
+		p.piocheRestantLettres();
+		l = Pioche.piocheLettre(45);
+		p.piocheRestant();
+		p.piocheRestantLettres();
 	}
 }
