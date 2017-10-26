@@ -3,6 +3,7 @@ package istv.scrabble.objets;
 import java.util.ArrayList;
 import java.util.List;
 
+import istv.scrabble.enumerations.CelluleBonus;
 import istv.scrabble.interfaces.Cellule;
 import istv.scrabble.interfaces.Plateau;
 
@@ -113,18 +114,16 @@ public class Regle {
 	 * Découpe le mot en character & calcul le score des mots posés 
 	 */
 	
-	public int valeurScore(String motADecoupe) {
+	public static int valeurScore(List<Cellule> cellules) {
 		int score = 0;
-		String str1 = motADecoupe;
-		ArrayList<Character> maListe = new ArrayList<Character>();
-		for(int i = 0; i < str1.length(); i++) {
-			char val = str1.charAt(i);
-			maListe.add(val);
-		}
-		
-		Lettre valeurScore = new Lettre();
-		for(Character c : maListe) {
-			score = score + valeurScore.getScore(c);
+		for (Cellule c : cellules) {
+			if (c.getCelluleBonus().equals(CelluleBonus.MOT_COMPTE_DOUBLE)
+					|| (c.getCelluleBonus().equals(CelluleBonus.MOT_COMPTE_TRIPLE))) {
+				// TODO
+				score = score + c.getScoreLettre();
+			} else {
+				score = score + (c.getScoreLettre() * c.getCelluleBonus().getBonus());
+			}
 		}
 		return score;
 	}

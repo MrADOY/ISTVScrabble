@@ -179,4 +179,37 @@ public class RegleTest {
 			System.out.println(c);
 		}
 	}
+	
+	@Test
+	public void testDirectionMot_HORI_UNE_LETTRE_OK_SCORE() {
+
+		regle.initChangementGrille();
+
+		plateau.poserCellule(7, 7, celluleA);
+		plateau.poserCellule(7, 8, celluleB);
+		plateau.poserCellule(7, 9, celluleC);
+		plateau.poserCellule(7, 10, celluleD);
+		regle.setChangement(7, 10);
+
+		plateau.dessinerPlateau();
+
+		Placement actual = regle.recuperationMotsPoses();
+
+		for (String s : actual.getMot()) {
+			System.out.println(s);
+		}
+		
+		for (Cellule c : actual.getCellules()) {
+			System.out.println(c);
+		}
+		
+		System.out.println(Regle.valeurScore(actual.getCellules()));
+		
+	}
+
+	
+	
+	
+	
+	
 }
