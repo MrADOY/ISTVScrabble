@@ -52,8 +52,6 @@ public class Pioche implements PiocheInt {
 				'Z',
 				'*','*'
 				);
-
-
 	    	    }
 
 	    /**
