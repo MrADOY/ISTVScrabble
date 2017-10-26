@@ -72,7 +72,37 @@ public class PlateauImpl implements Plateau {
 		}
 
 	}
+	
+	/**
+	 * Mettre à jour les cellules voisines jouables
+	 */
+	
+	public void setJouableCellulesVoisines(int i, int j) {
 
+		PlateauImpl.plateauJeu[i][j].genererCelluleVide();
+
+		if (j - 1 >= 0) { // Gauche
+			if (PlateauImpl.plateauJeu[i][j - 1].getEstVide()) {
+				PlateauImpl.plateauJeu[i][j - 1].setEstJouable(true);
+			}
+		}
+		if (j + 1 < Plateau.LARGEUR_PLATEAU) { // Droite
+			if (PlateauImpl.plateauJeu[i][j + 1].getEstVide()) {
+				PlateauImpl.plateauJeu[i][j + 1].setEstJouable(true);
+			}
+		}
+		if (i - 1 >= 0) { // Haut
+			if (PlateauImpl.plateauJeu[i - 1][j].getEstVide()) {
+				PlateauImpl.plateauJeu[i - 1][j].setEstJouable(true);
+			}
+		}
+		if (i + 1 < Plateau.LONGUEUR_PLATEAU) { // Bas
+			if (PlateauImpl.plateauJeu[i + 1][j].getEstVide()) {
+				PlateauImpl.plateauJeu[i + 1][j].setEstJouable(true);
+			}
+		}
+	}
+	
 	/**
 	 * Cette methode est utilisÃ©e pour instancier un plateau contenant des cellules
 	 * vides
