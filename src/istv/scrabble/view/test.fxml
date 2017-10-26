@@ -100,7 +100,7 @@
                            <children>
                               <ImageView id="1" fitHeight="450.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../../../../Scrabble_Graphique/resources/plateau.png" />
+                                    <Image url="@../../../../resources/plateau.png" />
                                  </image>
                               </ImageView>
                               <GridPane fx:id="plateau" alignment="CENTER" gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="360.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -141,7 +141,7 @@
                                  <children>
                                     <Label fx:id="case00" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="25.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                        <graphic>
-                                          <ImageView fx:id="img00" fitHeight="25.0" fitWidth="25.0" onDragEntered="#selectTargetLabel" pickOnBounds="true" preserveRatio="true" />
+                                          <ImageView fx:id="img00" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
                                        </graphic>
                                     </Label>
                                     <Label fx:id="case01" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
@@ -182,8 +182,8 @@
                               <Insets />
                            </opaqueInsets>
                            <children>
-                              <ImageView fx:id="img1" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
                               <Label fx:id="rack1" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#dragText" prefHeight="50.0" prefWidth="50.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <ImageView fx:id="img1" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
                               <Label fx:id="rack2" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                  <graphic>
                                     <ImageView fx:id="img2" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />

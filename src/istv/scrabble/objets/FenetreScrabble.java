@@ -8,15 +8,19 @@ import java.util.Map;
 
 import istv.scrabble.interfaces.PiocheInt;
 import javafx.application.Application;
-import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventTarget;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Control;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -27,7 +31,7 @@ import javafx.stage.Stage;
  * @contributor
  *
  */
-public class FenetreScrabble extends Application implements EventHandler<MouseEvent> {
+public class FenetreScrabble extends Application implements EventHandler<DragEvent> {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
@@ -39,9 +43,10 @@ public class FenetreScrabble extends Application implements EventHandler<MouseEv
 		FXMLLoader fxmlLoader = new FXMLLoader(new File("src/istv/scrabble/view/test.fxml").toURI().toURL());
 		final Node node = fxmlLoader.load();
 		final StackPane root = new StackPane(node);
+		
 		Map<String, Object> namespace = fxmlLoader.getNamespace();
 		ImageView rack = (ImageView) namespace.get("img1");
-		ImageView imagePane = (ImageView) namespace.get("Img00");
+		ImageView imagePane = (ImageView) namespace.get("img00");
 
 		int IMAGE_SIZE = 50;
 
@@ -50,19 +55,8 @@ public class FenetreScrabble extends Application implements EventHandler<MouseEv
 		// GridPane gridPane = new GridPane();
 		// gridPane.setGridLinesVisible(true);
 
-		// rack.setOnMouseDragged(new EventHandler <MouseEvent>() {
-		// public void handle(MouseEvent event) {
-		// System.out.println("DRAG");
-		// /* allow any transfer mode */
-		// Dragboard db = rack.startDragAndDrop(TransferMode.ANY);
-		//
-		//// ClipboardContent content = new ClipboardContent();
-		//// content.put(source.getImage());
-		//// db.setContent(content);
-		////
-		// event.consume();
-		// }
-		// });
+		
+		
 		//
 		//// System.out.println(rack.getProperties());
 		// imagePane.setOnDragDropped(event -> {
@@ -103,21 +97,30 @@ public class FenetreScrabble extends Application implements EventHandler<MouseEv
 		primaryStage.setHeight(primaryScreenBounds.getHeight());
 		primaryStage.show();
 	}
-
-	/** lancement du prog */
+	
+	/*  MAIN */
 	public static void main(String[] args) {
 		launch(args);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javafx.event.EventHandler#handle(javafx.event.Event)
-	 */
-	@Override
-	public void handle(MouseEvent event) {
-		// TODO Auto-generated method stub
+	
+	public void handle(DragEvent event) {
+		System.out.println("TEST");
+		
+	    //Data dropped
+	    //If there is an image on the dragboard, read it and use it
+		EventTarget target = event.getTarget();
+	    Dragboard db = event.getDragboard();
+	    boolean success = false;
+	    Node node = event.getPickResult().getIntersectedNode();
+	    if(node != target && db.hasImage()){
+	        success = true;
+	    }
+	    //let the source know whether the image was successfully transferred and used
+	    event.setDropCompleted(success);
 
+	    event.consume();
 	}
+
 
 }

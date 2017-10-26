@@ -103,6 +103,34 @@ public class ScrabbleController {
 	@FXML
 	private Label rack7;
 
+	@FXML
+	private Node selectSourceLabel(MouseEvent event) {
+		String source1 = event.getSource().toString(); // yields complete string
+		// Node source3 = event.getPickResult().getIntersectedNode(); //yields complete
+		// string
+		// Object source3 = event.getSource(); //yields complete string
+		// System.out.println(source3);
+		Node source2 = event.getPickResult().getIntersectedNode(); // returns JUST the id of the object that was clicked
+		// System.out.println("Full String: " + source1);
+		// System.out.println("Just the id: " + source2);
+		System.out.println("SOURCE : " + source2);
+		return source2;
+	}
+
+	@FXML
+	private Node selectTargetLabel(MouseEvent event) {
+		String target1 = event.getTarget().toString(); // yields complete string
+		// Node source3 = event.getPickResult().getIntersectedNode(); //yields complete
+		// string
+		// Object source3 = event.getSource(); //yields complete string
+		// System.out.println(source3);
+		Node target2 = event.getPickResult().getIntersectedNode(); // returns JUST the id of the object that was clicked
+		// System.out.println("Full String: " + target1);
+		// System.out.println("Just the id: " + target2);
+		System.out.println("TARGET : " + target2);
+		return target2;
+	}
+	
 	/**
 	 * Is called by the main application to give a reference back to itself.
 	 * 
@@ -110,9 +138,6 @@ public class ScrabbleController {
 	 */
 	public void setMainApp(FenetreScrabble main) {
 		this.mainApp = main;
-
-		// Add observable list data to the table
-
 	}
 
 	public void melange() {
@@ -197,39 +222,7 @@ public class ScrabbleController {
 		}
 	}
 
-	// public Label setSource() {
-	//
-	// return label;
-	//
-	// }
 
-	@FXML
-	private Node selectSourceLabel(MouseEvent event) {
-		String source1 = event.getSource().toString(); // yields complete string
-		// Node source3 = event.getPickResult().getIntersectedNode(); //yields complete
-		// string
-		// Object source3 = event.getSource(); //yields complete string
-		// System.out.println(source3);
-		Node source2 = event.getPickResult().getIntersectedNode(); // returns JUST the id of the object that was clicked
-		// System.out.println("Full String: " + source1);
-		// System.out.println("Just the id: " + source2);
-		System.out.println("SOURCE : " + source2);
-		return source2;
-	}
-
-	@FXML
-	private Node selectTargetLabel(MouseEvent event) {
-		String target1 = event.getTarget().toString(); // yields complete string
-		// Node source3 = event.getPickResult().getIntersectedNode(); //yields complete
-		// string
-		// Object source3 = event.getSource(); //yields complete string
-		// System.out.println(source3);
-		Node target2 = event.getPickResult().getIntersectedNode(); // returns JUST the id of the object that was clicked
-		// System.out.println("Full String: " + target1);
-		// System.out.println("Just the id: " + target2);
-		System.out.println("TARGET : " + target2);
-		return target2;
-	}
 
 	public void dragText(MouseEvent event) {
 		// final Object source = dragEvent.getGestureSource();
@@ -238,6 +231,7 @@ public class ScrabbleController {
 		Node targetDrag = selectTargetLabel(event);
 		Label source = (Label) sourceDrag;
 		Label target = (Label) targetDrag;
+				
 		source.setOnDragDetected(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent event) {
 				/* drag was detected, start drag-and-drop gesture */
