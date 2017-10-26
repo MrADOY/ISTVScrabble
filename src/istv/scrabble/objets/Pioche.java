@@ -80,18 +80,11 @@ public class Pioche implements PiocheInt {
 	        return tabLettre;
 	    }
 	    
-	    /**
-	     * Indique le nombre de pièces restantes dans la pioche
-	     * @return le nombre de pièces restantes
-	     */
 	    public int piocheRestant() {
 	        System.out.println("Il reste " + lettresPioche.size() + " lettres dans la pioche");
 	       	return lettresPioche.size();
 	    }
 	    
-	    /**
-	     * Indique le nombre de pièces restantes par lettres dans la pioche
-	     */
 	    public void piocheRestantLettres() {
 	        Set<Character> lettres = new TreeSet<Character>();
 	        int i = 0;
@@ -106,9 +99,7 @@ public class Pioche implements PiocheInt {
 	    		
 	    }
 	    
-	    /**
-	     * Indique le nombre de pièces restantes par lettres dans la pioche
-	     */
+	    
 	    public void piocheContenu() {
 	        Set<Character> lettres = new TreeSet<Character>();
 	    		for(Character l : lettresPioche) {
