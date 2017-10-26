@@ -1,28 +1,276 @@
 package istv.scrabble.objets;
 
-import istv.scrabble.interfaces.Plateau;
+import java.util.ArrayList;
+import java.util.List;
 
+import istv.scrabble.interfaces.Cellule;
+import istv.scrabble.interfaces.Plateau;
 
 /**
  * 
- * @author Aurelien Pietrzak 
- *
+ * @author Aurelien Pietrzak
+ * @contributors Romain lefevbre 
  */
 
-/*Attention les règles ne sont pas encore au point */
 
+/*
+ * Classe qui permet d'appliquer toutes les regles du jeu Scrabble. 
+ */
 
 public class Regle {
 
-	static boolean[][] changement = new boolean[15][15];
+	/* Attributs */
 
-	public void initChangement() {
+	static boolean[][] changementGrille = new boolean[15][15];
+
+	/**
+	 * 
+	 * Methode principale qui récupère les mots posés sur la grille au tour t
+	 */
+
+	public Placement recuperationMotsPoses() {
+
+		/* Initialise les variables pour connaître le cas dans lequel on se trouve */
+
+		Direction direction = null;
+		int indicePremierChangement = this.getPremierChangement();
+		int i = getI(indicePremierChangement);
+		int j = getJ(indicePremierChangement);
+		int nombreChangement = this.getNombreChangement();
+		int nombreVoisin = this.getNbVoisin(i, j);
+		Placement p = new Placement();
+
+		/* Le joueur complete un mot */
+
+		if (nombreChangement == 1) {
+
+			/* Le joueur complète un SEUL ET UNIQUE mot */
+			
+			if (nombreVoisin <= 1) {
+				
+				direction = this.getDirectionMot(i, j);
+				this.getMotPose(p,direction, i, j);
+			}
+
+			/* Cas très rare le joueur complète DEUX MOTS avec SEULE lettre */
+
+			else {	
+				this.getMotPose(p,Direction.HORIZONTALE, i, j); 
+				this.getMotPose(p,Direction.VERTICALE, i, j);
+			}
+		}
+
+		/*
+		 * Le joueur pose plusieurs pièces plusieurs cas s'offrent à nous -> Le joueur
+		 * pose un mot sans lien direct avec d'autre mot -> Le joueur pose un mot qui
+		 * complète la fin d'un autre mot
+		 */
+
+		else if (nombreChangement > 1)
+
+		{
+			if (nombreVoisin == 1) {
+
+				{
+	
+					direction = this.getDirectionMot(i, j);
+					this.getMotPose(p ,direction, i, j);
+
+					int IndiceDerniereCase = this.getIndiceDernierCase(direction, i, j);
+					int IderniereCase = this.getI(IndiceDerniereCase);
+					int JderniereCase = this.getJ(IndiceDerniereCase);
+
+					if (this.getNbVoisin(IderniereCase, JderniereCase) > 1) {
+
+						direction = (direction.equals(Direction.VERTICALE)) ? Direction.HORIZONTALE : Direction.VERTICALE;					
+							this.getMotPoseIndice(p , direction, IderniereCase, JderniereCase);
+
+					}
+				}
+			}
+
+			if (nombreVoisin >= 2) { // LES MOTS SERONT FORCEMENT DANS LES DEUX DIRECTIONS
+				
+				this.getMotPose(p , Direction.HORIZONTALE, i, j);
+				this.getMotPose(p , Direction.VERTICALE, i, j);
+
+			}
+
+		}
+
+		return p;
+
+	}
+
+	/**
+	 * Recupere la direction d'un mot à partir des indices fournis en entrée
+	 */
+
+	private Direction getDirectionMot(int i, int j) {
+
+		if (!PlateauImpl.plateauJeu[i][j - 1].getEstVide())
+			return Direction.HORIZONTALE;
+		else if (!PlateauImpl.plateauJeu[i][j + 1].getEstVide())
+			return Direction.HORIZONTALE;
+		else if (!PlateauImpl.plateauJeu[i - 1][j].getEstVide())
+			return Direction.VERTICALE;
+		else if (!PlateauImpl.plateauJeu[i + 1][j].getEstVide())
+			return Direction.VERTICALE;
+
+		return null;
+
+	}
+
+	/**
+	 * Recupere un mot pose à partir dans la direction donnée La méthode permet de
+	 * partir du mot plus en haut / du mot le plus à gauche
+	 */
+
+	private void getMotPose(Placement placement ,Direction direction, int i, int j) {
+
+		String mot = "";
+		List<Cellule> cellules = new ArrayList<Cellule>();
+		
+		switch (direction) {
+
+		case VERTICALE:
+
+			while (!PlateauImpl.plateauJeu[i - 1][j].getEstVide()) {
+				i--;
+			}
+
+			while (!PlateauImpl.plateauJeu[i][j].getEstVide()) {
+				mot = mot + PlateauImpl.plateauJeu[i][j].getLettre();
+				cellules.add(PlateauImpl.plateauJeu[i][j]);
+				i++;
+			}
+
+			break;
+
+		case HORIZONTALE:
+
+			while (!PlateauImpl.plateauJeu[i][j - 1].getEstVide()) {
+				j--;
+			}
+
+			while (!PlateauImpl.plateauJeu[i][j].getEstVide()) {
+				mot = mot + PlateauImpl.plateauJeu[i][j].getLettre();
+				cellules.add(PlateauImpl.plateauJeu[i][j]);
+				j++;
+			}
+
+			break;
+
+		}
+
+		placement.addCellules(cellules).addMot(mot);
+	}
+
+	/**
+	 * Recupere le mot selon la direction et à partir dans indices fournis
+	 */
+
+	private void getMotPoseIndice(Placement placement, Direction direction, int i, int j) {
+
+		String mot = "";
+		List<Cellule> cellules = new ArrayList<Cellule>();
+
+		switch (direction) {
+
+		case VERTICALE:
+
+			while (!PlateauImpl.plateauJeu[i][j].getEstVide()) {
+				mot = mot + PlateauImpl.plateauJeu[i][j].getLettre();
+				i++;
+			}
+
+			break;
+
+		case HORIZONTALE:
+
+			while (!PlateauImpl.plateauJeu[i][j].getEstVide()) {
+				mot = mot + PlateauImpl.plateauJeu[i][j].getLettre();
+				j++;
+			}
+
+			break;
+
+		}
+
+		placement.addCellules(cellules).addMot(mot);
+	}
+
+	/*
+	 * Recupère le premier Changement dans la grille de changement d'etat
+	 */
+
+	private int getPremierChangement() {
+
 		for (int i = 0; i < Plateau.LARGEUR_PLATEAU; i++) {
 			for (int j = 0; j < Plateau.LONGUEUR_PLATEAU; j++) {
-				changement[i][j] = false;
+				if (changementGrille[i][j]) {
+					return Plateau.LARGEUR_PLATEAU * i + j;
+				}
+			}
+		}
+		return -1;
+	}
+
+	/**
+	 * Recupère l'indice de la dernière lettre d'un mot dans la grille
+	 */
+
+	private int getIndiceDernierCase(Direction direction, int i, int j) {
+
+		switch (direction) {
+		case VERTICALE:
+			while (!PlateauImpl.plateauJeu[i + 1][j].getEstVide())
+				i++;
+			break;
+
+		case HORIZONTALE:
+			while (!PlateauImpl.plateauJeu[i][j + 1].getEstVide())
+				j++;
+			break;
+		}
+
+		return Plateau.LARGEUR_PLATEAU * i + j;
+	}
+
+	/**
+	 * Recupère le nombre de changement d'état dans la grille de changement
+	 */
+
+	private int getNombreChangement() {
+
+		int nb = 0;
+
+		for (int i = 0; i < Plateau.LARGEUR_PLATEAU; i++) {
+			for (int j = 0; j < Plateau.LONGUEUR_PLATEAU; j++) {
+				if (changementGrille[i][j]) {
+					nb++;
+				}
+			}
+		}
+
+		return nb;
+	}
+
+	/**
+	 * Initialise la grille des changements d'etat à false
+	 */
+
+	public void initChangementGrille() {
+		for (int i = 0; i < Plateau.LARGEUR_PLATEAU; i++) {
+			for (int j = 0; j < Plateau.LONGUEUR_PLATEAU; j++) {
+				changementGrille[i][j] = false;
 			}
 		}
 	}
+
+	/**
+	 * Recupere le nombre de voisin d'une Cellule
+	 */
 
 	private int getNbVoisin(int i, int j) {
 
@@ -42,102 +290,8 @@ public class Regle {
 		return nbVoisin;
 	}
 
-	public Direction getDirMot() {
-
-		Direction dir = null;
-
-		int indiceFirstCellule = this.getFirstChangement();
-		int i = getI(indiceFirstCellule);
-		int j = getJ(indiceFirstCellule);
-		int nbChangement = this.getNbChangement(); // Cas differents suivant nb changements
-		int nbVoisin = this.getNbVoisin(i, j);
-
-		if (nbChangement == 1) {
-			// Une seule lettre a été posée le joueur complete un mot
-
-			if (nbVoisin == 1) // On cherche le sens du mot
-			{
-				if (!PlateauImpl.plateauJeu[i][j - 1].getEstVide())
-					dir = Direction.HORIZONTALE;
-				else if (!PlateauImpl.plateauJeu[i][j + 1].getEstVide())
-					dir = Direction.HORIZONTALE;
-				else if (!PlateauImpl.plateauJeu[i - 1][j].getEstVide())
-					dir = Direction.VERTICALE;
-				else if (!PlateauImpl.plateauJeu[i + 1][j].getEstVide())
-					dir = Direction.VERTICALE;
-			}
-
-		}
-			else if (nbChangement > 1) // Le joueur pose un mot complet ou complete 1 mot et rempli {
-			{
-
-				if (nbVoisin == 1) // Le joueur pose uniquement un seul mot
-				{
-					if (!PlateauImpl.plateauJeu[i][j - 1].getEstVide())
-						dir = Direction.HORIZONTALE;
-					else if (!PlateauImpl.plateauJeu[i][j + 1].getEstVide())
-						dir = Direction.HORIZONTALE;
-					else if (!PlateauImpl.plateauJeu[i - 1][j].getEstVide())
-						dir = Direction.VERTICALE;
-					else if (!PlateauImpl.plateauJeu[i + 1][j].getEstVide())
-						dir = Direction.VERTICALE;
-				}
-				
-				if(nbVoisin >= 2) { //LES MOTS SERONT FORCEMENT DANS LES DEUX DIRECTIONS{
-					
-					System.out.println(getMotPose(Direction.HORIZONTALE, i, j));
-					System.out.println(getMotPose(Direction.VERTICALE, i, j));
-					
-				}
-
-			}
-
-		//System.out.println(dir);
-		//System.out.println(getMotPose(dir, i, j));
-
-		return null;
-
-	}
-
-	private String getMotPose(Direction direction, int i, int j) {
-
-		String mot = "";
-
-		switch (direction) {
-
-		case VERTICALE:
-
-			while (!PlateauImpl.plateauJeu[i - 1][j].getEstVide()) {
-				i--;
-			}
-
-			while (!PlateauImpl.plateauJeu[i][j].getEstVide()) {
-				mot = mot + PlateauImpl.plateauJeu[i][j].getLettre();
-				i++;
-			}
-
-			break;
-
-		case HORIZONTALE:
-
-			while (!PlateauImpl.plateauJeu[i][j - 1].getEstVide()) {
-				j--;
-			}
-
-			while (!PlateauImpl.plateauJeu[i][j].getEstVide()) {
-				mot = mot + PlateauImpl.plateauJeu[i][j].getLettre();
-				j++;
-			}
-
-			break;
-
-		}
-
-		return mot;
-	}
-
 	public void setChangement(int i, int j) {
-		changement[i][j] = true;
+		changementGrille[i][j] = true;
 	}
 
 	private int getI(int indice) {
@@ -145,38 +299,6 @@ public class Regle {
 	}
 
 	private int getJ(int indice) {
-		return indice % Plateau.LARGEUR_PLATEAU;
+		return indice % Plateau.LONGUEUR_PLATEAU;
 	}
-
-	/*
-	 * ATTENTION à appliquer lorsque les cases jouées ont bien été validées par les
-	 * règles
-	 */
-
-	private int getFirstChangement() {
-		for (int i = 0; i < Plateau.LARGEUR_PLATEAU; i++) {
-			for (int j = 0; j < Plateau.LONGUEUR_PLATEAU; j++) {
-				if (changement[i][j]) {
-					return Plateau.LARGEUR_PLATEAU * i + j;
-				}
-			}
-		}
-		return -1;
-	}
-
-	private int getNbChangement() {
-
-		int nb = 0;
-
-		for (int i = 0; i < Plateau.LARGEUR_PLATEAU; i++) {
-			for (int j = 0; j < Plateau.LONGUEUR_PLATEAU; j++) {
-				if (changement[i][j]) {
-					nb++;
-				}
-			}
-		}
-
-		return nb;
-	}
-
 }
