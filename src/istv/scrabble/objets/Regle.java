@@ -9,7 +9,7 @@ import istv.scrabble.interfaces.Plateau;
 /**
  * 
  * @author Aurelien Pietrzak
- * @contributors Romain lefevbre 
+ * @contributors Romain Lefevre 
  */
 
 
@@ -101,7 +101,35 @@ public class Regle {
 		return p;
 
 	}
+	
+	/**
+	 * Verifie que le mot est présent dans le dico
+	 */
+	public boolean isInDico(String monMot) {
+		return Dictionnaire.set.contains(monMot.toUpperCase());
+	}
+	
+	/**
+	 * Découpe le mot en character & calcul le score des mots posés 
+	 */
+	
+	public int valeurScore(String motADecoupe) {
+		int score = 0;
+		String str1 = motADecoupe;
+		ArrayList<Character> maListe = new ArrayList<Character>();
+		for(int i = 0; i < str1.length(); i++) {
+			char val = str1.charAt(i);
+			maListe.add(val);
+		}
+		
+		Lettre valeurScore = new Lettre();
+		for(Character c : maListe) {
+			score = score + valeurScore.getScore(c);
+		}
+		return score;
+	}
 
+	
 	/**
 	 * Recupere la direction d'un mot à partir des indices fournis en entrée
 	 */
