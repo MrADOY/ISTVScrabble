@@ -32,7 +32,7 @@ public class PlateauImpl implements Plateau {
 		PlateauImpl.plateauJeu[i][j].setLettre(cellule.getLettre());
 		PlateauImpl.plateauJeu[i][j].setScoreLettre(cellule.getScoreLettre());
 		PlateauImpl.plateauJeu[i][j].setEstVide();
-		PlateauImpl.plateauJeu[i][j].setBonus(cellule.getCelluleBonus());
+		//PlateauImpl.plateauJeu[i][j].setBonus(cellule.getCelluleBonus());
 		cellule.setI(i);
 		cellule.setJ(j);
 		PlateauImpl.plateauJeu[i][j].setEstJouable(false);

@@ -3,6 +3,7 @@ package istv.scrabble.tu;
 import org.junit.Before;
 import org.junit.Test;
 
+import istv.scrabble.enumerations.CelluleBonus;
 import istv.scrabble.objets.CelluleImpl;
 import istv.scrabble.objets.PlateauImpl;
 
@@ -18,7 +19,7 @@ public class PlateauImplTest {
 	public void setUp() {
 	plateau =  new PlateauImpl();
 	
-	celluleA  = new CelluleImpl('A');
+	celluleA  = new CelluleImpl('A',CelluleBonus.NORMAL);
 	celluleB  = new CelluleImpl('B');
 	celluleC  = new CelluleImpl('C');
 	
@@ -39,4 +40,10 @@ public class PlateauImplTest {
 		
 	}
 	
+	@Test
+	public void testCaseBonus() {
+		System.out.println(plateau.getPlateau()[7][7].getCelluleBonus());
+		plateau.poserCellule(7, 7, celluleA);
+		plateau.dessinerPlateau();
+	}
 }

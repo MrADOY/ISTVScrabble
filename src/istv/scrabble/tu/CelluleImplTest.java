@@ -17,9 +17,12 @@ public class CelluleImplTest {
 	@Test
 	public void testCelluleImplBonus() {
 		
-		CelluleImpl cellule = new CelluleImpl(0,0,CelluleBonus.NORMAL);
+		CelluleImpl cellule = new CelluleImpl();
+
+		cellule.genererCelluleVide();
 		
-		System.out.println(cellule.getBonus().equals(CelluleBonus.NORMAL));
+		cellule.setBonus(CelluleBonus.LETTRE_COMPTE_DOUBLE);
+		System.out.println(cellule.getCelluleBonus());
 	}
 
 }
