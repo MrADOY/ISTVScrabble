@@ -14,7 +14,7 @@ public class MainJoueur {
 
 	// ATTRIBUTS
 	
-	protected static List<Character> mainJoueur;
+	protected List<Character> mainJoueur;
 	
 	
 	/**
@@ -22,11 +22,7 @@ public class MainJoueur {
 	 */
 	public MainJoueur() {
 		mainJoueur = new ArrayList<Character>();
-//		PiocheInt p = new Pioche();
-//		List<Character> l = new ArrayList<Character>();
-//		l = Pioche.piocheLettre(7);
-//		((MainJoueur) mainJoueur).ajoutLettreMain(l);
-
+		mainJoueur.addAll(Pioche.piocheLettre(7));
 	}
 	
 	
@@ -35,7 +31,12 @@ public class MainJoueur {
         return mainJoueur;
     }
     
-	public static List<Character> getMainJoueur() {
+    public List<Character> retirerLettreMain(List<Character> rack) {
+        mainJoueur.removeAll(rack);
+        return mainJoueur;
+    }
+    
+	public List<Character> getMainJoueur() {
 		return mainJoueur;
 	}
 	
@@ -47,15 +48,12 @@ public class MainJoueur {
 	}
 
 
-	public static void setMainJoueur(List<Character> mainJoueur) {
-		MainJoueur.mainJoueur = mainJoueur;
+	public void setMainJoueur(List<Character> mainJoueur, MainJoueur main) {
+		main = (MainJoueur) mainJoueur;
 	}
 	
 	public List<Character> melangerMain(List<Character> mainJoueur) {
 		Collections.shuffle(mainJoueur);
 		return mainJoueur;
 	}
-
-	
-	
 }

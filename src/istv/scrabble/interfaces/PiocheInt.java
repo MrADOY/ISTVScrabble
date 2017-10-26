@@ -10,7 +10,20 @@ import java.util.List;
  */
 public interface PiocheInt {
 
-	//Le joueur pioche un nombre j de lettres
-//	List<Character> piocheLettre(int j);
+	/**
+	 * Indique le nombre de pièces restantes dans la pioche
+	 * @return le nombre de pièces restantes
+	 */
+	int piocheRestant();
+
+	/**
+	 * Indique le nombre de pièces restantes par lettres dans la pioche
+	 */
+	void piocheRestantLettres();
+
+	/**
+	 * Indique le nombre de pièces restantes par lettres dans la pioche
+	 */
+	void piocheContenu();
 
 }
