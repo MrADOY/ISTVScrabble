@@ -84,6 +84,11 @@ public class PlateauImpl implements Plateau {
 		}
 	}
 	
+	
+	public Boolean isCelluleJouable(CelluleImpl cellule) {
+		return cellule.getEstJouable();
+	}
+	
 	/**
 	 * Cette methode est utilisée pour instancier un plateau contenant des cellules
 	 * vides
