@@ -50,55 +50,36 @@ public class PlateauImpl implements Plateau {
 
 		PlateauImpl.plateauJeu[i][j].genererCelluleVide();
 
-		if (j - 1 >= 0) { // Gauche
-			if (PlateauImpl.plateauJeu[i][j - 1].getEstVide()) {
-				PlateauImpl.plateauJeu[i][j - 1].setEstJouable(false);
-			}
-		}
-		if (j + 1 < Plateau.LARGEUR_PLATEAU) { // Droite
-			if (PlateauImpl.plateauJeu[i][j + 1].getEstVide()) {
-				PlateauImpl.plateauJeu[i][j + 1].setEstJouable(false);
-			}
-		}
-		if (i - 1 >= 0) { // Haut
-			if (PlateauImpl.plateauJeu[i - 1][j].getEstVide()) {
-				PlateauImpl.plateauJeu[i - 1][j].setEstJouable(false);
-			}
-		}
-		if (i + 1 < Plateau.LONGUEUR_PLATEAU) { // Bas
-			if (PlateauImpl.plateauJeu[i + 1][j].getEstVide()) {
-				PlateauImpl.plateauJeu[i + 1][j].setEstJouable(false);
-			}
-		}
+		this.setJouableCellulesVoisines(i, j, false);
 
 	}
 	
 	/**
-	 * Mettre à jour les cellules voisines jouables
+	 * Mettre ï¿½ jour les cellules voisines jouables
 	 */
 	
-	public void setJouableCellulesVoisines(int i, int j) {
+	public void setJouableCellulesVoisines(int i, int j,boolean jouable) {
 
 		PlateauImpl.plateauJeu[i][j].genererCelluleVide();
 
 		if (j - 1 >= 0) { // Gauche
 			if (PlateauImpl.plateauJeu[i][j - 1].getEstVide()) {
-				PlateauImpl.plateauJeu[i][j - 1].setEstJouable(true);
+				PlateauImpl.plateauJeu[i][j - 1].setEstJouable(jouable);
 			}
 		}
 		if (j + 1 < Plateau.LARGEUR_PLATEAU) { // Droite
 			if (PlateauImpl.plateauJeu[i][j + 1].getEstVide()) {
-				PlateauImpl.plateauJeu[i][j + 1].setEstJouable(true);
+				PlateauImpl.plateauJeu[i][j + 1].setEstJouable(jouable);
 			}
 		}
 		if (i - 1 >= 0) { // Haut
 			if (PlateauImpl.plateauJeu[i - 1][j].getEstVide()) {
-				PlateauImpl.plateauJeu[i - 1][j].setEstJouable(true);
+				PlateauImpl.plateauJeu[i - 1][j].setEstJouable(jouable);
 			}
 		}
 		if (i + 1 < Plateau.LONGUEUR_PLATEAU) { // Bas
 			if (PlateauImpl.plateauJeu[i + 1][j].getEstVide()) {
-				PlateauImpl.plateauJeu[i + 1][j].setEstJouable(true);
+				PlateauImpl.plateauJeu[i + 1][j].setEstJouable(jouable);
 			}
 		}
 	}
