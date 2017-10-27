@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import istv.scrabble.enumerations.CelluleBonus;
+import istv.scrabble.exceptions.GameException;
 import istv.scrabble.interfaces.Cellule;
 import istv.scrabble.interfaces.Plateau;
 
@@ -29,7 +30,7 @@ public class Regle {
 	 * Methode principale qui récupère les mots posés sur la grille au tour t
 	 */
 
-	public Placement recuperationMotsPoses() {
+	public void recuperationMotsPoses() throws GameException{
 
 		/* Initialise les variables pour connaître le cas dans lequel on se trouve */
 
@@ -99,8 +100,20 @@ public class Regle {
 
 		}
 
-		return p;
-
+		// Verifie si les mots posés sont dans le dico
+		boolean isInDico = true;
+		for(String pla : p.getMot()) {
+			isInDico = this.isInDico(pla);
+			if(!isInDico) {
+				//TODO ENLEVER LES CELLULES
+				new GameException("Mot : " + pla + " n'est pas un mot valide");
+			}
+		}
+		
+		// Calcul le score des mots posés 
+		
+		Scrabble.getJoueurActuel().calculScore(valeurScore(p.getCellules()));
+		
 	}
 	
 	/**
@@ -114,7 +127,7 @@ public class Regle {
 	 * Découpe le mot en character & calcul le score des mots posés 
 	 */
 	
-	public static int valeurScore(List<Cellule> cellules) {
+	public int valeurScore(List<Cellule> cellules) {
 		int score = 0;
 		for (Cellule c : cellules) {
 			if (c.getCelluleBonus().equals(CelluleBonus.MOT_COMPTE_DOUBLE)
