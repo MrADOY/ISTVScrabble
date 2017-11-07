@@ -9,6 +9,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.SepiaTone?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -63,9 +64,9 @@
         </Menu>
       </menus>
     </MenuBar>
-    <SplitPane dividerPositions="0.20921544209215442" focusTraversable="true" prefHeight="551.0" prefWidth="787.0" VBox.vgrow="ALWAYS">
+    <SplitPane dividerPositions="0.20921544209215442, 0.5" focusTraversable="true" prefHeight="551.0" prefWidth="787.0" VBox.vgrow="ALWAYS">
       <items>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="547.0" prefWidth="230.0">
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="547.0" prefWidth="192.0">
           <children>
                   <AnchorPane layoutX="-1.0" layoutY="256.0" prefHeight="293.0" prefWidth="196.0">
                      <children>
@@ -94,7 +95,7 @@
         </AnchorPane>
         <ScrollPane prefHeight="549.0" prefWidth="658.0">
           <content>
-            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="549.0" prefWidth="559.0">
+            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="549.0" prefWidth="407.0">
               <children>
                 <Label fx:id="nomJoueur" alignment="CENTER" font="$x1" layoutX="175.0" layoutY="3.0" prefHeight="23.0" prefWidth="231.0" style="&#10;" textAlignment="CENTER" textFill="$x2" wrapText="false" />
                         <AnchorPane layoutX="64.0" layoutY="26.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="450.0">
@@ -207,6 +208,20 @@
             </AnchorPane>
           </content>
         </ScrollPane>
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="547.0" prefWidth="344.0">
+               <children>
+                  <AnchorPane layoutX="-1.0" layoutY="256.0" prefHeight="293.0" prefWidth="196.0" />
+                  <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Debug" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x11" />
+                     </font>
+                     <textFill>
+                        <Color blue="0.624" green="0.624" red="0.624" fx:id="x21" />
+                     </textFill>
+                  </Label>
+                  <TextArea fx:id="console" layoutX="5.0" layoutY="47.0" prefHeight="496.0" prefWidth="334.0" />
+               </children>
+            </AnchorPane>
       </items>
     </SplitPane>
     <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">

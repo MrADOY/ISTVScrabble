@@ -5,19 +5,30 @@
  */
 package istv.scrabble.view;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
+import istv.scrabble.objets.CelluleImpl;
 import istv.scrabble.objets.FenetreScrabble;
 import istv.scrabble.objets.Joueur;
 import istv.scrabble.objets.MainJoueur;
 import istv.scrabble.objets.Pioche;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -26,7 +37,7 @@ import javafx.scene.layout.GridPane;
  * @contributor
  *
  */
-public class ScrabbleController {
+public class ScrabbleController implements Initializable {
 
 	/**
 	 * Constructeur de ScrabbleController
@@ -40,9 +51,38 @@ public class ScrabbleController {
 	private Joueur j = new Joueur("Bob");
 	private Pioche p = new Pioche();
 
+	  @FXML
+	    private TextArea console;
+	
+	    public void appendText(String valueOf) {
+	        Platform.runLater(() -> console.appendText(valueOf));
+	    }
+	
+	    public void initialize(URL location, ResourceBundle resources) {
+	    		piocher();
+			setRack();
+			nomJoueur.setText(j.getNom());
+	        OutputStream out = new OutputStream() {
+	            @Override
+	            public void write(int b) throws IOException {
+	                appendText(String.valueOf((char)b));
+	            }
+	        };
+	        System.setOut(new PrintStream(out, true));
+	        System.setErr(new PrintStream(out, true));
+	    }
+
+	
 	@FXML
 	private Label leftStatus;
 
+	@FXML
+	private AnchorPane debugNode;
+
+//	@FXML
+//	private Label leftStatus;
+
+	
 	@FXML
 	private GridPane rack;
 
@@ -165,35 +205,35 @@ public class ScrabbleController {
 	    }
 
 	public void melange() {
-		m.melangerMain(m.getMainJoueur());
+		m.melangerMain();
 		afficheMain();
 		setRack();
 	}
 
 	private void setRack() {
 		List<LettreView> liste = new ArrayList<LettreView>();
-		for (Character lm : m.getMainJoueur()) {
-			LettreView l = new LettreView(lm.toString());
+		for (CelluleImpl lm : m.getMainJoueur()) {
+			LettreView l = new LettreView(lm.getLettre().toString());
 //			System.out.println(l.lettre);
 			liste.add(l);
 			
 		}
-		System.out.println(m.getMainJoueur());
+		
 		if (!m.getMainJoueur().isEmpty()) {
-			// img1.setImage(new Image("file:resources/Wood/letter_" +
-			// m.getMainJoueur().get(0).toString() + ".png"));
-			// img2.setImage(new Image("file:resources/Wood/letter_" +
-			// m.getMainJoueur().get(1).toString() + ".png"));
-			// img3.setImage(new Image("file:resources/Wood/letter_" +
-			// m.getMainJoueur().get(2).toString() + ".png"));
-			// img4.setImage(new Image("file:resources/Wood/letter_" +
-			// m.getMainJoueur().get(3).toString() + ".png"));
-			// img5.setImage(new Image("file:resources/Wood/letter_" +
-			// m.getMainJoueur().get(4).toString() + ".png"));
-			// img6.setImage(new Image("file:resources/Wood/letter_" +
-			// m.getMainJoueur().get(5).toString() + ".png"));
-			// img7.setImage(new Image("file:resources/Wood/letter_" +
-			// m.getMainJoueur().get(6).toString() + ".png"));
+//			 img1.setImage(new Image("file:resources/Wood/letter_" +
+//			 m.getMainJoueur().get(0).toString() + ".png"));
+//			 img2.setImage(new Image("file:resources/Wood/letter_" +
+//			 m.getMainJoueur().get(1).toString() + ".png"));
+//			 img3.setImage(new Image("file:resources/Wood/letter_" +
+//			 m.getMainJoueur().get(2).toString() + ".png"));
+//			 img4.setImage(new Image("file:resources/Wood/letter_" +
+//			 m.getMainJoueur().get(3).toString() + ".png"));
+//			 img5.setImage(new Image("file:resources/Wood/letter_" +
+//			 m.getMainJoueur().get(4).toString() + ".png"));
+//			 img6.setImage(new Image("file:resources/Wood/letter_" +
+//			 m.getMainJoueur().get(5).toString() + ".png"));
+//			 img7.setImage(new Image("file:resources/Wood/letter_" +
+//			 m.getMainJoueur().get(6).toString() + ".png"));
 			//
 			// System.out.println(m.getMainJoueur());
 			// System.out.println(m.getMainJoueur().size());
@@ -257,8 +297,7 @@ public class ScrabbleController {
 
 	@FXML
 	private void piocher() {
-		int nbPieces = 7 - m.getMainJoueur().size();
-		m.ajoutLettreMain(Pioche.piocheLettre(nbPieces));
+		m.piocherLettreManquante();
 		afficheMain();
 	}
 
@@ -281,6 +320,7 @@ public class ScrabbleController {
 
 	@FXML
 	private void afficheMain() {
+//		m.afficherMainJoueur();
 		leftStatus.setText(m.getMainJoueur().toString());
 		// setRack();
 	}
@@ -364,6 +404,16 @@ public class ScrabbleController {
 		//
 	}
 
+//	@FXML
+//    private void handleButtonClick(ActionEvent event) {
+//        if (event.getSource() == showDebug) {
+//        		debugNode.show();
+//        } else if (event.getSource() == hideDebug) {
+//        		debugNode.hide();
+//        }
+//        // etc...
+//    }
+	
 	@FXML
 	private void initialize() {
 		piocher();
