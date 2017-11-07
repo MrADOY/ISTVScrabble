@@ -3,13 +3,15 @@ package istv.scrabble.objets;
 import java.util.ArrayList;
 import java.util.List;
 
+import istv.scrabble.enumerations.CelluleBonus;
+import istv.scrabble.exceptions.GameException;
 import istv.scrabble.interfaces.Cellule;
 import istv.scrabble.interfaces.Plateau;
 
 /**
  * 
  * @author Aurelien Pietrzak
- * @contributors Romain lefevbre 
+ * @contributors Romain Lefevre 
  */
 
 
@@ -28,7 +30,7 @@ public class Regle {
 	 * Methode principale qui récupère les mots posés sur la grille au tour t
 	 */
 
-	public Placement recuperationMotsPoses() {
+	public void recuperationMotsPoses() throws GameException{
 
 		/* Initialise les variables pour connaître le cas dans lequel on se trouve */
 
@@ -98,10 +100,48 @@ public class Regle {
 
 		}
 
-		return p;
-
+		// Verifie si les mots posés sont dans le dico
+		boolean isInDico = true;
+		for(String pla : p.getMot()) {
+			isInDico = this.isInDico(pla);
+			if(!isInDico) {
+				//TODO ENLEVER LES CELLULES
+				new GameException("Mot : " + pla + " n'est pas un mot valide");
+			}
+		}
+		
+		// Calcul le score des mots posés 
+		
+		Scrabble.getJoueurActuel().calculScore(valeurScore(p.getCellules()));
+		
+	}
+	
+	/**
+	 * Verifie que le mot est présent dans le dico
+	 */
+	public boolean isInDico(String monMot) {
+		return Dictionnaire.set.contains(monMot.toUpperCase());
+	}
+	
+	/**
+	 * Découpe le mot en character & calcul le score des mots posés 
+	 */
+	
+	public int valeurScore(List<Cellule> cellules) {
+		int score = 0;
+		for (Cellule c : cellules) {
+			if (c.getCelluleBonus().equals(CelluleBonus.MOT_COMPTE_DOUBLE)
+					|| (c.getCelluleBonus().equals(CelluleBonus.MOT_COMPTE_TRIPLE))) {
+				// TODO
+				score = score + c.getScoreLettre();
+			} else {
+				score = score + (c.getScoreLettre() * c.getCelluleBonus().getBonus());
+			}
+		}
+		return score;
 	}
 
+	
 	/**
 	 * Recupere la direction d'un mot à partir des indices fournis en entrée
 	 */

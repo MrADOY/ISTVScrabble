@@ -1,5 +1,6 @@
 package istv.scrabble.interfaces;
 
+import istv.scrabble.enumerations.CelluleBonus;
 import istv.scrabble.objets.CelluleImpl;
 
 /**
@@ -28,5 +29,6 @@ public interface Cellule {
 	public Boolean getEstJouable();
 	public void setEstJouable(Boolean estJouable);
 	public void setEstJouable();
+	public CelluleBonus getCelluleBonus();
 	
 }

@@ -60,7 +60,7 @@ public class CelluleImpl implements Cellule {
 	public String toString() {
 		
 		if(!this.estVide)
-		return " [" + this.getLettre() + "," + this.getI() + "," + this.getJ() + "] ";
+		return " [" + this.getLettre() + "," + this.getI() + "," + this.getJ() + this.getCelluleBonus() + "] ";
 		return " [VIDE] ";	
 	
 	}
@@ -117,7 +117,7 @@ public class CelluleImpl implements Cellule {
 		this.lettre = lettre;
 	}
 	
-	public CelluleBonus getBonus() {
+	public CelluleBonus getCelluleBonus() {
 		return bonus;
 	}
 	

@@ -1,5 +1,8 @@
 package istv.scrabble.objets;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import istv.scrabble.enumerations.CelluleBonus;
 import istv.scrabble.interfaces.Plateau;
 
@@ -14,29 +17,31 @@ public class PlateauImpl implements Plateau {
 	/* Attributs */
 
 	protected static CelluleImpl[][] plateauJeu;
+	protected List<CelluleImpl> caseJouee;
 
 	/* Constructeurs */
 
 	public PlateauImpl() {
 		plateauJeu = new CelluleImpl[Plateau.LONGUEUR_PLATEAU][Plateau.LARGEUR_PLATEAU];
+		caseJouee = new ArrayList<CelluleImpl>();
 	}
 
 	/* Methodes */
 
-	@Override
 	public void poserCellule(int i, int j, CelluleImpl cellule) {
-		
-		//TODO EFFECTUER LES TESTS AVANT DE POSER UNE CELLULE 
+
 		
 		
 		PlateauImpl.plateauJeu[i][j].setLettre(cellule.getLettre());
 		PlateauImpl.plateauJeu[i][j].setScoreLettre(cellule.getScoreLettre());
 		PlateauImpl.plateauJeu[i][j].setEstVide();
-		PlateauImpl.plateauJeu[i][j].setBonus(cellule.getBonus());
 		cellule.setI(i);
 		cellule.setJ(j);
+
+		Scrabble.getJoueurActuel().getMain().retirerCelluleMain(cellule);
+				
 		PlateauImpl.plateauJeu[i][j].setEstJouable(false);
-		this.setCaseJouable();
+		this.setJouableCellulesVoisines(i, j, true);
 	
 	}
 
@@ -46,31 +51,46 @@ public class PlateauImpl implements Plateau {
 	 * 
 	 */
 
-	public void enleverCellule(int i, int j) {
+	public void enleverCellule(int i, int j , CelluleImpl cellule) {
+
+		Scrabble.getJoueurActuel().getMain().ajoutCelluleMain(cellule);
+		PlateauImpl.plateauJeu[i][j].genererCelluleVide();
+		this.setJouableCellulesVoisines(i, j, false);
+
+	}
+
+	/**
+	 * Mettre � jour les cellules voisines jouables
+	 */
+
+	public void setJouableCellulesVoisines(int i, int j, boolean jouable) {
 
 		PlateauImpl.plateauJeu[i][j].genererCelluleVide();
 
 		if (j - 1 >= 0) { // Gauche
 			if (PlateauImpl.plateauJeu[i][j - 1].getEstVide()) {
-				PlateauImpl.plateauJeu[i][j - 1].setEstJouable(false);
+				PlateauImpl.plateauJeu[i][j - 1].setEstJouable(jouable);
 			}
 		}
 		if (j + 1 < Plateau.LARGEUR_PLATEAU) { // Droite
 			if (PlateauImpl.plateauJeu[i][j + 1].getEstVide()) {
-				PlateauImpl.plateauJeu[i][j + 1].setEstJouable(false);
+				PlateauImpl.plateauJeu[i][j + 1].setEstJouable(jouable);
 			}
 		}
 		if (i - 1 >= 0) { // Haut
 			if (PlateauImpl.plateauJeu[i - 1][j].getEstVide()) {
-				PlateauImpl.plateauJeu[i - 1][j].setEstJouable(false);
+				PlateauImpl.plateauJeu[i - 1][j].setEstJouable(jouable);
 			}
 		}
 		if (i + 1 < Plateau.LONGUEUR_PLATEAU) { // Bas
 			if (PlateauImpl.plateauJeu[i + 1][j].getEstVide()) {
-				PlateauImpl.plateauJeu[i + 1][j].setEstJouable(false);
+				PlateauImpl.plateauJeu[i + 1][j].setEstJouable(jouable);
 			}
 		}
+	}
 
+	public Boolean isCelluleJouable(CelluleImpl cellule) {
+		return cellule.getEstJouable();
 	}
 
 	/**

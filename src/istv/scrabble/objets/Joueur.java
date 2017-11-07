@@ -1,27 +1,24 @@
+package istv.scrabble.objets;
+
 /**
  * @author Amine BOUMOUSSOU
  * Licence 3 FA - ISTV
  * 
  */
-package istv.scrabble.objets;
 
-/**
- * 
- * Joueur.java
- *
- */
 
 public class Joueur {
-	// ATTRIBUTS
-	String nom;
-	int score;
-	MainJoueur main;
+	
+	/* Attributs */
+	
+	protected String nom;
+	protected int score;
+	protected MainJoueur main;
 
-	// CONSTRUCTEURS
+	/* Constructeurs */
+	
 	public Joueur() {
-		this.nom = "Undefined";
-		this.score = 0;
-		this.main = new MainJoueur();
+
 	}
 
 	public Joueur(String nom) {
@@ -30,11 +27,14 @@ public class Joueur {
 		this.main = new MainJoueur();
 	}
 
-	// METHODES
-	public void jouerCellule(int i, int j, CelluleImpl cellule) {
-		// PlateauImp.poserCellule(i, j, cellule);
-	}
+	/* Methodes */
+	
 
+
+	public void calculScore(int score) {
+		this.score += score;
+	}
+	
 	public String getNom() {
 		return nom;
 	}
