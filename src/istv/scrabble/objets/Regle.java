@@ -30,7 +30,7 @@ public class Regle {
 	 * Methode principale qui récupère les mots posés sur la grille au tour t
 	 */
 
-	public void recuperationMotsPoses() throws GameException{
+	public Placement recuperationMotsPoses() throws GameException{
 
 		/* Initialise les variables pour connaître le cas dans lequel on se trouve */
 
@@ -101,6 +101,7 @@ public class Regle {
 		}
 
 		// Verifie si les mots posés sont dans le dico
+		
 		boolean isInDico = true;
 		for(String pla : p.getMot()) {
 			isInDico = this.isInDico(pla);
@@ -114,6 +115,7 @@ public class Regle {
 		
 		Scrabble.getJoueurActuel().calculScore(valeurScore(p.getCellules()));
 		
+		return p;
 	}
 	
 	/**
@@ -127,7 +129,7 @@ public class Regle {
 	 * Découpe le mot en character & calcul le score des mots posés 
 	 */
 	
-	public int valeurScore(List<Cellule> cellules) {
+	public static int valeurScore(List<Cellule> cellules) {
 		int score = 0;
 		for (Cellule c : cellules) {
 			if (c.getCelluleBonus().equals(CelluleBonus.MOT_COMPTE_DOUBLE)

@@ -23,7 +23,6 @@ public class Joueur {
 
 	public Joueur(String nom) {
 		this.nom = nom;
-		this.score = 0;
 		this.main = new MainJoueur();
 	}
 

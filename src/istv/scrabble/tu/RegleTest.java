@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import istv.scrabble.exceptions.GameException;
 import istv.scrabble.interfaces.Cellule;
 import istv.scrabble.objets.CelluleImpl;
 import istv.scrabble.objets.Placement;
@@ -44,18 +45,20 @@ public class RegleTest {
 	}
 
 	@Test
-	public void testDirectionMot_HORI_SEUL_OK() {
+	public void testDirectionMot_HORI_SEUL_OK() throws GameException {
 
 		plateau.poserCellule(7, 7, celluleA);
 		plateau.poserCellule(7, 8, celluleB);
 		plateau.poserCellule(7, 9, celluleC);
 
+		plateau.getPlateau();
 		regle.setChangement(7, 7);
 		regle.setChangement(7, 8);
 		regle.setChangement(7, 9);
 
 		plateau.dessinerPlateau();
 
+		/*
 		Placement actual = regle.recuperationMotsPoses();
 
 		for (String s : actual.getMot()) {
@@ -66,11 +69,11 @@ public class RegleTest {
 			System.out.println(c);
 		}
 
-		
+		*/
 	}
 
 	@Test
-	public void testDirectionMot_HORI_UNE_LETTRE_OK() {
+	public void testDirectionMot_HORI_UNE_LETTRE_OK() throws GameException {
 
 		regle.initChangementGrille();
 
@@ -94,7 +97,7 @@ public class RegleTest {
 	}
 
 	@Test
-	public void testDirectionMot_HORI_CROISE_OK() {
+	public void testDirectionMot_HORI_CROISE_OK() throws GameException {
 
 		regle.initChangementGrille();
 
@@ -122,7 +125,7 @@ public class RegleTest {
 	}
 
 	@Test
-	public void testDirectionMot_CROISE_OK() {
+	public void testDirectionMot_CROISE_OK() throws GameException {
 
 		regle.initChangementGrille();
 
@@ -151,7 +154,7 @@ public class RegleTest {
 	}
 
 	@Test
-	public void testDirectionMot_CROISE_FIN_MOT_OK() {
+	public void testDirectionMot_CROISE_FIN_MOT_OK() throws GameException {
 
 		regle.initChangementGrille();
 
@@ -181,7 +184,7 @@ public class RegleTest {
 	}
 	
 	@Test
-	public void testDirectionMot_HORI_UNE_LETTRE_OK_SCORE() {
+	public void testDirectionMot_HORI_UNE_LETTRE_OK_SCORE() throws GameException {
 
 		regle.initChangementGrille();
 
@@ -206,10 +209,4 @@ public class RegleTest {
 		System.out.println(Regle.valeurScore(actual.getCellules()));
 		
 	}
-
-	
-	
-	
-	
-	
 }
