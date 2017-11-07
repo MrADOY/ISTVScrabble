@@ -1,5 +1,8 @@
 package istv.scrabble.objets;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import istv.scrabble.enumerations.CelluleBonus;
 import istv.scrabble.interfaces.Plateau;
 
@@ -14,29 +17,31 @@ public class PlateauImpl implements Plateau {
 	/* Attributs */
 
 	protected static CelluleImpl[][] plateauJeu;
+	protected List<CelluleImpl> caseJouee;
 
 	/* Constructeurs */
 
 	public PlateauImpl() {
 		plateauJeu = new CelluleImpl[Plateau.LONGUEUR_PLATEAU][Plateau.LARGEUR_PLATEAU];
+		caseJouee = new ArrayList<CelluleImpl>();
 	}
 
 	/* Methodes */
 
-	@Override
 	public void poserCellule(int i, int j, CelluleImpl cellule) {
-		
-		//TODO EFFECTUER LES TESTS AVANT DE POSER UNE CELLULE 
+
 		
 		
 		PlateauImpl.plateauJeu[i][j].setLettre(cellule.getLettre());
 		PlateauImpl.plateauJeu[i][j].setScoreLettre(cellule.getScoreLettre());
 		PlateauImpl.plateauJeu[i][j].setEstVide();
-		//PlateauImpl.plateauJeu[i][j].setBonus(cellule.getCelluleBonus());
 		cellule.setI(i);
 		cellule.setJ(j);
+
+		Scrabble.getJoueurActuel().getMain().retirerCelluleMain(cellule);
+				
 		PlateauImpl.plateauJeu[i][j].setEstJouable(false);
-		this.setCaseJouable();
+		this.setJouableCellulesVoisines(i, j, true);
 	
 	}
 
@@ -46,19 +51,19 @@ public class PlateauImpl implements Plateau {
 	 * 
 	 */
 
-	public void enleverCellule(int i, int j) {
+	public void enleverCellule(int i, int j , CelluleImpl cellule) {
 
+		Scrabble.getJoueurActuel().getMain().ajoutCelluleMain(cellule);
 		PlateauImpl.plateauJeu[i][j].genererCelluleVide();
-
 		this.setJouableCellulesVoisines(i, j, false);
 
 	}
-	
+
 	/**
 	 * Mettre � jour les cellules voisines jouables
 	 */
-	
-	public void setJouableCellulesVoisines(int i, int j,boolean jouable) {
+
+	public void setJouableCellulesVoisines(int i, int j, boolean jouable) {
 
 		PlateauImpl.plateauJeu[i][j].genererCelluleVide();
 
@@ -83,12 +88,11 @@ public class PlateauImpl implements Plateau {
 			}
 		}
 	}
-	
-	
+
 	public Boolean isCelluleJouable(CelluleImpl cellule) {
 		return cellule.getEstJouable();
 	}
-	
+
 	/**
 	 * Cette methode est utilisée pour instancier un plateau contenant des cellules
 	 * vides

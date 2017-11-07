@@ -59,7 +59,7 @@ public class Pioche implements PiocheInt {
 	     * @param le nombre de lettres à piocher
 	     * @return List<Character> contenant les lettres piochées
 	     */
-	    public static List<Character> piocheLettre(int j) {
+	public static List<Character> piocheLettre(int j) {
 	        List<Character> tabLettre = new ArrayList<Character>();
 	        
 	        for (int i = 0; i < j; i++) {

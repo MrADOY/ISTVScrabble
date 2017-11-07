@@ -18,10 +18,10 @@ public class Scrabble {
 	
 	
 	public Scrabble() {
-		plateau = new PlateauImpl();
+//		plateau = new PlateauImpl();
 		pioche = new Pioche();
-		joueurs = new Joueur[2];
-		
+//		joueurs = new Joueur[2];
+//		
 	}
 	
  

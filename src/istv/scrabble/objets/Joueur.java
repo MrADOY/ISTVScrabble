@@ -11,9 +11,9 @@ public class Joueur {
 	
 	/* Attributs */
 	
-	String nom;
-	int score;
-	MainJoueur main;
+	protected String nom;
+	protected int score;
+	protected MainJoueur main;
 
 	/* Constructeurs */
 	

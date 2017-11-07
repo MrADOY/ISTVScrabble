@@ -4,56 +4,80 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
 /**
  * 
  * @author Nicolas JOURDAIN
  * 
  */
+
 public class MainJoueur {
 
 	// ATTRIBUTS
-	
-	protected List<Character> mainJoueur;
-	
-	
+
+	protected List<CelluleImpl> mainJoueur;
+
 	/**
 	 * Constructeur de MainJoueur
 	 */
+
 	public MainJoueur() {
-		mainJoueur = new ArrayList<Character>();
-		mainJoueur.addAll(Pioche.piocheLettre(7));
+		mainJoueur = new ArrayList<CelluleImpl>();
+
+		List<Character> pioche = Pioche.piocheLettre(7);
+
+		for (Character c : pioche) {
+			mainJoueur.add(new CelluleImpl(c));
+		}
+
 	}
-	
-	
-    public List<Character> ajoutLettreMain(List<Character> rack) {
-        mainJoueur.addAll(rack);
-        return mainJoueur;
-    }
-    
-    public List<Character> retirerLettreMain(List<Character> rack) {
-        mainJoueur.removeAll(rack);
-        return mainJoueur;
-    }
-    
-	public List<Character> getMainJoueur() {
-		return mainJoueur;
+
+	public void piocherLettreManquante() {
+
+		int nombreLettresManquantes = 7 - this.mainJoueur.size();
+		List<Character> lettresManquantes = Pioche.piocheLettre(nombreLettresManquantes);
+		for (Character c : lettresManquantes) {
+			this.ajoutCelluleMain(new CelluleImpl(c));
+		}
+
 	}
-	
+
+	public void ajoutCelluleMain(CelluleImpl cellule) {
+		this.mainJoueur.add(cellule);
+	}
+
+	public void retirerCelluleMain(CelluleImpl cellule) {
+		this.mainJoueur.remove(cellule);
+	}
+
+	public List<CelluleImpl> getMainJoueur() {
+		return this.mainJoueur;
+	}
+
 	public void afficherMainJoueur() {
 		System.out.println("Votre main est : ");
-		for(Character l : mainJoueur)
-		System.out.print(l + " ");
+		for (CelluleImpl c : mainJoueur)
+			System.out.print(c + " ");
 		System.out.print("\n");
 	}
 
+	public void setMainJoueur(List<CelluleImpl> cellules) {
+		this.mainJoueur = cellules;
+	}
 
-	public void setMainJoueur(List<Character> mainJoueur, MainJoueur main) {
-		main = (MainJoueur) mainJoueur;
+	public void melangerMain() {
+		Collections.shuffle(mainJoueur);
 	}
 	
-	public List<Character> melangerMain(List<Character> mainJoueur) {
-		Collections.shuffle(mainJoueur);
-		return mainJoueur;
+	public String toString() {
+		
+		String main = " [ ";
+				
+		for(CelluleImpl c : this.mainJoueur) {
+			main += c.getLettre() + " ";
+		}
+		
+		main += " ]";
+		return main;
 	}
+	
 }
