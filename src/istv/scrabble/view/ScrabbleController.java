@@ -12,18 +12,12 @@ import istv.scrabble.objets.FenetreScrabble;
 import istv.scrabble.objets.Joueur;
 import istv.scrabble.objets.MainJoueur;
 import istv.scrabble.objets.Pioche;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -53,15 +47,6 @@ public class ScrabbleController {
 	private GridPane rack;
 
 	@FXML
-	private ImageView img00;
-
-	@FXML
-	private ImageView img1;
-
-	@FXML
-	private ImageView img2;
-
-	@FXML
 	private ImageView img3;
 
 	@FXML
@@ -78,6 +63,48 @@ public class ScrabbleController {
 
 	@FXML
 	private Label case00;
+
+	@FXML
+	private Label case01;
+
+	@FXML
+	private Label case02;
+
+	@FXML
+	private Label case03;
+
+	@FXML
+	private Label case04;
+
+	@FXML
+	private Label case05;
+
+	@FXML
+	private Label case06;
+
+	@FXML
+	private Label case07;
+
+	@FXML
+	private Label case08;
+
+	@FXML
+	private Label case09;
+
+	@FXML
+	private Label case010;
+
+	@FXML
+	private Label case011;
+
+	@FXML
+	private Label case012;
+
+	@FXML
+	private Label case013;
+
+	@FXML
+	private Label case014;
 
 	@FXML
 	private Label nomJoueur;
@@ -113,24 +140,10 @@ public class ScrabbleController {
 		Node source2 = event.getPickResult().getIntersectedNode(); // returns JUST the id of the object that was clicked
 		// System.out.println("Full String: " + source1);
 		// System.out.println("Just the id: " + source2);
-		System.out.println("SOURCE : " + source2);
+		// System.out.println("SOURCE : " + source2);
 		return source2;
 	}
 
-	@FXML
-	private Node selectTargetLabel(MouseEvent event) {
-		String target1 = event.getTarget().toString(); // yields complete string
-		// Node source3 = event.getPickResult().getIntersectedNode(); //yields complete
-		// string
-		// Object source3 = event.getSource(); //yields complete string
-		// System.out.println(source3);
-		Node target2 = event.getPickResult().getIntersectedNode(); // returns JUST the id of the object that was clicked
-		// System.out.println("Full String: " + target1);
-		// System.out.println("Just the id: " + target2);
-		System.out.println("TARGET : " + target2);
-		return target2;
-	}
-	
 	/**
 	 * Is called by the main application to give a reference back to itself.
 	 * 
@@ -139,13 +152,33 @@ public class ScrabbleController {
 	public void setMainApp(FenetreScrabble main) {
 		this.mainApp = main;
 	}
+	
+	  @FXML
+	  public Node selectSource(MouseEvent event)
+	    {
+//	    String source1 = event.getSource().toString(); //yields complete string
+	    Node source2 = event.getPickResult().getIntersectedNode(); //returns JUST the id of the object that was clicked
+//	    System.out.println("Full String: " + source1);
+//	    System.out.println("Just the id: " + source2);
+//	    System.out.println(" " + source2);
+	    return source2;
+	    }
 
 	public void melange() {
 		m.melangerMain(m.getMainJoueur());
+		afficheMain();
 		setRack();
 	}
 
 	private void setRack() {
+		List<LettreView> liste = new ArrayList<LettreView>();
+		for (Character lm : m.getMainJoueur()) {
+			LettreView l = new LettreView(lm.toString());
+//			System.out.println(l.lettre);
+			liste.add(l);
+			
+		}
+		System.out.println(m.getMainJoueur());
 		if (!m.getMainJoueur().isEmpty()) {
 			// img1.setImage(new Image("file:resources/Wood/letter_" +
 			// m.getMainJoueur().get(0).toString() + ".png"));
@@ -162,10 +195,10 @@ public class ScrabbleController {
 			// img7.setImage(new Image("file:resources/Wood/letter_" +
 			// m.getMainJoueur().get(6).toString() + ".png"));
 			//
-			System.out.println(m.getMainJoueur());
-			System.out.println(m.getMainJoueur().size());
+			// System.out.println(m.getMainJoueur());
+			// System.out.println(m.getMainJoueur().size());
 			if (m.getMainJoueur().size() >= 1)
-				rack1.setText(m.getMainJoueur().get(0).toString());
+				rack1.setText(liste.get(0).lettre);
 			else {
 				rack1.setText("");
 				rack2.setText("");
@@ -176,7 +209,7 @@ public class ScrabbleController {
 				rack7.setText("");
 			}
 			if (m.getMainJoueur().size() >= 2)
-				rack2.setText(m.getMainJoueur().get(1).toString());
+				rack2.setText(liste.get(1).lettre);
 			else {
 				rack2.setText("");
 				rack3.setText("");
@@ -186,7 +219,7 @@ public class ScrabbleController {
 				rack7.setText("");
 			}
 			if (m.getMainJoueur().size() >= 3)
-				rack3.setText(m.getMainJoueur().get(2).toString());
+				rack3.setText(liste.get(2).lettre);
 			else {
 				rack3.setText("");
 				rack4.setText("");
@@ -195,7 +228,7 @@ public class ScrabbleController {
 				rack7.setText("");
 			}
 			if (m.getMainJoueur().size() >= 4)
-				rack4.setText(m.getMainJoueur().get(3).toString());
+				rack4.setText(liste.get(3).lettre);
 			else {
 				rack4.setText("");
 				rack5.setText("");
@@ -203,234 +236,137 @@ public class ScrabbleController {
 				rack7.setText("");
 			}
 			if (m.getMainJoueur().size() >= 5)
-				rack5.setText(m.getMainJoueur().get(4).toString());
+				rack5.setText(liste.get(4).lettre);
 			else {
 				rack5.setText("");
 				rack6.setText("");
 				rack7.setText("");
 			}
 			if (m.getMainJoueur().size() >= 6)
-				rack6.setText(m.getMainJoueur().get(5).toString());
+				rack6.setText(liste.get(5).lettre);
 			else {
 				rack6.setText("");
 				rack7.setText("");
 			}
 			if (m.getMainJoueur().size() >= 7)
-				rack7.setText(m.getMainJoueur().get(6).toString());
+				rack7.setText(liste.get(6).lettre);
 			else
 				rack7.setText("");
 		}
 	}
 
-
-
-	public void dragText(MouseEvent event) {
-		// final Object source = dragEvent.getGestureSource();
-		// final Label target = dragEvent.getGestureTarget();
-		Node sourceDrag = selectSourceLabel(event);
-		Node targetDrag = selectTargetLabel(event);
-		Label source = (Label) sourceDrag;
-		Label target = (Label) targetDrag;
-				
-		source.setOnDragDetected(new EventHandler<MouseEvent>() {
-			public void handle(MouseEvent event) {
-				/* drag was detected, start drag-and-drop gesture */
-				// System.out.println("onDragDetected");
-				/* allow any transfer mode */
-				Dragboard db = source.startDragAndDrop(TransferMode.ANY);
-
-				/* put a string on dragboard */
-				ClipboardContent content = new ClipboardContent();
-				content.putString(source.getText());
-				db.setContent(content);
-
-				event.consume();
-			}
-		});
-
-		target.setOnDragOver(new EventHandler<DragEvent>() {
-			public void handle(DragEvent event) {
-				/* data is dragged over the target */
-				// System.out.println("onDragOver");
-
-				/*
-				 * accept it only if it is not dragged from the same node and if it has a string
-				 * data
-				 */
-				if (event.getGestureSource() != target && event.getDragboard().hasString()) {
-					/* allow for both copying and moving, whatever user chooses */
-					event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-				}
-
-				event.consume();
-			}
-		});
-
-		target.setOnDragEntered(new EventHandler<DragEvent>() {
-			public void handle(DragEvent event) {
-				/* the drag-and-drop gesture entered the target */
-				// System.out.println("onDragEntered");
-				/* show to the user that it is an actual gesture target */
-				if (event.getGestureSource() != target && event.getDragboard().hasString()) {
-					target.setText("ENTERED");
-				}
-
-				event.consume();
-			}
-		});
-
-		target.setOnDragExited(new EventHandler<DragEvent>() {
-			public void handle(DragEvent event) {
-				/* mouse moved away, remove the graphical cues */
-				target.setText("");
-
-				event.consume();
-			}
-		});
-
-		target.setOnDragDropped(new EventHandler<DragEvent>() {
-			public void handle(DragEvent event) {
-				/* data dropped */
-				// System.out.println("onDragDropped");
-				/* if there is a string data on dragboard, read it and use it */
-				Dragboard db = event.getDragboard();
-				boolean success = false;
-				if (db.hasString()) {
-					target.setText(db.getString());
-					success = true;
-				}
-				/*
-				 * let the source know whether the string was successfully transferred and used
-				 */
-				event.setDropCompleted(success);
-
-				event.consume();
-			}
-		});
-
-		source.setOnDragDone(new EventHandler<DragEvent>() {
-			public void handle(DragEvent event) {
-				/* the drag-and-drop gesture ended */
-				// System.out.println("onDragDone");
-				target.setText(source.getText());
-				source.setText("");
-				List<Character> l = new ArrayList<Character>();
-				for (char c : target.getText().toCharArray()) {
-					l.add(c);
-				}
-
-				m.retirerLettreMain(l);
-
-				/* if the data was successfully moved, clear it */
-				if (event.getTransferMode() == TransferMode.MOVE) {
-				}
-				event.consume();
-			}
-		});
+	@FXML
+	private void piocher() {
+		int nbPieces = 7 - m.getMainJoueur().size();
+		m.ajoutLettreMain(Pioche.piocheLettre(nbPieces));
+		afficheMain();
 	}
 
-	//
-	// public void dragImage() {
-	// leftStatus.setText("Drag");
-	//// final Object source = dragEvent.getGestureSource();
-	//// final Label target = dragEvent.getGestureTarget();
-	// ImageView source = img1;
-	// ImageView target = img00;
-	// source.setOnMouseDragged(new EventHandler <MouseEvent>() {
-	// public void handle(MouseEvent event) {
-	// System.out.println("DRAG");
-	// /* allow any transfer mode */
-	// Dragboard db = source.startDragAndDrop(TransferMode.ANY);
-	//
-	//// ClipboardContent content = new ClipboardContent();
-	//// content.put(source.getImage());
-	//// db.setContent(content);
-	////
-	// event.consume();
-	// }
-	// });
-	//
-	// target.setOnDragOver(new EventHandler <DragEvent>() {
-	// public void handle(DragEvent event) {
-	// /* data is dragged over the target */
-	//// System.out.println("onDragOver");
-	//
-	// /* accept it only if it is not dragged from the same node
-	// * and if it has a string data */
-	// if (event.getGestureSource() != target &&
-	// event.getDragboard().hasString()) {
-	// /* allow for both copying and moving, whatever user chooses */
-	// event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-	// }
-	//
-	// event.consume();
-	// }
-	// });
-	//
-	// target.setOnDragEntered(new EventHandler <DragEvent>() {
-	// public void handle(DragEvent event) {
-	// /* the drag-and-drop gesture entered the target */
-	//// System.out.println("onDragEntered");
-	// /* show to the user that it is an actual gesture target */
-	// if (event.getGestureSource() != target &&
-	// event.getDragboard().hasString()) {
-	//// target.setText("ENTERED");
-	// }
-	//
-	// event.consume();
-	// }
-	// });
-	//
-	// target.setOnDragExited(new EventHandler <DragEvent>() {
-	// public void handle(DragEvent event) {
-	// /* mouse moved away, remove the graphical cues */
-	//// target.setImage(source.getImage());
-	//
-	// event.consume();
-	// }
-	// });
-	//
-	// target.setOnDragDropped(new EventHandler <DragEvent>() {
-	// public void handle(DragEvent event) {
-	// /* data dropped */
-	// System.out.println("onDragDropped");
-	// /* if there is a string data on dragboard, read it and use it */
-	// Dragboard db = event.getDragboard();
-	// boolean success = false;
-	// if (db.hasString()) {
-	// target.setImage(source.getImage());
-	// success = true;
-	// }
-	// /* let the source know whether the string was successfully
-	// * transferred and used */
-	// event.setDropCompleted(success);
-	//
-	// event.consume();
-	// }
-	// });
-	//
-	// source.setOnDragDone(new EventHandler <DragEvent>() {
-	// public void handle(DragEvent event) {
-	// /* the drag-and-drop gesture ended */
-	// System.out.println("onDragDone");
-	// target.setImage(source.getImage());
-	// source.setImage(null);
-	// List<Character> l = new ArrayList<Character>();
-	// l.add(m.getMainJoueur().get(0));
-	// m.retirerLettreMain(l);
-	// /* if the data was successfully moved, clear it */
-	// if (event.getTransferMode() == TransferMode.MOVE) {
-	//
-	//
-	// }
-	//
-	// event.consume();
-	// }
-	// });
-	// }
-	//
+	@FXML
+	/* Liste d'int => col - row */
+	private Node mouseEntered(MouseEvent e) {
+		Node source = e.getPickResult().getIntersectedNode();
+		Integer colIndex = GridPane.getColumnIndex(source);
+		Integer rowIndex = GridPane.getRowIndex(source);
+		int col = colIndex == null ? 0 : colIndex;
+		int row = rowIndex == null ? 0 : rowIndex;
+		/* DEBUG */
+		List<Integer> id = new ArrayList<Integer>();
+		id.add(col);
+		id.add(row);
+		/* Fin DEBUG */
+		return source;
+
+	}
+
+	@FXML
+	private void afficheMain() {
+		leftStatus.setText(m.getMainJoueur().toString());
+		// setRack();
+	}
+
+	@FXML
+	private void dragText(DragEvent event) {
+		// final Object source = dragEvent.getGestureSource();
+		// final Label target = dragEvent.getGestureTarget();
+		System.out.println("Drag");
+		Object sourceDrag = event.getGestureSource();
+		System.out.println(sourceDrag);
+
+		// Node targetDrag = selectTargetLabel(event);
+		// // Label source = (Label) sourceDrag;
+		// Label source = (Label) sourceDrag;
+		//// Label target = (Label) mouseEntered(event);
+		// System.out.println(sourceDrag);
+
+		// target.setOnDragOver(new EventHandler<DragEvent>() {
+		// public void handle(DragEvent event) {
+		// /* data is dragged over the target */
+		// // System.out.println("onDragOver");
+		//
+		// /*
+		// * accept it only if it is not dragged from the same node and if it has a
+		// string
+		// * data
+		// */
+		// if (event.getGestureSource() != target && event.getDragboard().hasString()) {
+		// /* allow for both copying and moving, whatever user chooses */
+		// event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+		// }
+		//
+		// event.consume();
+		// }
+		// });
+		//
+		// target.setOnDragEntered(new EventHandler<DragEvent>() {
+		// public void handle(DragEvent event) {
+		// /* the drag-and-drop gesture entered the target */
+		// // System.out.println("onDragEntered");
+		// /* show to the user that it is an actual gesture target */
+		// if (event.getGestureSource() != target && event.getDragboard().hasString()) {
+		// target.setText("ENTERED");
+		// }
+		//
+		// event.consume();
+		// }
+		// });
+		//
+		// target.setOnDragExited(new EventHandler<DragEvent>() {
+		// public void handle(DragEvent event) {
+		// /* mouse moved away, remove the graphical cues */
+		// target.setText("");
+		//
+		// event.consume();
+		// }
+		// });
+		//
+		// target.setOnDragDropped(new EventHandler<DragEvent>() {
+		// public void handle(DragEvent event) {
+		// /* data dropped */
+		// // System.out.println("onDragDropped");
+		// /* if there is a string data on dragboard, read it and use it */
+		// Dragboard db = event.getDragboard();
+		// boolean success = false;
+		// if (db.hasString()) {
+		// target.setText(db.getString());
+		// success = true;
+		// }
+		// /*
+		// * let the source know whether the string was successfully transferred and
+		// used
+		// */
+		// event.setDropCompleted(success);
+		//
+		// event.consume();
+		// }
+		// });
+		//
+		//
+	}
+
 	@FXML
 	private void initialize() {
+		piocher();
 		setRack();
 		nomJoueur.setText(j.getNom());
 	}
