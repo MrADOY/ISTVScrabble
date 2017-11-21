@@ -17,7 +17,7 @@ public class PlateauImpl implements Plateau {
 	/* Attributs */
 
 	protected static CelluleImpl[][] plateauJeu;
-	protected List<CelluleImpl> caseJouee;
+	protected static List<CelluleImpl> caseJouee;
 
 	/* Constructeurs */
 
@@ -30,19 +30,21 @@ public class PlateauImpl implements Plateau {
 
 	public void poserCellule(int i, int j, CelluleImpl cellule) {
 
-		
-		
 		PlateauImpl.plateauJeu[i][j].setLettre(cellule.getLettre());
 		PlateauImpl.plateauJeu[i][j].setScoreLettre(cellule.getScoreLettre());
 		PlateauImpl.plateauJeu[i][j].setEstVide();
-		cellule.setI(i);
-		cellule.setJ(j);
+		PlateauImpl.plateauJeu[i][j].setI(i);
+		PlateauImpl.plateauJeu[i][j].setJ(j);
 
 		Scrabble.getJoueurActuel().getMain().retirerCelluleMain(cellule);
-				
-		PlateauImpl.plateauJeu[i][j].setEstJouable(false);
-		this.setJouableCellulesVoisines(i, j, true);
-	
+
+		if (PlateauImpl.plateauJeu[i][j].getEstJouable()) {
+			PlateauImpl.plateauJeu[i][j].setEstJouable(false);
+			this.setJouableCellulesVoisines(i, j, true);
+		}
+
+		PlateauImpl.caseJouee.add(PlateauImpl.plateauJeu[i][j]);
+		
 	}
 
 	/**
@@ -51,21 +53,36 @@ public class PlateauImpl implements Plateau {
 	 * 
 	 */
 
-	public void enleverCellule(int i, int j , CelluleImpl cellule) {
+	public void enleverCellule(int i, int j) {
 
-		Scrabble.getJoueurActuel().getMain().ajoutCelluleMain(cellule);
+		System.out.println(Scrabble.getJoueurActuel().getMain().getMainJoueur().size());
+		Scrabble.getJoueurActuel().getMain().ajoutCelluleMain(new CelluleImpl(this.getCellule(i, j).getLettre()));
+		System.out.println(Scrabble.getJoueurActuel().getMain().getMainJoueur().size());
+		
 		PlateauImpl.plateauJeu[i][j].genererCelluleVide();
 		this.setJouableCellulesVoisines(i, j, false);
 
 	}
 
+	
+	/**
+	 * Enleve toutes les cases jouées de la pile
+	 */
+	
+	public void supprimerPileCaseJouee() {
+		for(CelluleImpl c : PlateauImpl.caseJouee) {			
+			this.enleverCellule(c.getI(), c.getJ());
+		}
+	}
+	
+	
 	/**
 	 * Mettre � jour les cellules voisines jouables
 	 */
 
 	public void setJouableCellulesVoisines(int i, int j, boolean jouable) {
 
-		PlateauImpl.plateauJeu[i][j].genererCelluleVide();
+		//PlateauImpl.plateauJeu[i][j].genererCelluleVide();
 
 		if (j - 1 >= 0) { // Gauche
 			if (PlateauImpl.plateauJeu[i][j - 1].getEstVide()) {

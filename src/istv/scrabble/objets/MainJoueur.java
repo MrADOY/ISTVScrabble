@@ -2,6 +2,7 @@ package istv.scrabble.objets;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -15,6 +16,7 @@ public class MainJoueur {
 	// ATTRIBUTS
 
 	protected List<CelluleImpl> mainJoueur;
+
 
 	/**
 	 * Constructeur de MainJoueur
@@ -38,7 +40,6 @@ public class MainJoueur {
 		for (Character c : lettresManquantes) {
 			this.ajoutCelluleMain(new CelluleImpl(c));
 		}
-
 	}
 
 	public void ajoutCelluleMain(CelluleImpl cellule) {
@@ -59,6 +60,7 @@ public class MainJoueur {
 			System.out.print(c + " ");
 		System.out.print("\n");
 	}
+
 
 	public void setMainJoueur(List<CelluleImpl> cellules) {
 		this.mainJoueur = cellules;

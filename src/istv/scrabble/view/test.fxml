@@ -9,9 +9,11 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.SepiaTone?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -61,13 +63,25 @@
             <MenuItem mnemonicParsing="false" onAction="#melange" text="Mélanger la main" />
           </items>
         </Menu>
+            <Menu mnemonicParsing="false" text="?">
+               <items>
+                  <MenuItem fx:id="showDebug" mnemonicParsing="false" onAction="#handleButtonClick" text="Afficher le mode debug...">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="F1" control="UP" meta="UP" shift="UP" shortcut="ANY" />
+                     </accelerator></MenuItem>
+                  <MenuItem fx:id="hideDebug" mnemonicParsing="false" onAction="#handleButtonClick" text="Cacher le mode debug...">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="F2" control="UP" meta="UP" shift="UP" shortcut="ANY" />
+                     </accelerator></MenuItem>
+               </items>
+            </Menu>
       </menus>
     </MenuBar>
     <SplitPane dividerPositions="0.20921544209215442" focusTraversable="true" prefHeight="551.0" prefWidth="787.0" VBox.vgrow="ALWAYS">
       <items>
-        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="547.0" prefWidth="230.0">
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="547.0" prefWidth="192.0">
           <children>
-                  <AnchorPane layoutX="-1.0" layoutY="256.0" prefHeight="293.0" prefWidth="196.0">
+                  <AnchorPane layoutX="-2.0" layoutY="165.0" prefHeight="293.0" prefWidth="196.0">
                      <children>
                         <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Scores" textAlignment="CENTER" wrapText="false">
                            <font>
@@ -77,6 +91,19 @@
                               <Color blue="0.624" green="0.624" red="0.624" fx:id="x21" />
                            </textFill>
                         </Label>
+                        <AnchorPane fx:id="debugNode" layoutX="-1.0" layoutY="67.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="317.0" prefWidth="196.0">
+                           <children>
+                              <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Debug" textAlignment="CENTER" wrapText="false">
+                                 <font>
+                                    <Font size="18.0" fx:id="x11" />
+                                 </font>
+                                 <textFill>
+                                    <Color blue="0.624" green="0.624" red="0.624" fx:id="x21" />
+                                 </textFill>
+                              </Label>
+                              <TextArea fx:id="console" editable="false" layoutX="9.0" layoutY="38.0" onDragDropped="#dropping" onDragOver="#draggingOver" prefHeight="272.0" prefWidth="180.0" />
+                           </children>
+                        </AnchorPane>
                      </children>
                   </AnchorPane>
             <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Menu" textAlignment="CENTER" wrapText="false">
@@ -87,20 +114,21 @@
                 <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
               </textFill>
             </Label>
-                  <Button layoutX="47.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#melange" text="Mélanger la main" />
-                  <Button layoutX="46.0" layoutY="85.0" mnemonicParsing="false" onMouseClicked="#melange" text="Piocher des lettres" />
+                  <Button layoutX="47.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#melange" prefHeight="27.0" prefWidth="134.0" text="Mélanger la main" />
+                  <Button layoutX="46.0" layoutY="85.0" mnemonicParsing="false" onMouseClicked="#piocher" text="Piocher des lettres" />
+                  <Button layoutX="46.0" layoutY="126.0" mnemonicParsing="false" onMouseClicked="#afficheMain" prefHeight="27.0" prefWidth="134.0" text="Afficher la main" />
           </children>
         </AnchorPane>
-        <ScrollPane prefHeight="549.0" prefWidth="658.0">
+        <ScrollPane>
           <content>
-            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="549.0" prefWidth="559.0">
+            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="549.0" prefWidth="605.0">
               <children>
                 <Label fx:id="nomJoueur" alignment="CENTER" font="$x1" layoutX="175.0" layoutY="3.0" prefHeight="23.0" prefWidth="231.0" style="&#10;" textAlignment="CENTER" textFill="$x2" wrapText="false" />
                         <AnchorPane layoutX="64.0" layoutY="26.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="450.0">
                            <children>
                               <ImageView id="1" fitHeight="450.0" fitWidth="450.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../../../../Scrabble_Graphique/resources/plateau.png" />
+                                    <Image url="@../../../../resources/plateau.png" />
                                  </image>
                               </ImageView>
                               <GridPane fx:id="plateau" alignment="CENTER" gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="360.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -139,13 +167,10 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Label fx:id="case00" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="25.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                       <graphic>
-                                          <ImageView fx:id="img00" fitHeight="25.0" fitWidth="25.0" onDragEntered="#selectTargetLabel" pickOnBounds="true" preserveRatio="true" />
-                                       </graphic>
-                                    </Label>
+                                    <ImageView fx:id="img11" fitHeight="28.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label fx:id="case00" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="25.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                     <Label fx:id="case01" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                                    <Label fx:id="case02" alignment="CENTER" contentDisplay="CENTER" onDragEntered="#selectTargetLabel" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                    <Label fx:id="case02" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                     <Label fx:id="case03" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                     <Label fx:id="case04" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                     <Label fx:id="case05" alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="25.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
@@ -162,7 +187,7 @@
                               </GridPane>
                            </children>
                         </AnchorPane>
-                        <GridPane alignment="CENTER" gridLinesVisible="true" layoutX="115.0" layoutY="483.0" prefHeight="50.0" prefWidth="350.0" AnchorPane.topAnchor="483.0">
+                        <GridPane fx:id="rack" alignment="CENTER" gridLinesVisible="true" layoutX="115.0" layoutY="483.0" prefHeight="50.0" prefWidth="350.0" AnchorPane.topAnchor="483.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -182,15 +207,15 @@
                               <Insets />
                            </opaqueInsets>
                            <children>
-                              <ImageView fx:id="img1" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
-                              <Label fx:id="rack1" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#dragText" prefHeight="50.0" prefWidth="50.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Label fx:id="rack1" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <ImageView fx:id="img1" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#dragText" pickOnBounds="true" preserveRatio="true" />
                               <Label fx:id="rack2" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                  <graphic>
                                     <ImageView fx:id="img2" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
                                  </graphic></Label>
                               <Label fx:id="rack3" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" GridPane.columnIndex="2" GridPane.halignment="CENTER">
                                  <graphic>
-                                    <ImageView fx:id="mg3" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="img3" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
                                  </graphic></Label>
                               <Label fx:id="rack4" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                  <graphic>

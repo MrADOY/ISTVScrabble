@@ -25,6 +25,9 @@ public class Scrabble {
 	}
 	
  
+	public static void checkFinTour() {
+		//
+	}
 	public static Joueur getJoueurActuel() {
 		return joueurActuel;
 	}
