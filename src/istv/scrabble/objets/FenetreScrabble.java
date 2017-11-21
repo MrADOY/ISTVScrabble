@@ -26,6 +26,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -55,9 +56,9 @@ public class FenetreScrabble extends Application {
 		final Group group = new Group();
 		final Scene scene = new Scene(root, 350, 300);
 		
-		
-		
+				
 		Map<String, Object> namespace = fxmlLoader.getNamespace();
+//		System.out.println(namespace);
 //		Label rack = (Label) namespace.get("rack1");
 //		Node rack = ScrabbleController.selectSource(event);
 //		Label target = (Label) namespace.get("case00");
@@ -78,5 +79,5 @@ public class FenetreScrabble extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-
+	
 }
