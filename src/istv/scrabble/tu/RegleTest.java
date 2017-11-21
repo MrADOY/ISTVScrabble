@@ -1,16 +1,18 @@
 package istv.scrabble.tu;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import istv.scrabble.exceptions.GameException;
 import istv.scrabble.interfaces.Cellule;
 import istv.scrabble.objets.CelluleImpl;
+import istv.scrabble.objets.Dictionnaire;
+import istv.scrabble.objets.Joueur;
+import istv.scrabble.objets.Pioche;
 import istv.scrabble.objets.Placement;
 import istv.scrabble.objets.PlateauImpl;
 import istv.scrabble.objets.Regle;
+import istv.scrabble.objets.Scrabble;
 
 /**
  * 
@@ -19,7 +21,7 @@ import istv.scrabble.objets.Regle;
  */
 
 
-public class RegleTest {
+public class RegleTest{
 
 	private PlateauImpl plateau;
 	private CelluleImpl celluleA;
@@ -30,6 +32,11 @@ public class RegleTest {
 
 	@Before
 	public void setUp() {
+		Pioche p = new Pioche();
+		Joueur j = new Joueur();
+		Scrabble s  = new Scrabble();
+		
+		s.setJoueurActuel(j);
 		plateau = new PlateauImpl();
 
 		celluleA = new CelluleImpl('M');
@@ -38,6 +45,7 @@ public class RegleTest {
 		celluleD = new CelluleImpl('S');
 		plateau.creationPlateau();
 
+		Dictionnaire d = new Dictionnaire();
 		regle = new Regle();
 
 		regle.initChangementGrille();
@@ -58,7 +66,7 @@ public class RegleTest {
 
 		plateau.dessinerPlateau();
 
-		/*
+		
 		Placement actual = regle.recuperationMotsPoses();
 
 		for (String s : actual.getMot()) {
@@ -69,7 +77,7 @@ public class RegleTest {
 			System.out.println(c);
 		}
 
-		*/
+		
 	}
 
 	@Test
@@ -206,7 +214,7 @@ public class RegleTest {
 			System.out.println(c);
 		}
 		
-		System.out.println(Regle.valeurScore(actual.getCellules()));
+		System.out.println(Regle.scoreMot(actual.getCellules()));
 		
 	}
 }

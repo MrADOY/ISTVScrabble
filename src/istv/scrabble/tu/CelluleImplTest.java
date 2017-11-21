@@ -1,5 +1,7 @@
 package istv.scrabble.tu;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 import istv.scrabble.enumerations.CelluleBonus;
@@ -22,6 +24,8 @@ public class CelluleImplTest {
 		cellule.genererCelluleVide();
 		
 		cellule.setBonus(CelluleBonus.LETTRE_COMPTE_DOUBLE);
+		
+		assertEquals(cellule.getCelluleBonus(),CelluleBonus.LETTRE_COMPTE_DOUBLE);
 		System.out.println(cellule.getCelluleBonus());
 	}
 

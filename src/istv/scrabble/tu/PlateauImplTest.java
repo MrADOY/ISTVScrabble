@@ -55,8 +55,9 @@ public class PlateauImplTest {
 
 		Scrabble s = new Scrabble();
 	
+		s.plateau.creationPlateau();
 		Pioche p = new Pioche();
-		Joueur j = new Joueur("test");
+		Joueur j = new Joueur("test",p);
 	
 		Scrabble.setJoueurActuel(j);
 
@@ -75,7 +76,7 @@ public class PlateauImplTest {
 		
 		plateau.enleverCellule(7, 7);
 		
-		System.out.println("Etat après enlevage");
+		System.out.println("Etat après avoir enlevé");
 		System.out.println(j.getMain());
 		plateau.dessinerPlateau();
 		
@@ -87,15 +88,15 @@ public class PlateauImplTest {
 	public void testPileCoupJoue() {
 	
 		Scrabble s = new Scrabble();
-		
+		s.plateau.creationPlateau();
 		Pioche p = new Pioche();
-		Joueur j = new Joueur("test");
+		Joueur j = new Joueur("test",p);
 	
 		Scrabble.setJoueurActuel(j);
 
-		System.out.println("Etat initiale");
+		System.out.println("Etat initial");
 		System.out.println(j.getMain());
-		
+		plateau.dessinerPlateau();
 		plateau.poserCellule(7, 7, j.getMain().getMainJoueur().get(0));
 		plateau.poserCellule(7, 8, j.getMain().getMainJoueur().get(1));
 		plateau.poserCellule(7, 9, j.getMain().getMainJoueur().get(2));
