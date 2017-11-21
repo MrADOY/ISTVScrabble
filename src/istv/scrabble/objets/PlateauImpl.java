@@ -36,7 +36,7 @@ public class PlateauImpl implements Plateau {
 		PlateauImpl.plateauJeu[i][j].setI(i);
 		PlateauImpl.plateauJeu[i][j].setJ(j);
 
-		Scrabble.getJoueurActuel().getMain().retirerCelluleMain(cellule);
+		//Scrabble.getJoueurActuel().getMain().retirerCelluleMain(cellule);
 
 		if (PlateauImpl.plateauJeu[i][j].getEstJouable()) {
 			PlateauImpl.plateauJeu[i][j].setEstJouable(false);

@@ -43,6 +43,7 @@ public class Lettre {
 		lettre.put('X', 10);
 		lettre.put('Y', 10);
 		lettre.put('Z', 10);
+		lettre.put('*', 0); //TODO
 	
 	}
 	

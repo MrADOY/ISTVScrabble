@@ -11,26 +11,30 @@ import java.util.List;
  * 
  */
 
-public class MainJoueur {
+public class Main {
 
 	// ATTRIBUTS
 
 	protected List<CelluleImpl> mainJoueur;
-
+	protected Joueur joueur;
 
 	/**
 	 * Constructeur de MainJoueur
 	 */
 
-	public MainJoueur() {
-		mainJoueur = new ArrayList<CelluleImpl>();
-
-		List<Character> pioche = Pioche.piocheLettre(7);
+	public Main(Joueur joueur) {
+		
+		
+		this.joueur = joueur;
+		this.mainJoueur = new ArrayList<CelluleImpl>();
+		this.joueur.setMain(this);
+		
+		List<Character> pioche = joueur.getPioche().piocheLettre(7);
 
 		for (Character c : pioche) {
 			mainJoueur.add(new CelluleImpl(c));
+			System.out.println("Lettre " + c + " ajoutée au Joueur "+ joueur.getNom() );
 		}
-
 	}
 
 	public void piocherLettreManquante() {

@@ -13,17 +13,19 @@ public class Joueur {
 	
 	protected String nom;
 	protected int score;
-	protected MainJoueur main;
-
+	protected Main main;
+	protected Pioche pioche;
+	
 	/* Constructeurs */
 	
 	public Joueur() {
 
 	}
 
-	public Joueur(String nom) {
+	public Joueur(String nom,Pioche pioche) {
 		this.nom = nom;
-		this.main = new MainJoueur();
+		this.pioche = pioche;
+		this.main = new Main(this);
 	}
 
 	/* Methodes */
@@ -50,11 +52,20 @@ public class Joueur {
 		this.score = score;
 	}
 
-	public MainJoueur getMain() {
+	public Main getMain() {
 		return main;
 	}
 
-	public void setMain(MainJoueur main) {
+	public void setMain(Main main) {
 		this.main = main;
 	}
+	
+	public Pioche getPioche() {
+		return pioche;
+	}
+
+	public void setPioche(Pioche pioche) {
+		this.pioche = pioche;
+	}
+
 }

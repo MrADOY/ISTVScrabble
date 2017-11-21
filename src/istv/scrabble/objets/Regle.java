@@ -112,7 +112,7 @@ public class Regle {
 		
 		// Calcul le score des mots posés 
 		
-		Scrabble.getJoueurActuel().calculScore(valeurScore(p.getCellules()));
+		Scrabble.getJoueurActuel().calculScore(scoreMot(p.getCellules()));
 		
 		return p;
 	}
@@ -128,7 +128,7 @@ public class Regle {
 	 * Découpe le mot en character & calcul le score des mots posés 
 	 */
 	
-	public static int valeurScore(List<Cellule> cellules) {
+	public static int scoreMot(List<Cellule> cellules) {
 		int score = 0;
 		for (Cellule c : cellules) {
 			if (c.getCelluleBonus().equals(CelluleBonus.MOT_COMPTE_DOUBLE)
@@ -141,7 +141,6 @@ public class Regle {
 		}
 		return score;
 	}
-
 	
 	/**
 	 * Recupere la direction d'un mot à partir des indices fournis en entrée
