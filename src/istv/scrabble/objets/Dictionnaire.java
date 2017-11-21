@@ -18,6 +18,14 @@ import java.util.TreeSet;
 public class Dictionnaire {
 
 	protected static TreeSet<String> set;
+	public static TreeSet<String> getSet() {
+		return set;
+	}
+
+	public static void setSet(TreeSet<String> set) {
+		Dictionnaire.set = set;
+	}
+
 	protected String monFichier = "dico.txt";
 
 	public Dictionnaire() {

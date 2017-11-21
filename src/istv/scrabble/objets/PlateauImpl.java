@@ -66,7 +66,7 @@ public class PlateauImpl implements Plateau {
 
 	
 	/**
-	 * Enleve toutes les cases jouées de la pile
+	 * Enleve toutes les cases jouées de la pile si mauvais Placement
 	 */
 	
 	public void supprimerPileCaseJouee() {
