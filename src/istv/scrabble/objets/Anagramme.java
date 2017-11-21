@@ -1,5 +1,11 @@
 package istv.scrabble.objets;
 
+/**
+ * 21-11-2017
+ * @author Lefevre Romain
+ * Licence 3 FA - ISTV
+ * 
+ */
 
 public class Anagramme {
 	public Anagramme(String pmot) {
@@ -8,6 +14,7 @@ public class Anagramme {
 		char[] TEMP = pmot.toCharArray();
 		
 		int taille_solution = 0;
+		// Taille des suffixes 
 		int limiteSuffixe = 6;
 		int long_anagram = TEMP.length;
 		
