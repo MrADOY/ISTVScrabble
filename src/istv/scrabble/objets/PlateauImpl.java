@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import istv.scrabble.enumerations.CelluleBonus;
+import istv.scrabble.exceptions.GameException;
+import istv.scrabble.exceptions.Logger;
 import istv.scrabble.interfaces.Plateau;
 
 /**
@@ -23,28 +25,38 @@ public class PlateauImpl implements Plateau {
 
 	public PlateauImpl() {
 		plateauJeu = new CelluleImpl[Plateau.LONGUEUR_PLATEAU][Plateau.LARGEUR_PLATEAU];
+		this.creationPlateau();
 		caseJouee = new ArrayList<CelluleImpl>();
+		Logger.log("Initialisation du plateau , OK !");
 	}
 
 	/* Methodes */
 
-	public void poserCellule(int i, int j, CelluleImpl cellule) {
-
-		PlateauImpl.plateauJeu[i][j].setLettre(cellule.getLettre());
-		PlateauImpl.plateauJeu[i][j].setScoreLettre(cellule.getScoreLettre());
-		PlateauImpl.plateauJeu[i][j].setEstVide();
-		PlateauImpl.plateauJeu[i][j].setI(i);
-		PlateauImpl.plateauJeu[i][j].setJ(j);
-
-		//Scrabble.getJoueurActuel().getMain().retirerCelluleMain(cellule);
+	public void poserCellule(int i, int j, CelluleImpl cellule) throws GameException {
 
 		if (PlateauImpl.plateauJeu[i][j].getEstJouable()) {
+
+			PlateauImpl.plateauJeu[i][j].setLettre(cellule.getLettre());
+			PlateauImpl.plateauJeu[i][j].setScoreLettre(cellule.getScoreLettre());
+			PlateauImpl.plateauJeu[i][j].setEstVide();
+			PlateauImpl.plateauJeu[i][j].setI(i);
+			PlateauImpl.plateauJeu[i][j].setJ(j);
+
+			Scrabble.getJoueurActuel().getMain().retirerCelluleMain(cellule);
+
+			PlateauImpl.caseJouee.add(PlateauImpl.plateauJeu[i][j]);
 			PlateauImpl.plateauJeu[i][j].setEstJouable(false);
+			Regle.changementGrille[i][j] = true;
+			
 			this.setJouableCellulesVoisines(i, j, true);
+			
+			Logger.log("Le joueur " + Scrabble.getJoueurActuel() + " pose " + cellule  + " en " + "[" + i + "," + j + "]");
+
 		}
 
-		PlateauImpl.caseJouee.add(PlateauImpl.plateauJeu[i][j]);
-		
+		else {
+			throw new GameException(GameException.CODE_ERREUR_REGLE, "La case posée n'est pas une case jouable veuillez rejouer");
+		}
 	}
 
 	/**
@@ -55,11 +67,14 @@ public class PlateauImpl implements Plateau {
 
 	public void enleverCellule(int i, int j) {
 
-		System.out.println(Scrabble.getJoueurActuel().getMain().getMainJoueur().size());
-		Scrabble.getJoueurActuel().getMain().ajoutCelluleMain(new CelluleImpl(this.getCellule(i, j).getLettre()));
-		System.out.println(Scrabble.getJoueurActuel().getMain().getMainJoueur().size());
+		Logger.log("Le joueur " + Scrabble.getJoueurActuel() + " ajoute une cellule de la case " + "[" + i + "," + j + "]" +"a sa main");
+		
+		CelluleImpl celluleAjoutMain = new CelluleImpl(this.getCellule(i, j).getLettre());
+		
+		Scrabble.getJoueurActuel().getMain().ajouteCelluleMain(celluleAjoutMain);
 		
 		PlateauImpl.plateauJeu[i][j].genererCelluleVide();
+		
 		this.setJouableCellulesVoisines(i, j, false);
 
 	}

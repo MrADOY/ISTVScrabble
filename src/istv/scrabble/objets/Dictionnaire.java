@@ -8,49 +8,37 @@
 package istv.scrabble.objets;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.TreeSet;
+import java.util.ArrayList;
+
+import istv.scrabble.exceptions.GameException;
+import istv.scrabble.exceptions.Logger;
+import istv.scrabble.mdag.MDAG;
 
 public class Dictionnaire {
 
-	protected static TreeSet<String> set;
-	public static TreeSet<String> getSet() {
-		return set;
-	}
+	protected String fichier = "dico.txt";
+	protected MDAG dictionnaire;
 
-	public static void setSet(TreeSet<String> set) {
-		Dictionnaire.set = set;
-	}
+	public Dictionnaire(String path) throws GameException {
 
-	protected String monFichier = "dico.txt";
-
-	public Dictionnaire() {
-		set = new TreeSet<String>();
-		ajoutMotsTree();
-	}
-	
-	//Ajouter au Treeset les mots du fichier dico.txt
-	public void ajoutMotsTree(){
-		try{
-			InputStream ips = new FileInputStream(monFichier);
-			InputStreamReader ipsr = new InputStreamReader(ips);
-			BufferedReader br = new BufferedReader(ipsr);
-			String ligne;
-			while((ligne=br.readLine()) != null){
-				Dictionnaire.set.add(ligne);
-			}
-			br.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		File fichier = new File(path);
+		
+		try {
+			this.dictionnaire = new MDAG(fichier);
+			Logger.log("Initialisation du dictionnaire , OK");
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new GameException(GameException.ERREUR_TECHNIQUE,"Initialisation du dictionnaire impossible");
 		}
+
+		
 	}
-	
-	
-	
+
+	public MDAG getDictionnaire() {
+		return this.dictionnaire;
+	}
+
 }

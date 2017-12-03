@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 import istv.scrabble.objets.CelluleImpl;
 import istv.scrabble.objets.FenetreScrabble;
 import istv.scrabble.objets.Joueur;
-import istv.scrabble.objets.MainJoueur;
+import istv.scrabble.objets.Main;
 import istv.scrabble.objets.Pioche;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -56,7 +56,7 @@ public class ScrabbleController implements Initializable {
 	}
 
 	private FenetreScrabble mainApp;
-	private MainJoueur m = new MainJoueur();
+	private Main m = new Main();
 	private Joueur j = new Joueur("Bob");
 	private Pioche p = new Pioche();
 
@@ -249,14 +249,14 @@ public class ScrabbleController implements Initializable {
 	
 	private void setRack() {
 		List<LettreView> liste = new ArrayList<LettreView>();
-		for (CelluleImpl lm : m.getMainJoueur()) {
+		for (CelluleImpl lm : m.getCellulesJoueur()) {
 			LettreView l = new LettreView(lm.getLettre().toString());
 //			System.out.println(l.lettre);
 			liste.add(l);
 			
 		}
 		
-		if (!m.getMainJoueur().isEmpty()) {
+		if (!m.getCellulesJoueur().isEmpty()) {
 			img1.setImage(new Image("file:resources/Wood/letter_" + liste.get(0).lettre + ".png"));
 			img2.setImage(new Image("file:resources/Wood/letter_" + liste.get(1).lettre + ".png"));
 			img3.setImage(new Image("file:resources/Wood/letter_" + liste.get(2).lettre + ".png"));
@@ -267,7 +267,7 @@ public class ScrabbleController implements Initializable {
 			
 			
 			
-			if (m.getMainJoueur().size() >= 1)
+			if (m.getCellulesJoueur().size() >= 1)
 				rack1.setText(liste.get(0).lettre);
 			else {
 				rack1.setText("");
@@ -351,7 +351,7 @@ public class ScrabbleController implements Initializable {
 	@FXML
 	private void afficheMain() {
 		m.afficherMainJoueur();
-		leftStatus.setText(m.getMainJoueur().toString());
+		leftStatus.setText(m.getCellulesJoueur().toString());
 	}
 
 	 
@@ -363,7 +363,7 @@ public class ScrabbleController implements Initializable {
 	    System.out.println("Full String: " + source1);
 	    System.out.println("Just the id: " + source2);
 	    System.out.println(" " + source2);
-	    img2.setStyle("-fx-image: url(file:resources/Wood/letter_" + m.getMainJoueur().get(0).getLettre() + ".png);");
+	    img2.setStyle("-fx-image: url(file:resources/Wood/letter_" + m.getCellulesJoueur().get(0).getLettre() + ".png);");
 	    
 //
 //		 Node targetDrag = selectTargetLabel(event);

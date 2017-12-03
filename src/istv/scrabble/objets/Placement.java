@@ -59,4 +59,24 @@ public class Placement {
 
 		return this;
 	}
+	
+	public String toString() {
+		
+		String placement =  "Placement ";
+		
+		placement += "Cellule actuelles  : " ;
+				
+		for(Cellule c : this.getCellules()) {
+			placement += "[" + c.getLettre() + "]";
+		}
+		
+		placement += "Mots actuels  : " ;
+		
+		for(String mot : this.getMot()) {
+			placement += "[" + mot + "]";
+		}
+		
+		return placement;
+		
+	}
 }

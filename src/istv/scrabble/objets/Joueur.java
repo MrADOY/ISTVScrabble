@@ -1,5 +1,9 @@
 package istv.scrabble.objets;
 
+import istv.scrabble.exceptions.GameException;
+import istv.scrabble.exceptions.Logger;
+import istv.scrabble.interfaces.Plateau;
+
 /**
  * @author Amine BOUMOUSSOU
  * Licence 3 FA - ISTV
@@ -15,6 +19,7 @@ public class Joueur {
 	protected int score;
 	protected Main main;
 	protected Pioche pioche;
+	protected PlateauImpl plateauJeu;
 	
 	/* Constructeurs */
 	
@@ -22,10 +27,14 @@ public class Joueur {
 
 	}
 
-	public Joueur(String nom,Pioche pioche) {
+	public Joueur(String nom,Pioche pioche,PlateauImpl plateauJeu) {
+	
 		this.nom = nom;
 		this.pioche = pioche;
 		this.main = new Main(this);
+		this.plateauJeu = plateauJeu;
+		Logger.log("Initialisation du joueur " + nom + " , OK! ");
+	
 	}
 
 	/* Methodes */
@@ -34,6 +43,7 @@ public class Joueur {
 
 	public void calculScore(int score) {
 		this.score += score;
+		Logger.log("Le joueur " + this.nom + " possède un score de " + this.score);
 	}
 	
 	public String getNom() {
@@ -66,6 +76,28 @@ public class Joueur {
 
 	public void setPioche(Pioche pioche) {
 		this.pioche = pioche;
+	}
+	
+	public String toString() {
+		return  nom + " score : " + score + " main : " + main;
+		
+	}
+	
+	public CelluleImpl choisirCelluleMain(int nb) {
+		return this.getMain().getCellulesJoueur().get(nb);
+	}
+	
+	public void poserCellule(int nb , int i , int j) {
+		
+		try {
+			this.plateauJeu.poserCellule(i, j, choisirCelluleMain(nb));
+		} catch (GameException e) {
+			this.plateauJeu.supprimerPileCaseJouee();
+		}
+	}
+	
+	public void piocheLettre() {
+		this.main.piocherLettreManquante();
 	}
 
 }

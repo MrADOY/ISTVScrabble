@@ -60,8 +60,8 @@ public class CelluleImpl implements Cellule {
 	public String toString() {
 		
 		if(!this.estVide)
-		return " [" + this.getLettre() + "," + this.getI() + "," + this.getJ() + this.getCelluleBonus() + "] ";
-		return " [VIDE] ";	
+		return " [" + this.getLettre() + "] ";
+		return " [*] ";	
 	
 	}
 		

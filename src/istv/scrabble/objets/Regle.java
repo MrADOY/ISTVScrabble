@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import istv.scrabble.enumerations.CelluleBonus;
 import istv.scrabble.exceptions.GameException;
+import istv.scrabble.exceptions.Logger;
 import istv.scrabble.interfaces.Cellule;
 import istv.scrabble.interfaces.Plateau;
 
@@ -24,12 +25,19 @@ public class Regle {
 
 	static boolean[][] changementGrille = new boolean[15][15];
 
+	
+	/* Construteurs */
+	
+	public Regle() {
+		Logger.log("Initialisation des règles , OK");
+	}
+	
 	/**
 	 * 
 	 * Methode principale qui récupère les mots posés sur la grille au tour t
 	 */
 
-	public Placement recuperationMotsPoses() throws GameException{
+	public void recuperationMotsPoses() throws GameException{
 
 		/* Initialise les variables pour connaître le cas dans lequel on se trouve */
 
@@ -49,6 +57,7 @@ public class Regle {
 			
 			if (nombreVoisin <= 1) {
 				
+				Logger.log("Le joueur " + Scrabble.joueurActuel + " complète un mot");
 				direction = this.getDirectionMot(i, j);
 				this.getMotPose(p,direction, i, j);
 			}
@@ -58,6 +67,7 @@ public class Regle {
 			else {	
 				this.getMotPose(p,Direction.HORIZONTALE, i, j); 
 				this.getMotPose(p,Direction.VERTICALE, i, j);
+				Logger.log("Le joueur " + Scrabble.joueurActuel + " complète deux mots");
 			}
 		}
 
@@ -85,6 +95,8 @@ public class Regle {
 
 						direction = (direction.equals(Direction.VERTICALE)) ? Direction.HORIZONTALE : Direction.VERTICALE;					
 							this.getMotPoseIndice(p , direction, IderniereCase, JderniereCase);
+							
+							Logger.log("Le joueur " + Scrabble.joueurActuel + " pose un mot");		
 
 					}
 				}
@@ -92,6 +104,7 @@ public class Regle {
 
 			if (nombreVoisin >= 2) { // LES MOTS SERONT FORCEMENT DANS LES DEUX DIRECTIONS
 				
+				Logger.log("Le joueur " + Scrabble.joueurActuel + " complète deux mots");
 				this.getMotPose(p , Direction.HORIZONTALE, i, j);
 				this.getMotPose(p , Direction.VERTICALE, i, j);
 
@@ -102,26 +115,34 @@ public class Regle {
 		// Verifie si les mots posés sont dans le dico
 		
 		boolean isInDico = true;
+		
 		for(String pla : p.getMot()) {
+			
 			isInDico = this.isInDico(pla);
-			if(!isInDico) {
-				//TODO ENLEVER LES CELLULES
-				new GameException("Mot : " + pla + " n'est pas un mot valide");
+			if(!isInDico) {		
+				Scrabble.plateau.supprimerPileCaseJouee();
+				throw new GameException(GameException.CODE_ERREUR_REGLE,"Mot(s) placé(s) incorrecte(s) annulation des cellules posées");
 			}
+			
 		}
 		
 		// Calcul le score des mots posés 
 		
 		Scrabble.getJoueurActuel().calculScore(scoreMot(p.getCellules()));
+
+		Logger.log("Recupération : " + p.toString());
 		
-		return p;
+		Logger.log("Score du joueur après vérification " + Scrabble.getJoueurActuel().score);
+		
+		
+		initChangementGrille();
 	}
 	
 	/**
 	 * Verifie que le mot est présent dans le dico
 	 */
-	public boolean isInDico(String monMot) {
-		return Dictionnaire.set.contains(monMot.toUpperCase());
+	public boolean isInDico(String mot) {
+		return Scrabble.getDictionnaire().contains(mot);
 	}
 	
 	/**
@@ -133,7 +154,7 @@ public class Regle {
 		for (Cellule c : cellules) {
 			if (c.getCelluleBonus().equals(CelluleBonus.MOT_COMPTE_DOUBLE)
 					|| (c.getCelluleBonus().equals(CelluleBonus.MOT_COMPTE_TRIPLE))) {
-				// TODO
+				// TODO MOT COMPTE DOUBLE , MOT COMPTE TRIPLE
 				score = score + c.getScoreLettre();
 			} else {
 				score = score + (c.getScoreLettre() * c.getCelluleBonus().getBonus());

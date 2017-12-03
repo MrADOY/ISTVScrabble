@@ -32,11 +32,9 @@ public class RegleTest{
 
 	@Before
 	public void setUp() {
-		Pioche p = new Pioche();
-		Joueur j = new Joueur();
+		
 		Scrabble s  = new Scrabble();
 		
-		s.setJoueurActuel(j);
 		plateau = new PlateauImpl();
 
 		celluleA = new CelluleImpl('M');
@@ -45,7 +43,6 @@ public class RegleTest{
 		celluleD = new CelluleImpl('S');
 		plateau.creationPlateau();
 
-		Dictionnaire d = new Dictionnaire();
 		regle = new Regle();
 
 		regle.initChangementGrille();
@@ -67,16 +64,7 @@ public class RegleTest{
 		plateau.dessinerPlateau();
 
 		
-		Placement actual = regle.recuperationMotsPoses();
-
-		for (String s : actual.getMot()) {
-			System.out.println(s);
-		}
-		
-		for (Cellule c : actual.getCellules()) {
-			System.out.println(c);
-		}
-
+	
 		
 	}
 
@@ -93,15 +81,9 @@ public class RegleTest{
 
 		plateau.dessinerPlateau();
 
-		Placement actual = regle.recuperationMotsPoses();
+		regle.recuperationMotsPoses();
 
-		for (String s : actual.getMot()) {
-			System.out.println(s);
-		}
-		
-		for (Cellule c : actual.getCellules()) {
-			System.out.println(c);
-		}
+
 	}
 
 	@Test
@@ -121,15 +103,9 @@ public class RegleTest{
 
 		plateau.dessinerPlateau();
 
-		Placement actual = regle.recuperationMotsPoses();
+		regle.recuperationMotsPoses();
 
-		for (String s : actual.getMot()) {
-			System.out.println(s);
-		}
-		
-		for (Cellule c : actual.getCellules()) {
-			System.out.println(c);
-		}
+	
 	}
 
 	@Test
@@ -150,15 +126,8 @@ public class RegleTest{
 
 		plateau.dessinerPlateau();
 
-		Placement actual = regle.recuperationMotsPoses();
+		regle.recuperationMotsPoses();
 
-		for (String s : actual.getMot()) {
-			System.out.println(s);
-		}
-		
-		for (Cellule c : actual.getCellules()) {
-			System.out.println(c);
-		}
 	}
 
 	@Test
@@ -180,15 +149,8 @@ public class RegleTest{
 
 		plateau.dessinerPlateau();
 
-		Placement actual = regle.recuperationMotsPoses();
+		regle.recuperationMotsPoses();
 
-		for (String s : actual.getMot()) {
-			System.out.println(s);
-		}
-		
-		for (Cellule c : actual.getCellules()) {
-			System.out.println(c);
-		}
 	}
 	
 	@Test
@@ -204,17 +166,9 @@ public class RegleTest{
 
 		plateau.dessinerPlateau();
 
-		Placement actual = regle.recuperationMotsPoses();
+		regle.recuperationMotsPoses();
 
-		for (String s : actual.getMot()) {
-			System.out.println(s);
-		}
-		
-		for (Cellule c : actual.getCellules()) {
-			System.out.println(c);
-		}
-		
-		System.out.println(Regle.scoreMot(actual.getCellules()));
+
 		
 	}
 }
