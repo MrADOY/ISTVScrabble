@@ -96,6 +96,14 @@ public class Joueur {
 		}
 	}
 	
+	public boolean poserCellule2(int nb , int i , int j) {
+		try {
+			this.plateauJeu.poserCellule(i, j, choisirCelluleMain(nb));
+			return true;
+		} catch (GameException e) {
+			return false;
+		}
+	}
 	public void piocheLettre() {
 		this.main.piocherLettreManquante();
 	}

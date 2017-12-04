@@ -21,6 +21,8 @@ import istv.scrabble.objets.FenetreScrabble;
 import istv.scrabble.objets.Joueur;
 import istv.scrabble.objets.Main;
 import istv.scrabble.objets.Pioche;
+import istv.scrabble.objets.PlateauImpl;
+import istv.scrabble.objets.Scrabble;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -46,6 +48,7 @@ import javafx.scene.layout.GridPane;
  * @contributor
  *
  */
+@SuppressWarnings("restriction")
 public class ScrabbleController implements Initializable {
 
 	/**
@@ -56,9 +59,10 @@ public class ScrabbleController implements Initializable {
 	}
 
 	private FenetreScrabble mainApp;
-	private Main m = new Main();
-	private Joueur j = new Joueur("Bob");
-	private Pioche p = new Pioche();
+	private Scrabble scrabble = new Scrabble();
+
+	
+	
 
 	@FXML
     private TextArea console;
@@ -100,113 +104,185 @@ public class ScrabbleController implements Initializable {
 	private ImageView img7;
 
 	@FXML
-	private Label case00;
-
-	@FXML
-	private Label case01;
-
-	@FXML
-	private Label case02;
-
-	@FXML
-	private Label case03;
-
-	@FXML
-	private Label case04;
-
-	@FXML
-	private Label case05;
-
-	@FXML
-	private Label case06;
-
-	@FXML
-	private Label case07;
-
-	@FXML
-	private Label case08;
-
-	@FXML
-	private Label case09;
-
-	@FXML
-	private Label case010;
-
-	@FXML
-	private Label case011;
-
-	@FXML
-	private Label case012;
-
-	@FXML
-	private Label case013;
-
-	@FXML
-	private Label case014;
-
-	@FXML
 	private Label nomJoueur;
 
-	@FXML
-	private Label rack1;
+	public void appendText(String valueOf) {
+		Platform.runLater(() -> console.appendText(valueOf));
+	}
 
-	@FXML
-	private Label rack2;
-
-	@FXML
-	private Label rack3;
-
-	@FXML
-	private Label rack4;
-
-	@FXML
-	private Label rack5;
-
-	@FXML
-	private Label rack6;
-
-	@FXML
-	private Label rack7;
+	Node target = null;
+	Node source = null;
+	int i = -1;
+	int j = -1;
 
 	
-
-    public void appendText(String valueOf) {
-        Platform.runLater(() -> console.appendText(valueOf));
-    }
-
-    public void initialize(URL location, ResourceBundle resources) {
-    		piocher();
+	public void initialize(URL location, ResourceBundle resources) {
+		piocher();
 		setRack();
-		nomJoueur.setText(j.getNom());
+		nomJoueur.setText(Scrabble.getJoueurActuel().getNom());
 		debugNode.setVisible(false);
-    }
-	
-    public void setDebug() {
-      OutputStream out = new OutputStream() {
-          @Override
-          public void write(int b) throws IOException {
-              appendText(String.valueOf((char)b));
-          }
-      };
-      System.setOut(new PrintStream(out, true));
-      System.setErr(new PrintStream(out, true));
-    }
-    
-    public void setConsole() {
-        OutputStream out = new OutputStream() {
-            @Override
-            public void write(int b) throws IOException {
-            	//FIXME Rediriger vers le terminal
-//            	System.console().writer().println(String.valueOf((char)b));
-//            	System.out.println("Console is :" + System.console());
-            	Platform.runLater(() -> console.appendText(String.valueOf((char)b)));
-            }
-        };
-        System.setOut(new PrintStream(out, true));
-        System.setErr(new PrintStream(out, true));
-      }
 
-	
+		img1.setOnMousePressed((event) -> {
+			source = getSource(event);
+		});
+		img1.setOnMouseReleased((event) -> {
+			target = getTarget(event);
+			if (!(target.getId().equals("img7") || target.getId().equals("img6") || target.getId().equals("img5") || target.getId().equals("img4") || target.getId().equals("img3") || target.getId().equals("img2") || target.getId().equals("img1"))) {
+				
+
+				// => Get I
+				i =(int) target.getLayoutX() / 30;
+				// => Get J
+				j =(int) target.getLayoutY() / 30;
+				
+				if(Scrabble.getJoueurActuel().poserCellule2(0, i, j))
+					((ImageView) target).setImage(((ImageView) source).getImage());
+				
+				setRack();
+			}
+		});
+
+		img2.setOnMousePressed((event) -> {
+			source = getSource(event);
+		});
+		img2.setOnMouseReleased((event) -> {
+			target = getTarget(event);
+			if (!(target.getId().equals("img7") || target.getId().equals("img6") || target.getId().equals("img5") || target.getId().equals("img4") || target.getId().equals("img3") || target.getId().equals("img2") || target.getId().equals("img1"))) {
+				((ImageView) target).setImage(((ImageView) source).getImage());
+
+				// => Get I
+				System.out.println((int) target.getLayoutX() / 30);
+				// => Get J
+				System.out.println((int) target.getLayoutY() / 30);
+
+				// 
+//				m.retirerCelluleMain(m.getCellulesJoueur().get(1));
+				setRack();
+			}
+		});
+		
+		img3.setOnMousePressed((event) -> {
+			source = getSource(event);
+		});
+		img3.setOnMouseReleased((event) -> {
+			target = getTarget(event);
+			if (!(target.getId().equals("img7") || target.getId().equals("img6") || target.getId().equals("img5") || target.getId().equals("img4") || target.getId().equals("img3") || target.getId().equals("img2") || target.getId().equals("img1"))) {
+				((ImageView) target).setImage(((ImageView) source).getImage());
+
+				// => Get I
+				System.out.println((int) target.getLayoutX() / 30);
+				// => Get J
+				System.out.println((int) target.getLayoutY() / 30);
+
+				// 
+//				m.retirerCelluleMain(m.getCellulesJoueur().get(2));
+				setRack();
+			}
+		});
+		
+		img4.setOnMousePressed((event) -> {
+			source = getSource(event);
+		});
+		img4.setOnMouseReleased((event) -> {
+			target = getTarget(event);
+			if (!(target.getId().equals("img7") || target.getId().equals("img6") || target.getId().equals("img5") || target.getId().equals("img4") || target.getId().equals("img3") || target.getId().equals("img2") || target.getId().equals("img1"))) {
+				((ImageView) target).setImage(((ImageView) source).getImage());
+
+				// => Get I
+				System.out.println((int) target.getLayoutX() / 30);
+				// => Get J
+				System.out.println((int) target.getLayoutY() / 30);
+
+				// 
+//				m.retirerCelluleMain(m.getCellulesJoueur().get(3));
+				setRack();
+			}
+		});
+		
+		img5.setOnMousePressed((event) -> {
+			source = getSource(event);
+		});
+		img5.setOnMouseReleased((event) -> {
+			target = getTarget(event);
+			if (!(target.getId().equals("img7") || target.getId().equals("img6") || target.getId().equals("img5") || target.getId().equals("img4") || target.getId().equals("img3") || target.getId().equals("img2") || target.getId().equals("img1"))) {
+				((ImageView) target).setImage(((ImageView) source).getImage());
+
+				// => Get I
+				System.out.println((int) target.getLayoutX() / 30);
+				// => Get J
+				System.out.println((int) target.getLayoutY() / 30);
+
+				// 
+//				m.retirerCelluleMain(m.getCellulesJoueur().get(4));
+				setRack();
+			}
+		});
+		
+		img6.setOnMousePressed((event) -> {
+			source = getSource(event);
+		});
+		img6.setOnMouseReleased((event) -> {
+			target = getTarget(event);
+			if (!(target.getId().equals("img7") || target.getId().equals("img6") || target.getId().equals("img5") || target.getId().equals("img4") || target.getId().equals("img3") || target.getId().equals("img2") || target.getId().equals("img1"))) {
+				((ImageView) target).setImage(((ImageView) source).getImage());
+
+				// => Get I
+				System.out.println((int) target.getLayoutX() / 30);
+				// => Get J
+				System.out.println((int) target.getLayoutY() / 30);
+
+				// 
+//				m.retirerCelluleMain(m.getCellulesJoueur().get(5));
+				setRack();
+			}
+		});
+		
+		img7.setOnMousePressed((event) -> {
+			source = getSource(event);
+		});
+		img7.setOnMouseReleased((event) -> {
+			target = getTarget(event);
+			if (!(target.getId().equals("img7") || target.getId().equals("img6") || target.getId().equals("img5") || target.getId().equals("img4") || target.getId().equals("img3") || target.getId().equals("img2") || target.getId().equals("img1"))) {
+				((ImageView) target).setImage(((ImageView) source).getImage());
+
+				// => Get I
+				System.out.println((int) target.getLayoutX() / 30);
+				// => Get J
+				System.out.println((int) target.getLayoutY() / 30);
+
+				// 
+//				m.retirerCelluleMain(m.getCellulesJoueur().get(6));
+				setRack();
+			}
+		});
+
+	}
+
+	public void setDebug() {
+		OutputStream out = new OutputStream() {
+			@Override
+			public void write(int b) throws IOException {
+				appendText(String.valueOf((char) b));
+			}
+		};
+		System.setOut(new PrintStream(out, true));
+		System.setErr(new PrintStream(out, true));
+	}
+
+	public void setConsole() {
+		OutputStream out = new OutputStream() {
+			@Override
+			public void write(int b) throws IOException {
+				// FIXME Rediriger vers le terminal
+				// System.console().writer().println(String.valueOf((char)b));
+				// System.out.println("Console is :" + System.console());
+				Platform.runLater(() -> console.appendText(String.valueOf((char) b)));
+			}
+		};
+		System.setOut(new PrintStream(out, true));
+		System.setErr(new PrintStream(out, true));
+	}
+
 	@FXML
 	private Node selectSourceLabel(DragEvent event) {
 		String source1 = event.getSource().toString(); // yields complete string
@@ -215,9 +291,9 @@ public class ScrabbleController implements Initializable {
 		// Object source3 = event.getSource(); //yields complete string
 		// System.out.println(source3);
 		Node source2 = event.getPickResult().getIntersectedNode(); // returns JUST the id of the object that was clicked
-		 System.out.println("Full String: " + source1);
+		System.out.println("Full String: " + source1);
 		// System.out.println("Just the id: " + source2);
-		 System.out.println("SOURCE : " + source2);
+		System.out.println("SOURCE : " + source2);
 		return source2;
 	}
 
@@ -229,321 +305,292 @@ public class ScrabbleController implements Initializable {
 	public void setMainApp(FenetreScrabble main) {
 		this.mainApp = main;
 	}
-	
-//	  @FXML
-//	  private Node selectSource(MouseEvent event)
-//	    {
-////	    String source1 = event.getSource().toString(); //yields complete string
-//	    Node source2 = event.getPickResult().getIntersectedNode(); //returns JUST the id of the object that was clicked
-////	    System.out.println("Full String: " + source1);
-////	    System.out.println("Just the id: " + source2);
-////	    System.out.println(" " + source2);
-//	    return source2;
-//	    }
+
+	// @FXML
+	// private Node selectSource(MouseEvent event)
+	// {
+	//// String source1 = event.getSource().toString(); //yields complete string
+	// Node source2 = event.getPickResult().getIntersectedNode(); //returns JUST the
+	// id of the object that was clicked
+	//// System.out.println("Full String: " + source1);
+	//// System.out.println("Just the id: " + source2);
+	//// System.out.println(" " + source2);
+	// return source2;
+	// }
 
 	public void melange() {
-		m.melangerMain();
+		Scrabble.getJoueurActuel().getMain().melangerMain();
 		afficheMain();
 		setRack();
 	}
-	
+
 	private void setRack() {
 		List<LettreView> liste = new ArrayList<LettreView>();
-		for (CelluleImpl lm : m.getCellulesJoueur()) {
+		for (CelluleImpl lm : Scrabble.getJoueurActuel().getMain().getCellulesJoueur()) {
 			LettreView l = new LettreView(lm.getLettre().toString());
-//			System.out.println(l.lettre);
+			// System.out.println(l.lettre);
 			liste.add(l);
-			
+
 		}
-		
-		if (!m.getCellulesJoueur().isEmpty()) {
-			img1.setImage(new Image("file:resources/Wood/letter_" + liste.get(0).lettre + ".png"));
-			img2.setImage(new Image("file:resources/Wood/letter_" + liste.get(1).lettre + ".png"));
-			img3.setImage(new Image("file:resources/Wood/letter_" + liste.get(2).lettre + ".png"));
-			img4.setImage(new Image("file:resources/Wood/letter_" + liste.get(3).lettre + ".png"));
-			img5.setImage(new Image("file:resources/Wood/letter_" + liste.get(4).lettre + ".png"));
-			img6.setImage(new Image("file:resources/Wood/letter_" + liste.get(5).lettre + ".png"));
-			img7.setImage(new Image("file:resources/Wood/letter_" + liste.get(6).lettre + ".png"));
+
+		if (!Scrabble.getJoueurActuel().getMain().getCellulesJoueur().isEmpty()) {
 			
-			
-			
-			if (m.getCellulesJoueur().size() >= 1)
-				rack1.setText(liste.get(0).lettre);
-			else {
-				rack1.setText("");
-				rack2.setText("");
-				rack3.setText("");
-				rack4.setText("");
-				rack5.setText("");
-				rack6.setText("");
-				rack7.setText("");
+			if (Scrabble.getJoueurActuel().getMain().getCellulesJoueur().size() >= 1) {
+				
+				img1.setImage(new Image("file:resources/Wood/letter_" + liste.get(0).lettre + ".png"));
+			} else {
+				img1.setImage(null);
+				img2.setImage(null);
+				img3.setImage(null);
+				img4.setImage(null);
+				img5.setImage(null);
+				img6.setImage(null);
+				img7.setImage(null);
 			}
-//			if (m.getMainJoueur().size() >= 2)
-//				rack2.setText(liste.get(1).lettre);
-//			else {
-//				rack2.setText("");
-//				rack3.setText("");
-//				rack4.setText("");
-//				rack5.setText("");
-//				rack6.setText("");
-//				rack7.setText("");
-//			}
-//			if (m.getMainJoueur().size() >= 3)
-//				rack3.setText(liste.get(2).lettre);
-//			else {
-//				rack3.setText("");
-//				rack4.setText("");
-//				rack5.setText("");
-//				rack6.setText("");
-//				rack7.setText("");
-//			}
-//			if (m.getMainJoueur().size() >= 4)
-//				rack4.setText(liste.get(3).lettre);
-//			else {
-//				rack4.setText("");
-//				rack5.setText("");
-//				rack6.setText("");
-//				rack7.setText("");
-//			}
-//			if (m.getMainJoueur().size() >= 5)
-//				rack5.setText(liste.get(4).lettre);
-//			else {
-//				rack5.setText("");
-//				rack6.setText("");
-//				rack7.setText("");
-//			}
-//			if (m.getMainJoueur().size() >= 6)
-//				rack6.setText(liste.get(5).lettre);
-//			else {
-//				rack6.setText("");
-//				rack7.setText("");
-//			}
-//			if (m.getMainJoueur().size() >= 7)
-//				rack7.setText(liste.get(6).lettre);
-//			else
-//				rack7.setText("");
+			if (Scrabble.getJoueurActuel().getMain().getCellulesJoueur().size() >= 2) {
+				img2.setImage(new Image("file:resources/Wood/letter_" + liste.get(1).lettre + ".png"));
+			} else {
+				img2.setImage(null);
+				img3.setImage(null);
+				img4.setImage(null);
+				img5.setImage(null);
+				img6.setImage(null);
+				img7.setImage(null);
+			}
+			if (Scrabble.getJoueurActuel().getMain().getCellulesJoueur().size() >= 3) {
+				img3.setImage(new Image("file:resources/Wood/letter_" + liste.get(2).lettre + ".png"));
+			} else {
+				img3.setImage(null);
+				img4.setImage(null);
+				img5.setImage(null);
+				img6.setImage(null);
+				img7.setImage(null);
+			}
+			if (Scrabble.getJoueurActuel().getMain().getCellulesJoueur().size() >= 4) {
+				img4.setImage(new Image("file:resources/Wood/letter_" + liste.get(3).lettre + ".png"));
+			} else {
+				img4.setImage(null);
+				img5.setImage(null);
+				img6.setImage(null);
+				img7.setImage(null);
+			}
+			if (Scrabble.getJoueurActuel().getMain().getCellulesJoueur().size() >= 5) {
+				img5.setImage(new Image("file:resources/Wood/letter_" + liste.get(4).lettre + ".png"));
+			} else {
+				img5.setImage(null);
+				img6.setImage(null);
+				img7.setImage(null);
+			}
+			if (Scrabble.getJoueurActuel().getMain().getCellulesJoueur().size() >= 6) {
+				img6.setImage(new Image("file:resources/Wood/letter_" + liste.get(5).lettre + ".png"));
+			} else {
+				img6.setImage(null);
+				img7.setImage(null);
+			}
+			if (Scrabble.getJoueurActuel().getMain().getCellulesJoueur().size() >= 7) {
+				img7.setImage(new Image("file:resources/Wood/letter_" + liste.get(6).lettre + ".png"));
+			} else {
+				img7.setImage(null);
+			}
+		}
+		else
+		{
+			img1.setImage(null);
+			img2.setImage(null);
+			img3.setImage(null);
+			img4.setImage(null);
+			img5.setImage(null);
+			img6.setImage(null);
+			img7.setImage(null);
 		}
 	}
 
 	@FXML
 	private void piocher() {
-		m.piocherLettreManquante();
+		Scrabble.getJoueurActuel().getMain().piocherLettreManquante();
 		afficheMain();
+		setRack();
 	}
 
-//	@FXML
-//	/* Liste d'int => col - row */
-//	private Node mouseEntered(MouseEvent e) {
-//		Node source = e.getPickResult().getIntersectedNode();
-//		Integer colIndex = GridPane.getColumnIndex(source);
-//		Integer rowIndex = GridPane.getRowIndex(source);
-//		int col = colIndex == null ? 0 : colIndex;
-//		int row = rowIndex == null ? 0 : rowIndex;
-//		/* DEBUG */
-//		List<Integer> id = new ArrayList<Integer>();
-//		id.add(col);
-//		id.add(row);
-//		/* Fin DEBUG */
-//		return source;
-//
-//	}
+	@FXML
+	/* Liste d'int => col - row */
+	private Node mouseEntered(MouseEvent e) {
+		Node source = e.getPickResult().getIntersectedNode();
+		Integer colIndex = GridPane.getColumnIndex(source);
+		Integer rowIndex = GridPane.getRowIndex(source);
+		int col = colIndex == null ? 0 : colIndex;
+		int row = rowIndex == null ? 0 : rowIndex;
+		/* DEBUG */
+		List<Integer> id = new ArrayList<Integer>();
+		id.add(col);
+		id.add(row);
+		/* Fin DEBUG */
+		return source;
+	}
 
 	@FXML
 	private void afficheMain() {
-		m.afficherMainJoueur();
-		leftStatus.setText(m.getCellulesJoueur().toString());
+		Scrabble.getJoueurActuel().getMain().toString();
+		leftStatus.setText(Scrabble.getJoueurActuel().getMain().getCellulesJoueur().toString());
 	}
 
-	 
-	
+	// @FXML
+	// private Node getSource(MouseEvent event) {
+	// ImageView source = (ImageView) event.getPickResult().getIntersectedNode();
+	// Image image = source.getImage();
+	// // System.out.println(source);
+	// // System.out.println(image);
+	//
+	// System.out.println("Source " + event.getPickResult().getIntersectedNode());
+	//
+	// return event.getPickResult().getIntersectedNode();
+	// //
+	// // Node targetDrag = selectTargetLabel(event);
+	// // // Label source = (Label) sourceDrag;
+	// // Label source = (Label) sourceDrag;
+	// // // Label target = (Label) mouseEntered(event);
+	// //
+	// //
+	// // target.setOnDragOver(new EventHandler<DragEvent>() {
+	// // public void handle(DragEvent event) {
+	// // /* data is dragged over the target */
+	// // // System.out.println("onDragOver");
+	// //
+	// // /*
+	// // * accept it only if it is not dragged from the same node and if it has a
+	// // string
+	// // * data
+	// // */
+	// // if (event.getGestureSource() != target &&
+	// event.getDragboard().hasString()) {
+	// // /* allow for both copying and moving, whatever user chooses */
+	// // event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+	// // }
+	// //
+	// // event.consume();
+	// // }
+	// // });
+	// //
+	// // target.setOnDragEntered(new EventHandler<DragEvent>() {
+	// // public void handle(DragEvent event) {
+	// // /* the drag-and-drop gesture entered the target */
+	// // // System.out.println("onDragEntered");
+	// // /* show to the user that it is an actual gesture target */
+	// // if (event.getGestureSource() != target &&
+	// event.getDragboard().hasString()) {
+	// // target.setText("ENTERED");
+	// // }
+	// //
+	// // event.consume();
+	// // }
+	// // });
+	// //
+	// // target.setOnDragExited(new EventHandler<DragEvent>() {
+	// // public void handle(DragEvent event) {
+	// // /* mouse moved away, remove the graphical cues */
+	// // target.setText("");
+	// //
+	// // event.consume();
+	// // }
+	// // });
+	// //
+	// // target.setOnDragDropped(new EventHandler<DragEvent>() {
+	// // public void handle(DragEvent event) {
+	// // /* data dropped */
+	// // // System.out.println("onDragDropped");
+	// // /* if there is a string data on dragboard, read it and use it */
+	// // Dragboard db = event.getDragboard();
+	// // boolean success = false;
+	// // if (db.hasString()) {
+	// // target.setText(db.getString());
+	// // success = true;
+	// // }
+	// // /*
+	// // * let the source know whether the string was successfully transferred and
+	// // used
+	// // */
+	// // event.setDropCompleted(success);
+	// //
+	// // event.consume();
+	// // }
+	// // });
+	// //
+	//
+	// }
+
 	@FXML
-	private void dragText(MouseEvent event) {
-		String source1 = event.getSource().toString(); //yields complete string
-	    String source2 = event.getPickResult().getIntersectedNode().getId(); //returns JUST the id of the object that was clicked
-	    System.out.println("Full String: " + source1);
-	    System.out.println("Just the id: " + source2);
-	    System.out.println(" " + source2);
-	    img2.setStyle("-fx-image: url(file:resources/Wood/letter_" + m.getCellulesJoueur().get(0).getLettre() + ".png);");
-	    
-//
-//		 Node targetDrag = selectTargetLabel(event);
-//		 // Label source = (Label) sourceDrag;
-//		 Label source = (Label) sourceDrag;
-//		// Label target = (Label) mouseEntered(event);
-//		 System.out.println(sourceDrag);
-//
-//		 target.setOnDragOver(new EventHandler<DragEvent>() {
-//		 public void handle(DragEvent event) {
-//		 /* data is dragged over the target */
-//		 // System.out.println("onDragOver");
-//		
-//		 /*
-//		 * accept it only if it is not dragged from the same node and if it has a
-//		 string
-//		 * data
-//		 */
-//		 if (event.getGestureSource() != target && event.getDragboard().hasString()) {
-//		 /* allow for both copying and moving, whatever user chooses */
-//		 event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-//		 }
-//		
-//		 event.consume();
-//		 }
-//		 });
-//		
-//		 target.setOnDragEntered(new EventHandler<DragEvent>() {
-//		 public void handle(DragEvent event) {
-//		 /* the drag-and-drop gesture entered the target */
-//		 // System.out.println("onDragEntered");
-//		 /* show to the user that it is an actual gesture target */
-//		 if (event.getGestureSource() != target && event.getDragboard().hasString()) {
-//		 target.setText("ENTERED");
-//		 }
-//		
-//		 event.consume();
-//		 }
-//		 });
-//		
-//		 target.setOnDragExited(new EventHandler<DragEvent>() {
-//		 public void handle(DragEvent event) {
-//		 /* mouse moved away, remove the graphical cues */
-//		 target.setText("");
-//		
-//		 event.consume();
-//		 }
-//		 });
-//		
-//		 target.setOnDragDropped(new EventHandler<DragEvent>() {
-//		 public void handle(DragEvent event) {
-//		 /* data dropped */
-//		 // System.out.println("onDragDropped");
-//		 /* if there is a string data on dragboard, read it and use it */
-//		 Dragboard db = event.getDragboard();
-//		 boolean success = false;
-//		 if (db.hasString()) {
-//		 target.setText(db.getString());
-//		 success = true;
-//		 }
-//		 /*
-//		 * let the source know whether the string was successfully transferred and
-//		 used
-//		 */
-//		 event.setDropCompleted(success);
-//		
-//		 event.consume();
-//		 }
-//		 });
-//		
-		
+	private Node getSource(MouseEvent event) {
+		ImageView source = (ImageView) event.getPickResult().getIntersectedNode();
+		Image image = source.getImage();
+		// System.out.println(source);
+		// System.out.println(image);
+
+//		System.out.println("Source " + event.getPickResult().getIntersectedNode());
+
+		return event.getPickResult().getIntersectedNode();
 	}
 
-
-	
-	private Double lastX = null;
-    private Double lastY = null;
-
-	
-	public void InitUi()
-    {
-		System.out.println("INIT DRAG");
-        if (this.img1 != null)
-        {
-        	System.out.println("NOT NULL DRAG");
-            this.img1.setOnDragOver(new EventHandler<DragEvent>()
-            {
-                @Override
-                public void handle(DragEvent dragEvent)
-                {
-                    HandleMouseMovement(dragEvent.getSceneX(), dragEvent.getSceneY());
-                }
-            });
-
-            this.img1.setOnDragDetected(new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent event) {
-                		System.out.println("DRAG");
-                    Dragboard db = img1.startDragAndDrop(TransferMode.ANY);
-                    ClipboardContent content = new ClipboardContent();
-                    content.putString("Does not matter");
-                    db.setContent(content);
-                    event.consume();
-
-                    lastX = event.getSceneX();
-                    lastY = event.getSceneY();
-                }
-            });
-        }
-    }
-	
-	 private synchronized void HandleMouseMovement(double sceneX, double sceneY)
-	    {
-	        double deltaX = sceneX - lastX;
-	        double deltaY = sceneY - lastY;
-
-	        lastX = sceneX;
-	        lastY = sceneY;
-
-	        double currentXAnchor =AnchorPane.getLeftAnchor(this.img1);
-	        double currentYAnchor =AnchorPane.getTopAnchor(this.img1);
-
-	        AnchorPane.setLeftAnchor( this.img1,  currentXAnchor + deltaX*1.5);
-	        AnchorPane.setTopAnchor(this.img1, currentYAnchor + deltaY*1.5);
-	    }
-	
 	@FXML
-    private void handleButtonClick(ActionEvent event) {
-        if (event.getSource() == showDebug) {
-        		setDebug();
-        		debugNode.setVisible(true);
-        } else if (event.getSource() == hideDebug) {
-        		setConsole();
-        		debugNode.setVisible(false);
-        }
-    }
-	
-	@FXML
-    private void draggingOver(DragEvent event) {
-      Dragboard board = event.getDragboard();
-      if (board.hasFiles()) {
-        event.acceptTransferModes(TransferMode.ANY);
-      }  
-    }
-	
-	@FXML
-    private void dropping(DragEvent event) {
-      try {
-        Dragboard board = event.getDragboard();
-        List<File> phil = board.getFiles();
-        FileInputStream fis;
-        fis = new FileInputStream(phil.get(0));
-      
-        StringBuilder builder = new StringBuilder();
-        int ch;
-        while((ch = fis.read()) != -1){
-            builder.append((char)ch);
-        }
-        
-        fis.close();
-        
-        console.setText(builder.toString());
+	private Node getTarget(MouseEvent event) {
+//		System.out.println("Target " + event.getPickResult().getIntersectedNode());
+		return event.getPickResult().getIntersectedNode();
+	}
 
-      } catch (FileNotFoundException fnfe) {
-        fnfe.printStackTrace();
-      } catch (IOException ioe) {
-        ioe.printStackTrace();
-      }
-     }
-	
 	@FXML
-    private void drop(DragEvent event) {
-        Dragboard board = event.getDragboard();
-        StringBuilder builder = new StringBuilder();
-        console.setText(builder.toString());
-     }
-	
-//	@FXML
-//	private void initialize() {
-//		piocher();
-////		setRack();
-//		nomJoueur.setText(j.getNom());
-//	}
+	private void handleButtonClick(ActionEvent event) {
+		if (event.getSource() == showDebug) {
+			setDebug();
+			debugNode.setVisible(true);
+		} else if (event.getSource() == hideDebug) {
+			setConsole();
+			debugNode.setVisible(false);
+		}
+	}
+
+	@FXML
+	private void draggingOver(DragEvent event) {
+		Dragboard board = event.getDragboard();
+		if (board.hasFiles()) {
+			event.acceptTransferModes(TransferMode.ANY);
+		}
+	}
+
+	@FXML
+	private void dropping(DragEvent event) {
+		try {
+			Dragboard board = event.getDragboard();
+			List<File> phil = board.getFiles();
+			FileInputStream fis;
+			fis = new FileInputStream(phil.get(0));
+
+			StringBuilder builder = new StringBuilder();
+			int ch;
+			while ((ch = fis.read()) != -1) {
+				builder.append((char) ch);
+			}
+
+			fis.close();
+
+			console.setText(builder.toString());
+
+		} catch (FileNotFoundException fnfe) {
+			fnfe.printStackTrace();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void drop(DragEvent event) {
+		Dragboard board = event.getDragboard();
+		StringBuilder builder = new StringBuilder();
+		console.setText(builder.toString());
+	}
+
+	// @FXML
+	// private void initialize() {
+	// piocher();
+	//// setRack();
+	// nomJoueur.setText(j.getNom());
+	// }
 }
