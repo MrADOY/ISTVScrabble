@@ -7,8 +7,8 @@ package istv.scrabble.objets;
  * 
  */
 
-public class Anagramme {
-	public Anagramme(String pmot) {
+public class arbre {
+	public arbre(String pmot) {
 		char[] word;
 		char[] solution;
 		char[] TEMP = pmot.toCharArray();
@@ -76,6 +76,6 @@ public class Anagramme {
 	}
 
 	public static void main(String[] args) {
-		Anagramme ana = new Anagramme("rraiver");
+		arbre ana = new arbre("rraiver");
 	}
 }

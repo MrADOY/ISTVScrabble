@@ -2,6 +2,7 @@ package istv.scrabble.objets;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import istv.scrabble.enumerations.CelluleBonus;
 import istv.scrabble.exceptions.GameException;
 import istv.scrabble.exceptions.Logger;

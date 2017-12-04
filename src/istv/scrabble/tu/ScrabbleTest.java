@@ -6,6 +6,9 @@
  */
 package istv.scrabble.tu;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 import istv.scrabble.objets.Scrabble;
@@ -51,5 +54,11 @@ public class ScrabbleTest {
 		new Scrabble("BENARD" , "JEAN LOUIS");
 		
 		Scrabble.jouerTour();
+	}
+	
+	@Test
+	
+	public void testIA() {
+		
 	}
 }

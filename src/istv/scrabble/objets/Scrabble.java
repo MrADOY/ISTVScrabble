@@ -63,6 +63,27 @@ public class Scrabble {
 		Logger.log("Initialisation du Scrabble , OK !");
 
 	}
+	
+	public Scrabble(String j1) {
+
+		
+		Scrabble.plateau = new PlateauImpl();
+		Scrabble.pioche = new Pioche();
+		Scrabble.joueurs = new Joueur[2];
+		Scrabble.joueurs[0] = new Joueur(j1, pioche, plateau);
+		Scrabble.joueurs[1] = new IAImpl("IA", pioche, plateau);
+		Scrabble.regle = new Regle();
+		Scrabble.nbTour = 1;
+
+		Scrabble.setJoueurActuel(Scrabble.joueurs[0]);
+		try {
+			Scrabble.dico = new Dictionnaire("dico.txt");
+		} catch (GameException e) {
+			//
+		}
+		Logger.log("Initialisation du Scrabble , OK !");
+
+	}
 
 	public static void jouerTour() {
 

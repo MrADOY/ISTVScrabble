@@ -74,6 +74,9 @@ public class Main {
 		Collections.shuffle(cellulesMain);
 	}
 
+	public void getMainString() {
+		
+	}
 	public String toString() {
 
 		String main = " [ ";

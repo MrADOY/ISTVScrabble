@@ -92,7 +92,7 @@ public class Joueur {
 		try {
 			this.plateauJeu.poserCellule(i, j, choisirCelluleMain(nb));
 		} catch (GameException e) {
-			this.plateauJeu.supprimerPileCaseJouee();
+			//
 		}
 	}
 	
