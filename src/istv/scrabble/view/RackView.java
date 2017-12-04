@@ -21,6 +21,7 @@ import javafx.scene.shape.Rectangle;
  * @contributor
  *
  */
+@SuppressWarnings("restriction")
 public class RackView extends Parent {
 
 	LettreViewOld[] rack;
