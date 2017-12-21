@@ -64,6 +64,8 @@ public class Scrabble {
 
 	}
 	
+	/* POUR IA */
+	
 	public Scrabble(String j1) {
 
 		
@@ -85,6 +87,12 @@ public class Scrabble {
 
 	}
 
+
+	@Deprecated
+	
+	/**
+	 * SEULEMENT POUR DEBUG
+	 */
 	public static void jouerTour() {
 
 		Scanner sc = new Scanner(System.in);
@@ -140,10 +148,12 @@ public class Scrabble {
 		if (Scrabble.joueurActuel.equals(Scrabble.getJoueur1())) {
 			Scrabble.setJoueurActuel(Scrabble.getJoueur2());
 			Scrabble.getJoueurActuel().piocheLettre();
+			PlateauImpl.caseJouee.removeAll(PlateauImpl.caseJouee);
 			Scrabble.nbTour++;
 		} else {
 			Scrabble.setJoueurActuel(Scrabble.getJoueur1());
 			Scrabble.getJoueurActuel().piocheLettre();
+			PlateauImpl.caseJouee.removeAll(PlateauImpl.caseJouee);
 			Scrabble.nbTour++;
 		}
 	}

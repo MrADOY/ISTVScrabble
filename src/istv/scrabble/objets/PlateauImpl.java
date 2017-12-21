@@ -3,6 +3,8 @@ package istv.scrabble.objets;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
+
 import istv.scrabble.enumerations.CelluleBonus;
 import istv.scrabble.exceptions.GameException;
 import istv.scrabble.exceptions.Logger;
@@ -26,7 +28,7 @@ public class PlateauImpl implements Plateau {
 	public PlateauImpl() {
 		plateauJeu = new CelluleImpl[Plateau.LONGUEUR_PLATEAU][Plateau.LARGEUR_PLATEAU];
 		this.creationPlateau();
-		caseJouee = new ArrayList<CelluleImpl>();
+		caseJouee = new ArrayList<CelluleImpl>();		
 		Logger.log("Initialisation du plateau , OK !");
 	}
 
