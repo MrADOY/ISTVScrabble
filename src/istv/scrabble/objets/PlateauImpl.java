@@ -69,7 +69,7 @@ public class PlateauImpl implements Plateau {
 
 	public void enleverCellule(int i, int j) {
 
-		Logger.log("Le joueur " + Scrabble.getJoueurActuel() + " ajoute une cellule de la case " + "[" + i + "," + j + "]" +"a sa main");
+		Logger.log("Le joueur " + Scrabble.getJoueurActuel() + " ajoute une cellule de la case " + "[" + i + "," + j + "]" +" a sa main");
 		
 		CelluleImpl celluleAjoutMain = new CelluleImpl(this.getCellule(i, j).getLettre());
 		

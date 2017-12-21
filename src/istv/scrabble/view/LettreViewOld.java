@@ -10,7 +10,6 @@ import java.util.List;
 
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.input.ClipboardContent;
@@ -29,6 +28,7 @@ import javafx.scene.text.Text;
  * @contributor
  *
  */
+@SuppressWarnings("restriction")
 public class LettreViewOld extends Parent {
 
 	public String lettre;
@@ -46,7 +46,7 @@ public class LettreViewOld extends Parent {
 		lettre = new String(l);
 		positionX = posX;
 		positionY = posY;
-		score = n;
+		setScore(n);
 
 		fond_lettre = new Rectangle(75, 75, Color.WHITE);
 		fond_lettre.setArcHeight(10);
@@ -182,6 +182,14 @@ public class LettreViewOld extends Parent {
 	public void relacher() {
 		fond_lettre.setFill(Color.WHITE);
 		this.setTranslateY(positionY);
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 
 }

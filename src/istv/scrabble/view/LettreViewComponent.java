@@ -8,8 +8,9 @@ package istv.scrabble.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.text.html.ImageView;
+
 import javafx.event.EventHandler;
-import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -27,8 +28,12 @@ import javafx.scene.text.Text;
  *
  */
 @SuppressWarnings("restriction")
-public class LettreView extends Parent {
+public class LettreViewComponent extends ImageView {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String lettre;
 	private Image img;
 	public static String style;
@@ -38,13 +43,13 @@ public class LettreView extends Parent {
 	/**
 	 * Constructeur de Lettre
 	 */
-	public LettreView(String l, String style) {
+	public LettreViewComponent(String l, String style) {
 		setLettre(new String(l));
 		setImg(new Image("file:resources/" + style +"/letter_" + l + ".png"));
 		text_lettre = new Text(getLettre());
 		text_lettre.setFont(new Font(25));
 		text_lettre.setFill(Color.WHITE);
-		this.getChildren().add(text_lettre);
+		this.add(text_lettre);
 
 		// this.setOnDragDetected(mouseEvent -> this.startFullDrag());
 		this.setOnDragDetected(new EventHandler<MouseEvent>() {
@@ -81,7 +86,7 @@ public class LettreView extends Parent {
 		
 	}
 
-	public LettreView(String l) {
+	public LettreViewComponent(String l) {
 		setLettre(new String(l));
 		setImg(new Image("file:resources/" + style +"/letter_" + l + ".png"));
 		text_lettre = new Text(getLettre());
