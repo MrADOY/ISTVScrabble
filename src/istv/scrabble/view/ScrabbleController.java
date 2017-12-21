@@ -18,14 +18,9 @@ import java.util.ResourceBundle;
 
 import istv.scrabble.objets.CelluleImpl;
 import istv.scrabble.objets.FenetreScrabble;
-import istv.scrabble.objets.Joueur;
-import istv.scrabble.objets.Main;
-import istv.scrabble.objets.Pioche;
-import istv.scrabble.objets.PlateauImpl;
 import istv.scrabble.objets.Scrabble;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -51,24 +46,36 @@ import javafx.scene.layout.GridPane;
 @SuppressWarnings("restriction")
 public class ScrabbleController implements Initializable {
 
-	/**
-	 * Constructeur de ScrabbleController
-	 */
-	public ScrabbleController() {
-		// TODO Auto-generated constructor stub
-	}
-
+	@SuppressWarnings("unused")
 	private FenetreScrabble mainApp;
-	private Scrabble scrabble = new Scrabble();
-
+	@SuppressWarnings("unused")
+	private Scrabble scrabble = new Scrabble("Marcel", "Michel");
+	Node target = null;
+	Node source = null;
+	int i = -1;
+	int j = -1;
+	String style = "Wood";
 	
-	
-
 	@FXML
     private TextArea console;
     
 	@FXML
-	private Label leftStatus;
+	private Label scoresNomJ1;
+	
+	@FXML
+	private Label scoresNomJ2;
+	
+	@FXML
+	private Label scoresJ1;
+	
+	@FXML
+	private Label nbTour;
+	
+	@FXML
+	private Label scoresJ2;
+	
+	@FXML
+	private Label messages;
 
 	@FXML
 	private AnchorPane debugNode;
@@ -105,40 +112,50 @@ public class ScrabbleController implements Initializable {
 
 	@FXML
 	private Label nomJoueur;
+	
+//	private static final LettreView customFormat =
+//		    new LettreView("a");
+
 
 	public void appendText(String valueOf) {
 		Platform.runLater(() -> console.appendText(valueOf));
 	}
 
-	Node target = null;
-	Node source = null;
-	int i = -1;
-	int j = -1;
-
-	
 	public void initialize(URL location, ResourceBundle resources) {
 		piocher();
 		setRack();
+		String nomJ1 = Scrabble.getJoueur1().getNom();
+		String nomJ2 = Scrabble.getJoueur2().getNom();
+		scoresNomJ1.setText(nomJ1);
+		scoresNomJ2.setText(nomJ2);
+		setScores();
+		setTour();
 		nomJoueur.setText(Scrabble.getJoueurActuel().getNom());
 		debugNode.setVisible(false);
-
+		
 		img1.setOnMousePressed((event) -> {
 			source = getSource(event);
 		});
 		img1.setOnMouseReleased((event) -> {
+//			System.out.println(event);
 			target = getTarget(event);
 			if (!(target.getId().equals("img7") || target.getId().equals("img6") || target.getId().equals("img5") || target.getId().equals("img4") || target.getId().equals("img3") || target.getId().equals("img2") || target.getId().equals("img1"))) {
-				
-
+			
 				// => Get I
 				i =(int) target.getLayoutX() / 30;
 				// => Get J
 				j =(int) target.getLayoutY() / 30;
 				
-				if(Scrabble.getJoueurActuel().poserCellule2(0, i, j))
-					((ImageView) target).setImage(((ImageView) source).getImage());
-				
-				setRack();
+				// TODO Vérifier taille tableau pour poser cellule (i< XX && j< YY)
+				if(i>=0 && j>=0 && i<15 && j<15){
+					if(Scrabble.getJoueurActuel().poserCellule2(0, i, j)){
+						((ImageView) target).setImage(((ImageView) source).getImage());
+						messages.setText("");
+					}
+					else
+						messages.setText("Vous ne pouvez pas jouer ici");
+					setRack();
+				}
 			}
 		});
 
@@ -148,16 +165,22 @@ public class ScrabbleController implements Initializable {
 		img2.setOnMouseReleased((event) -> {
 			target = getTarget(event);
 			if (!(target.getId().equals("img7") || target.getId().equals("img6") || target.getId().equals("img5") || target.getId().equals("img4") || target.getId().equals("img3") || target.getId().equals("img2") || target.getId().equals("img1"))) {
-				((ImageView) target).setImage(((ImageView) source).getImage());
-
+			
 				// => Get I
-				System.out.println((int) target.getLayoutX() / 30);
+				i =(int) target.getLayoutX() / 30;
 				// => Get J
-				System.out.println((int) target.getLayoutY() / 30);
-
-				// 
-//				m.retirerCelluleMain(m.getCellulesJoueur().get(1));
-				setRack();
+				j =(int) target.getLayoutY() / 30;
+				
+				// TODO Vérifier taille tableau pour poser cellule (i< XX && j< YY)
+				if(i>=0 && j>=0 && i<15 && j<15){
+					if(Scrabble.getJoueurActuel().poserCellule2(1, i, j)){
+						((ImageView) target).setImage(((ImageView) source).getImage());
+						messages.setText("");
+					}
+					else
+						messages.setText("Vous ne pouvez pas jouer ici");
+					setRack();
+				}
 			}
 		});
 		
@@ -167,16 +190,22 @@ public class ScrabbleController implements Initializable {
 		img3.setOnMouseReleased((event) -> {
 			target = getTarget(event);
 			if (!(target.getId().equals("img7") || target.getId().equals("img6") || target.getId().equals("img5") || target.getId().equals("img4") || target.getId().equals("img3") || target.getId().equals("img2") || target.getId().equals("img1"))) {
-				((ImageView) target).setImage(((ImageView) source).getImage());
-
+			
 				// => Get I
-				System.out.println((int) target.getLayoutX() / 30);
+				i =(int) target.getLayoutX() / 30;
 				// => Get J
-				System.out.println((int) target.getLayoutY() / 30);
-
-				// 
-//				m.retirerCelluleMain(m.getCellulesJoueur().get(2));
-				setRack();
+				j =(int) target.getLayoutY() / 30;
+				
+				// TODO Vérifier taille tableau pour poser cellule (i< XX && j< YY)
+				if(i>=0 && j>=0 && i<15 && j<15){
+					if(Scrabble.getJoueurActuel().poserCellule2(2, i, j)){
+						((ImageView) target).setImage(((ImageView) source).getImage());
+						messages.setText("");
+					}
+					else
+						messages.setText("Vous ne pouvez pas jouer ici");
+					setRack();
+				}
 			}
 		});
 		
@@ -186,16 +215,22 @@ public class ScrabbleController implements Initializable {
 		img4.setOnMouseReleased((event) -> {
 			target = getTarget(event);
 			if (!(target.getId().equals("img7") || target.getId().equals("img6") || target.getId().equals("img5") || target.getId().equals("img4") || target.getId().equals("img3") || target.getId().equals("img2") || target.getId().equals("img1"))) {
-				((ImageView) target).setImage(((ImageView) source).getImage());
-
+			
 				// => Get I
-				System.out.println((int) target.getLayoutX() / 30);
+				i =(int) target.getLayoutX() / 30;
 				// => Get J
-				System.out.println((int) target.getLayoutY() / 30);
-
-				// 
-//				m.retirerCelluleMain(m.getCellulesJoueur().get(3));
-				setRack();
+				j =(int) target.getLayoutY() / 30;
+				
+				// TODO Vérifier taille tableau pour poser cellule (i< XX && j< YY)
+				if(i>=0 && j>=0 && i<15 && j<15){
+					if(Scrabble.getJoueurActuel().poserCellule2(3, i, j)){
+						((ImageView) target).setImage(((ImageView) source).getImage());
+						messages.setText("");
+					}
+					else
+						messages.setText("Vous ne pouvez pas jouer ici");
+					setRack();
+				}
 			}
 		});
 		
@@ -205,16 +240,22 @@ public class ScrabbleController implements Initializable {
 		img5.setOnMouseReleased((event) -> {
 			target = getTarget(event);
 			if (!(target.getId().equals("img7") || target.getId().equals("img6") || target.getId().equals("img5") || target.getId().equals("img4") || target.getId().equals("img3") || target.getId().equals("img2") || target.getId().equals("img1"))) {
-				((ImageView) target).setImage(((ImageView) source).getImage());
-
+			
 				// => Get I
-				System.out.println((int) target.getLayoutX() / 30);
+				i =(int) target.getLayoutX() / 30;
 				// => Get J
-				System.out.println((int) target.getLayoutY() / 30);
-
-				// 
-//				m.retirerCelluleMain(m.getCellulesJoueur().get(4));
-				setRack();
+				j =(int) target.getLayoutY() / 30;
+				
+				// TODO Vérifier taille tableau pour poser cellule (i< XX && j< YY)
+				if(i>=0 && j>=0 && i<15 && j<15){
+					if(Scrabble.getJoueurActuel().poserCellule2(4, i, j)){
+						((ImageView) target).setImage(((ImageView) source).getImage());
+						messages.setText("");
+					}
+					else
+						messages.setText("Vous ne pouvez pas jouer ici");
+					setRack();
+				}
 			}
 		});
 		
@@ -224,16 +265,22 @@ public class ScrabbleController implements Initializable {
 		img6.setOnMouseReleased((event) -> {
 			target = getTarget(event);
 			if (!(target.getId().equals("img7") || target.getId().equals("img6") || target.getId().equals("img5") || target.getId().equals("img4") || target.getId().equals("img3") || target.getId().equals("img2") || target.getId().equals("img1"))) {
-				((ImageView) target).setImage(((ImageView) source).getImage());
-
+			
 				// => Get I
-				System.out.println((int) target.getLayoutX() / 30);
+				i =(int) target.getLayoutX() / 30;
 				// => Get J
-				System.out.println((int) target.getLayoutY() / 30);
-
-				// 
-//				m.retirerCelluleMain(m.getCellulesJoueur().get(5));
-				setRack();
+				j =(int) target.getLayoutY() / 30;
+				
+				// TODO Vérifier taille tableau pour poser cellule (i< XX && j< YY)
+				if(i>=0 && j>=0 && i<15 && j<15){
+					if(Scrabble.getJoueurActuel().poserCellule2(5, i, j)){
+						((ImageView) target).setImage(((ImageView) source).getImage());
+						messages.setText("");
+					}
+					else
+						messages.setText("Vous ne pouvez pas jouer ici");
+					setRack();
+				}
 			}
 		});
 		
@@ -243,21 +290,69 @@ public class ScrabbleController implements Initializable {
 		img7.setOnMouseReleased((event) -> {
 			target = getTarget(event);
 			if (!(target.getId().equals("img7") || target.getId().equals("img6") || target.getId().equals("img5") || target.getId().equals("img4") || target.getId().equals("img3") || target.getId().equals("img2") || target.getId().equals("img1"))) {
-				((ImageView) target).setImage(((ImageView) source).getImage());
-
+			
 				// => Get I
-				System.out.println((int) target.getLayoutX() / 30);
+				i =(int) target.getLayoutX() / 30;
 				// => Get J
-				System.out.println((int) target.getLayoutY() / 30);
-
-				// 
-//				m.retirerCelluleMain(m.getCellulesJoueur().get(6));
-				setRack();
+				j =(int) target.getLayoutY() / 30;
+				
+				// TODO Vérifier taille tableau pour poser cellule (i< XX && j< YY)
+				if(i>=0 && j>=0 && i<15 && j<15){
+					if(Scrabble.getJoueurActuel().poserCellule2(6, i, j)){
+						((ImageView) target).setImage(((ImageView) source).getImage());
+						messages.setText("");
+					}
+					else
+						messages.setText("Vous ne pouvez pas jouer ici");
+					setRack();
+				}
 			}
 		});
-
+		
 	}
 
+	@FXML
+	private void tourSuivant(){
+		if(Scrabble.verificationFinTour2()){
+			nomJoueur.setText(Scrabble.getJoueurActuel().getNom());
+			setRack();
+		}
+		setScores();
+		setTour();
+	}
+	
+	@FXML
+	private void styleSuivant(){
+		if(style == "Wood"){
+			style = "Marble";
+		}
+		else if(style == "Marble"){
+			style = "Metal";
+		}
+		else if(style == "Metal"){
+			style = "Wood";
+		}
+		setRack();
+	}
+	
+
+	private void setTour(){
+		nbTour.setText(String.valueOf(Scrabble.nbTour));
+	}
+	
+	
+	private void setScores(){
+		String scoreJ1 = Scrabble.getJoueur1().getScore() + "";
+		String scoreJ2 = Scrabble.getJoueur2().getScore() + "";
+		scoresJ1.setText(scoreJ1);
+		scoresJ2.setText(scoreJ2);
+	}
+	
+	@FXML
+	private void annulerCoup(){
+		Scrabble.plateau.supprimerPileCaseJouee();		
+	}
+	
 	public void setDebug() {
 		OutputStream out = new OutputStream() {
 			@Override
@@ -327,17 +422,15 @@ public class ScrabbleController implements Initializable {
 	private void setRack() {
 		List<LettreView> liste = new ArrayList<LettreView>();
 		for (CelluleImpl lm : Scrabble.getJoueurActuel().getMain().getCellulesJoueur()) {
-			LettreView l = new LettreView(lm.getLettre().toString());
-			// System.out.println(l.lettre);
+			LettreView l = new LettreView(lm.getLettre().toString(), style);
 			liste.add(l);
-
 		}
 
 		if (!Scrabble.getJoueurActuel().getMain().getCellulesJoueur().isEmpty()) {
 			
 			if (Scrabble.getJoueurActuel().getMain().getCellulesJoueur().size() >= 1) {
-				
-				img1.setImage(new Image("file:resources/Wood/letter_" + liste.get(0).lettre + ".png"));
+				img1.setImage(liste.get(0).getImg());
+//				img1.setImage(new Image("file:resources/" + style +"/letter_" + liste.get(0).getLettre() + ".png"));
 			} else {
 				img1.setImage(null);
 				img2.setImage(null);
@@ -348,7 +441,7 @@ public class ScrabbleController implements Initializable {
 				img7.setImage(null);
 			}
 			if (Scrabble.getJoueurActuel().getMain().getCellulesJoueur().size() >= 2) {
-				img2.setImage(new Image("file:resources/Wood/letter_" + liste.get(1).lettre + ".png"));
+				img2.setImage(liste.get(1).getImg());
 			} else {
 				img2.setImage(null);
 				img3.setImage(null);
@@ -358,7 +451,7 @@ public class ScrabbleController implements Initializable {
 				img7.setImage(null);
 			}
 			if (Scrabble.getJoueurActuel().getMain().getCellulesJoueur().size() >= 3) {
-				img3.setImage(new Image("file:resources/Wood/letter_" + liste.get(2).lettre + ".png"));
+				img3.setImage(liste.get(2).getImg());
 			} else {
 				img3.setImage(null);
 				img4.setImage(null);
@@ -367,7 +460,7 @@ public class ScrabbleController implements Initializable {
 				img7.setImage(null);
 			}
 			if (Scrabble.getJoueurActuel().getMain().getCellulesJoueur().size() >= 4) {
-				img4.setImage(new Image("file:resources/Wood/letter_" + liste.get(3).lettre + ".png"));
+				img4.setImage(liste.get(3).getImg());
 			} else {
 				img4.setImage(null);
 				img5.setImage(null);
@@ -375,20 +468,20 @@ public class ScrabbleController implements Initializable {
 				img7.setImage(null);
 			}
 			if (Scrabble.getJoueurActuel().getMain().getCellulesJoueur().size() >= 5) {
-				img5.setImage(new Image("file:resources/Wood/letter_" + liste.get(4).lettre + ".png"));
+				img5.setImage(liste.get(4).getImg());
 			} else {
 				img5.setImage(null);
 				img6.setImage(null);
 				img7.setImage(null);
 			}
 			if (Scrabble.getJoueurActuel().getMain().getCellulesJoueur().size() >= 6) {
-				img6.setImage(new Image("file:resources/Wood/letter_" + liste.get(5).lettre + ".png"));
+				img6.setImage(liste.get(5).getImg());
 			} else {
 				img6.setImage(null);
 				img7.setImage(null);
 			}
 			if (Scrabble.getJoueurActuel().getMain().getCellulesJoueur().size() >= 7) {
-				img7.setImage(new Image("file:resources/Wood/letter_" + liste.get(6).lettre + ".png"));
+				img7.setImage(liste.get(6).getImg());
 			} else {
 				img7.setImage(null);
 			}
@@ -431,7 +524,7 @@ public class ScrabbleController implements Initializable {
 	@FXML
 	private void afficheMain() {
 		Scrabble.getJoueurActuel().getMain().toString();
-		leftStatus.setText(Scrabble.getJoueurActuel().getMain().getCellulesJoueur().toString());
+//		messages.setText(Scrabble.getJoueurActuel().getMain().getCellulesJoueur().toString());
 	}
 
 	// @FXML
@@ -520,8 +613,8 @@ public class ScrabbleController implements Initializable {
 
 	@FXML
 	private Node getSource(MouseEvent event) {
-		ImageView source = (ImageView) event.getPickResult().getIntersectedNode();
-		Image image = source.getImage();
+//		ImageView source = (ImageView) event.getPickResult().getIntersectedNode();
+//		Image image = source.getImage();
 		// System.out.println(source);
 		// System.out.println(image);
 
@@ -536,6 +629,12 @@ public class ScrabbleController implements Initializable {
 		return event.getPickResult().getIntersectedNode();
 	}
 
+	@FXML
+	private Node getTargetDrop(DragEvent event) {
+//		System.out.println("Target " + event.getPickResult().getIntersectedNode());
+		return event.getPickResult().getIntersectedNode();
+	}
+	
 	@FXML
 	private void handleButtonClick(ActionEvent event) {
 		if (event.getSource() == showDebug) {
@@ -582,7 +681,7 @@ public class ScrabbleController implements Initializable {
 
 	@FXML
 	private void drop(DragEvent event) {
-		Dragboard board = event.getDragboard();
+//		Dragboard board = event.getDragboard();
 		StringBuilder builder = new StringBuilder();
 		console.setText(builder.toString());
 	}

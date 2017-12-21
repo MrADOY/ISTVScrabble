@@ -134,6 +134,20 @@ public class Scrabble {
 			Scrabble.changementJoueur();
 		}
 	}
+	
+	public static boolean verificationFinTour2() {
+
+		try {
+			Scrabble.regle.recuperationMotsPoses();
+			Logger.log("Fin du tour de : " + Scrabble.getJoueurActuel());
+			Scrabble.changementJoueur();
+			return true;
+		} catch (GameException e) {
+//			Scrabble.jouerTour();
+			Scrabble.changementJoueur();
+			return false;
+		}
+	}
 
 	public static void changementJoueur() {
 
