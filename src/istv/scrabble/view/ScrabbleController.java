@@ -27,9 +27,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
@@ -49,12 +47,14 @@ public class ScrabbleController implements Initializable {
 	@SuppressWarnings("unused")
 	private FenetreScrabble mainApp;
 	@SuppressWarnings("unused")
-	private Scrabble scrabble = new Scrabble("Marcel", "Michel");
+	private Scrabble scrabble = new Scrabble("Aurélien", "Nico");
 	Node target = null;
 	Node source = null;
+	private List<Node> pileTarget;
 	int i = -1;
 	int j = -1;
 	String style = "Wood";
+	
 	
 	@FXML
     private TextArea console;
@@ -151,6 +151,7 @@ public class ScrabbleController implements Initializable {
 					if(Scrabble.getJoueurActuel().poserCellule2(0, i, j)){
 						((ImageView) target).setImage(((ImageView) source).getImage());
 						messages.setText("");
+						
 					}
 					else
 						messages.setText("Vous ne pouvez pas jouer ici");
@@ -349,8 +350,13 @@ public class ScrabbleController implements Initializable {
 	}
 	
 	@FXML
-	private void annulerCoup(){
-		Scrabble.plateau.supprimerPileCaseJouee();		
+	private void annulerCoup()
+	{
+		
+		Scrabble.plateau.supprimerPileCaseJouee();
+		((ImageView) target).setImage(null);
+		setRack();
+		
 	}
 	
 	public void setDebug() {

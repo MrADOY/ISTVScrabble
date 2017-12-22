@@ -13,7 +13,7 @@ public class GameException extends Exception {
 	public GameException(String code, String message) {
 		
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy hh:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 		System.err.println("[" + sdf.format(new Date()) + " ERROR " + "]" + "Erreur : " + message);
 	
 	}

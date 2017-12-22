@@ -13,7 +13,7 @@ public class Logger {
 
 	public static String log (String message) {
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd MM yyyy hh:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
 		System.err.println("[" + sdf.format(new Date()) + "] " + "Message : " + message);
 		return "[" + new Date() + "]" + "Message :" + message;
